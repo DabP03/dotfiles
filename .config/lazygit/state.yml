@@ -1,0 +1,16 @@
+lastupdatecheck: 0
+recentrepos:
+- /home/piotr/dotfiles
+- /home/piotr/Code/Makao.UZ
+- /home/piotr/Code/Advent-Of-Code
+startuppopupversion: 5
+lastversion: 0.41.0
+customcommandshistory:
+- q
+hidecommandlog: false
+ignorewhitespaceindiffview: false
+diffcontextsize: 3
+localbranchsortorder: recency
+remotebranchsortorder: alphabetical
+gitlogorder: topo-order
+gitlogshowgraph: always
