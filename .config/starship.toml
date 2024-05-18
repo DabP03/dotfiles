@@ -6,17 +6,64 @@ $username\
 $hostname\
 $directory\
 $git_branch\
+$docker_context\
+$package\
+$c\
+$cmake\
+$cobol\
+$daml\
+$dart\
+$deno\
+$dotnet\
+$elixir\
+$elm\
+$erlang\
+$fennel\
+$golang\
+$guix_shell\
+$haskell\
+$haxe\
+$helm\
+$java\
+$julia\
+$kotlin\
+$gradle\
+$lua\
+$nim\
+$nodejs\
+$ocaml\
+$opa\
+$perl\
+$php\
+$pulumi\
+$purescript\
+$python\
+$raku\
+$rlang\
+$red\
+$ruby\
+$rust\
+$scala\
+$solidity\
+$swift\
+$terraform\
+$vlang\
+$vagrant\
+$zig\
+$buf\
+$nix_shell\
+$conda\
+$meson\
+$spack\
+$aws\
+$gcloud\
+$openstack\
+$azure\
+$crystal\
 $line_break\
 $character\
 """ 
 # right_format = """
-# $singularity\
-# $kubernetes\
-# $vcsh\
-# $fossil_branch\
-# $git_branch\
-# $hg_branch\
-# $pijul_channel\
 # $docker_context\
 # $package\
 # $c\
@@ -71,12 +118,6 @@ $character\
 # $openstack\
 # $azure\
 # $crystal\
-# $custom\
-# $jobs\
-# $status\
-# $os\
-# $container\
-# $cmd_duration\
 # """
 
 
