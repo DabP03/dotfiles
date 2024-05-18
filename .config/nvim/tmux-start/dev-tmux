@@ -1,0 +1,41 @@
+#!/bin/bash
+
+if [ $# -eq 1 ]
+then
+    if [ -d "$1" ]
+    then
+        tmux new-session \; \
+            rename-session neovim \; \
+            set -g status off \; \
+            send-keys "nvim '$1'" c-m \; \
+            split-w -l 10 \; \
+            send-keys "cd '$1'" c-m \; \
+            send-keys 'clear' c-m \; \
+            select-pane -t 0 \;
+    elif [ -f $1 ]
+    then
+        tmux new-session \; \
+            rename-session neovim \; \
+            set -g status off \; \
+            send-keys "nvim '$1'" c-m \; \
+            split-w -l 5 \; \
+            send-keys "cd '$(dirname $1)'" c-m \; \
+            send-keys 'clear' c-m \; \
+            select-pane -t 0 \;
+    else
+        echo not a path or a file
+        exit
+    fi
+elif [ $# -eq 0 ]
+then
+    tmux new-session \; \
+        rename-session neovim \; \
+        set -g status off \; \
+        send-keys "nvim ." c-m \; \
+        split-w -l 10 \; \
+        select-pane -t 0 \;
+else
+    echo "either 1 argument <path> or 0 for current directory"
+    exit
+fi
+
