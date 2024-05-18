@@ -1,5 +1,6 @@
 palette = "catppuccin_frappe"
 # add_newline = false
+# $package\
 
 format = """\
 $username\
@@ -7,7 +8,6 @@ $hostname\
 $directory\
 $git_branch\
 $docker_context\
-$package\
 $c\
 $cmake\
 $cobol\
