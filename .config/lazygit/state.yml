@@ -1,8 +1,8 @@
 lastupdatecheck: 0
 recentrepos:
+    - /home/piotr/dotfiles
     - /home/piotr/Code/lora_linux_driver
     - /home/piotr/Code/Makao.UZ
-    - /home/piotr/dotfiles
     - /home/piotr/Code/Advent-Of-Code
 startuppopupversion: 5
 lastversion: 0.42.0
