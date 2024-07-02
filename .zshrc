@@ -14,6 +14,7 @@ plugins=(
     sudo
     web-search
     fancy-ctrl-z
+    zsh-autopair
 )
 
 
@@ -39,12 +40,8 @@ alias gitui="gitui -t frappe.ron"
 alias cd="z"
 
 #alias compileAndRun="compileAndRun"
-alias removeUnused="sudo pacman -Rsn $(pacman -Qqdt)"
-
 alias fman="compgen -c | fzf | xargs man"
 alias ftldr="compgen -c | fzf | xargs tldr"
-
-eval $(thefuck --alias)
 
 export FZF_DEFAULT_OPTS=" \
 --color=bg+:#414559,bg:#303446,spinner:#f2d5cf,hl:#e78284 \
@@ -59,13 +56,10 @@ eval "$(starship init zsh)"
 export PATH="$HOME/.cargo/bin:$PATH"
 export PATH=$PATH=:/usr/include/SDL2
 export PATH=$PATH=:/home/piotr/.config/emacs/bin
-export PARH=$PATH=:/home/piotr/bin
+export PATH=$PATH=:/home/piotr/.bin
 
 export EDITOR=nvim
 export VISUAL=nvim
-
-source ~/.zsh-autopair/autopair.zsh
-autopair-init
 
 #xdg-mime default nvim.desktop text/plain
 eval "$(zoxide init zsh)"
