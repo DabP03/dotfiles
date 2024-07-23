@@ -56,10 +56,11 @@ export BAT_THEME="Catppuccin-frappe"
 eval "$(starship init zsh)"
 
 # export PATH=$PATH:~/.cargo/bin/
-export PATH="$HOME/.cargo/bin:$PATH"
-export PATH=$PATH=:/usr/include/SDL2
-export PATH=$PATH=:/home/piotr/.config/emacs/bin
-export PARH=$PATH=:/home/piotr/bin
+path+=('/home/piotr/.bin')
+path+=('/home/piotr/.cargo/bin')
+path+=('/usr/include/SDL2')
+path+=('/home/piotr/.config/emacs/bin')
+export PATH
 
 export EDITOR=nvim
 export VISUAL=nvim

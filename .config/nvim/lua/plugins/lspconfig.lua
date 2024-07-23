@@ -94,6 +94,11 @@ return {
             on_attach = on_attach,
         })
 
+        lspconfig["eslint"].setup({
+            capabilities = capabilities,
+            on_attach = on_attach,
+        })
+
         -- configure rust analyzer
         lspconfig["rust_analyzer"].setup({
             capabilities = capabilities,
