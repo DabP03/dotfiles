@@ -113,6 +113,13 @@ return {
             },
         })
 
+        lspconfig["ocamllsp"].setup({
+            capabilities = capabilities,
+            on_attach = on_attach,
+            filetypes = { "ocaml", "ocaml.menhir", "ocaml.interface", "ocaml.ocamllex", "reason", "dune" },
+            cmd = {"ocamllsp"},
+        })
+
         -- configure lua server (with special settings)
         lspconfig["lua_ls"].setup({
             capabilities = capabilities,

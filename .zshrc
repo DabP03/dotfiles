@@ -37,7 +37,7 @@ alias pf="fzf --border=none --preview 'bat -n --color=always {}' --bind shift-up
 alias vv="dev-tmux"
 alias gitui="gitui -t frappe.ron"
 alias cd="z"
-
+alias ssh="env TERM=xterm-256color ssh"
 #alias compileAndRun="compileAndRun"
 alias removeUnused="sudo pacman -Rsn $(pacman -Qqdt)"
 
@@ -70,3 +70,12 @@ autopair-init
 
 #xdg-mime default nvim.desktop text/plain
 eval "$(zoxide init zsh)"
+
+
+# BEGIN opam configuration
+# This is useful if you're using opam as it adds:
+#   - the correct directories to the PATH
+#   - auto-completion for the opam binary
+# This section can be safely removed at any time if needed.
+[[ ! -r '/home/piotr/.opam/opam-init/init.zsh' ]] || source '/home/piotr/.opam/opam-init/init.zsh' > /dev/null 2> /dev/null
+# END opam configuration
