@@ -6,10 +6,11 @@ return {
     },
     config = function()
         require('barbar').setup({
-            autohide = true,
+            autohide = false,
             animation = true,
             highlight_visible = false,
             highlight_current = false,
+            insert_at_end = true,
             sidebar_filetypes = {
                 NvimTree = true,
                 undotree = {text = 'undotree'},

@@ -21,8 +21,18 @@ opts.desc = "Previous buffer"
 vim.keymap.set("n", "<S-h>", ":bprevious<CR>", opts)
 opts.desc = "Order buffer by number"
 vim.keymap.set("n", "<Space>bb", "<Cmd>BufferOrderByBufferNumber<CR>", opts)
+opts.desc = "Order buffer by name"
+vim.keymap.set('n', '<Space>bn', '<Cmd>BufferOrderByName<CR>', opts)
+opts.desc = "Order buffer by directory"
+vim.keymap.set('n', '<Space>bd', '<Cmd>BufferOrderByDirectory<CR>', opts)
+opts.desc = "Order buffer by language"
+vim.keymap.set('n', '<Space>bl', '<Cmd>BufferOrderByLanguage<CR>', opts)
+opts.desc = "Order buffer by window number"
+vim.keymap.set('n', '<Space>bw', '<Cmd>BufferOrderByWindowNumber<CR>', opts)
 opts.desc = "Close buffer"
 vim.keymap.set('n', '<Space>bc', '<Cmd>BufferClose<CR>', opts)
+opts.desc = "Delete buffer"
+vim.keymap.set('n', '<Space>bd', '<Cmd>BufferDelete<CR>', opts)
 
 -- Move text up and down
 opts.desc = "Move text up in normal"
