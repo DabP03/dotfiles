@@ -37,6 +37,7 @@ alias ls="lsd"
 alias pf="fzf --border=none --preview 'bat -n --color=always {}' --bind shift-up:preview-page-up,shift-down:preview-page-down"
 alias vv="nvim_split"
 alias gitui="gitui -t frappe.ron"
+alias ssh="wezterm ssh"
 
 #alias compileAndRun="compileAndRun"
 alias fman="compgen -c | fzf | xargs man"
