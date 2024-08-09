@@ -37,7 +37,6 @@ alias ls="lsd"
 alias pf="fzf --border=none --preview 'bat -n --color=always {}' --bind shift-up:preview-page-up,shift-down:preview-page-down"
 alias vv="nvim_split"
 alias gitui="gitui -t frappe.ron"
-alias cd="z"
 
 #alias compileAndRun="compileAndRun"
 alias fman="compgen -c | fzf | xargs man"
@@ -62,4 +61,4 @@ export EDITOR=nvim
 export VISUAL=nvim
 
 #xdg-mime default nvim.desktop text/plain
-eval "$(zoxide init zsh)"
+eval "$(zoxide init zsh --cmd cd)"
