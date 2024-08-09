@@ -35,7 +35,7 @@ alias nv="neovide"
 alias sv="sudo nvim"
 alias ls="lsd"
 alias pf="fzf --border=none --preview 'bat -n --color=always {}' --bind shift-up:preview-page-up,shift-down:preview-page-down"
-alias vv="dev-tmux"
+alias vv="nvim_split"
 alias gitui="gitui -t frappe.ron"
 alias cd="z"
 
