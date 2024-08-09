@@ -1,0 +1,34 @@
+#!/bin/bash
+
+if [ $# -eq 1 ]
+then
+    if [ -d "$1" ]
+    then
+        cd $1
+        clear
+        wezterm cli split-pane --bottom --percent 15  
+        wezterm cli activate-pane-direction Up
+        nvim .
+    elif [ -f $1 ]
+    then
+        cd $(dirname $1)
+        clear
+        wezterm cli split-pane --bottom --percent 15  
+        wezterm cli activate-pane-direction Up
+        nvim $1
+    else
+        echo not a path or a file
+        exit
+    fi
+elif [ $# -eq 0 ]
+then
+    cd $(pwd)
+    clear
+    wezterm cli split-pane --bottom --percent 15  
+    wezterm cli activate-pane-direction Up
+    nvim
+else
+    echo "either 1 argument <path> or 0 for current directory"
+    exit
+fi
+
