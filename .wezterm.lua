@@ -2,9 +2,12 @@ local wezterm = require 'wezterm'
 
 return {
     color_scheme = "Catppuccin Frappe",
+    default_cwd = wezterm.home_dir,
     use_fancy_tab_bar = false,
     tab_bar_at_bottom = true,
     hide_tab_bar_if_only_one_tab = true,
+    enable_wayland = false,
+    font_size = 15,
     font = wezterm.font {
         family = 'Fira Code',
         weight = 'Medium',
@@ -23,7 +26,6 @@ return {
             'ss05',
         },
     },
-    font_size = 16,
     use_dead_keys = false,
     disable_default_key_bindings = true,
     keys = {
@@ -133,6 +135,26 @@ return {
             key = 'Enter',
             mods = 'CTRL|SHIFT',
             action = wezterm.action.ToggleFullScreen,
+        },
+        {
+            key = '=',
+            mods = 'CTRL',
+            action = wezterm.action.IncreaseFontSize,
+        },
+        {
+            key = '-',
+            mods = 'CTRL',
+            action = wezterm.action.DecreaseFontSize,
+        },
+        {
+            key = '0',
+            mods = 'CTRL',
+            action = wezterm.action.ResetFontSize,
+        },
+        {
+            key = 'f',
+            mods = 'SUPER',
+            action = wezterm.action.Search {CaseSensitiveString=""},
         }
 
     },
