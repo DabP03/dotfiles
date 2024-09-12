@@ -1,0 +1,12 @@
+# Colors
+
+background-color=#303446
+text-color=#c6d0f5
+border-color=#ef9f76
+progress-color=over #414559
+default-timeout=5000
+border-radius=8
+font=FiraCode Nerd Font 14
+
+[urgency=high]
+border-color=#e78284
