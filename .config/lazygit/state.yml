@@ -2,11 +2,8 @@ lastupdatecheck: 0
 recentrepos:
     - /home/piotr/Code/rusty_beagle
     - /home/piotr/dotfiles
-    - /home/piotr/Code/lora_linux_driver
-    - /home/piotr/Code/Makao.UZ
-    - /home/piotr/Code/Advent-Of-Code
 startuppopupversion: 5
-lastversion: 0.43.1
+lastversion: 0.44.0
 customcommandshistory:
     - q
 hidecommandlog: false

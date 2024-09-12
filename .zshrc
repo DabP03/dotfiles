@@ -35,12 +35,13 @@ alias nv="neovide"
 alias sv="sudo nvim"
 alias ls="lsd"
 alias pf="fzf --border=none --preview 'bat -n --color=always {}' --bind shift-up:preview-page-up,shift-down:preview-page-down"
-alias vv="nvim_split"
+alias vv="dev-tmux"
 alias gitui="gitui -t frappe.ron"
-
+alias ssh='env TERM=xterm-256color ssh' # allows kitty to work with ssh
 #alias compileAndRun="compileAndRun"
 alias fman="compgen -c | fzf | xargs man"
 alias ftldr="compgen -c | fzf | xargs tldr"
+alias get_idf='. $HOME/esp/esp-idf/export.sh'
 
 export FZF_DEFAULT_OPTS=" \
 --color=bg+:#414559,bg:#303446,spinner:#f2d5cf,hl:#e78284 \
@@ -62,3 +63,10 @@ export VISUAL=nvim
 
 #xdg-mime default nvim.desktop text/plain
 eval "$(zoxide init zsh --cmd cd)"
+
+# bun completions
+[ -s "/home/piotr/.bun/_bun" ] && source "/home/piotr/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
