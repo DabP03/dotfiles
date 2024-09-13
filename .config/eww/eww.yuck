@@ -29,7 +29,7 @@
                     " ")
             (button :class "logout"
                     :onclick "hyprctl dispatch exit"
-                    " ")
+                    " ")
             )
     )
 )

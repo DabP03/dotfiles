@@ -1,10 +1,11 @@
-{
+[{
     "position": "top",
+    "output": ["eDP-1", "DP-1"],
     "margin-top": 5,
     "margin-bottom" : 0,
     "margin-left": 10,
     "margin-right": 10,
-    "height" : 45,
+    "height" : 48,
     "modules-left": [
         "hyprland/workspaces",
         "hyprland/window",
@@ -33,8 +34,8 @@
         }
     },
     "clock": {
-        "interval": 1,
-        "format": "  {:%H:%M:%S}",
+        "interval": 60,
+        "format": "  {:%H:%M}",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
         "format-alt": "  {:%d.%m.%Y}"
     },
@@ -88,4 +89,92 @@
         "on-scroll-down": "playerctl previous",
         "exec": "$HOME/.config/waybar/scripts/mediaplayer.py 2> /dev/null", // Script in resources/custom_modules folder
     },
-}
+},
+{
+    "position": "top",
+    "output": ["HDMI-A-1", "HDMI-A-2"],
+    "margin-top": 5,
+    "margin-bottom" : 0,
+    "margin-left": 10,
+    "margin-right": 10,
+    "height" : 48,
+    "modules-left": [
+        "hyprland/workspaces",
+        "hyprland/window",
+    ],
+    "modules-right": [
+        "battery",
+        "pulseaudio",
+        "network",
+        "clock",
+    ],
+    "hyprland/window": {
+        "format": "{class}",
+        "max-length": 25,
+        "separate-outputs": true,
+    },
+    "hyprland/workspaces": {
+        "format": "{id}",
+        "on-click": "activate",
+        "sort-by-number": true,
+        "persistent-workspaces": {
+            "*": 10,
+        }
+    },
+    "clock": {
+        "interval": 60,
+        "format": "  {:%H:%M}",
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+        "format-alt": "  {:%d.%m.%Y}"
+    },
+    "battery": {
+        "states": {
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "{icon}   {capacity}%",
+        "format-full": "{icon}  {capacity}%",
+        "format-charging": "  {capacity}%",
+        "format-plugged": "  {capacity}%",
+        "format-alt": "{time} {icon}",
+        "format-icons": ["", "", "", "", ""]
+    },
+    "network": {
+        "format-wifi": "   {essid}",
+        "format-ethernet": "{cidr} ",
+        "tooltip-format": "{ifname} via {gwaddr} ",
+        "format-linked": "{ifname} (No IP) ",
+        "format-disconnected": " ⚠ ",
+        "format-alt": "{ifname}: {ipaddr}/{cidr}",
+        // "on-click": "wifi4wofi",
+        "on-click-right": "wifi4wofi",
+    },
+    "pulseaudio": {
+        "format": "{icon}  {volume}%",
+        "format-bluetooth": "{volume}% {icon} {format_source}",
+        "format-bluetooth-muted": " {icon} {format_source}",
+        "format-muted": " {format_source}",
+        "format-icons": {
+            "headphone": "",
+            "hands-free": "",
+            "headset": "",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": ["", " ", " "]
+        },
+        "on-click": "pavucontrol"
+    },
+    "custom/media": {
+        "format": "{icon}{}",
+        "escape": true,
+        "return-type": "json",
+        "max-length": 40,
+        "on-click": "playerctl play-pause",
+        "on-click-right": "playerctl stop",
+        "smooth-scrolling-threshold": 10, // This value was tested using a trackpad, it should be lowered if using a mouse.
+        "on-scroll-up": "playerctl next",
+        "on-scroll-down": "playerctl previous",
+        "exec": "$HOME/.config/waybar/scripts/mediaplayer.py 2> /dev/null", // Script in resources/custom_modules folder
+    },
+}]

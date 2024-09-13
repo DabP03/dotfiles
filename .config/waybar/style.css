@@ -23,7 +23,6 @@ button {
     border-radius: 5px;
 }
 
-
 menu {
     background-color: @base;
     color: @text;
@@ -31,25 +30,6 @@ menu {
     border-radius: 8px;
     padding: 8px;
 }
-
-/*
-window#waybar.empty {
-    background-color: transparent;
-}
-window#waybar.solo {
-    background-color: #FFFFFF;
-}
-*/
-
-/* window#waybar.termite { */
-/*     background-color: #3F3F3F; */
-/* } */
-
-/* window#waybar.chromium { */
-/*     background-color: #000000; */
-/*     border: none; */
-/* } */
-
 
 tooltip {
     background-color: @base;
@@ -60,12 +40,6 @@ tooltip {
     padding: 4px;
 }
 
-/* label { */
-/*     background-color: @base; */
-/*     color: @text; */
-/* } */
-
-/* https://github.com/Alexays/Waybar/wiki/FAQ#the-workspace-buttons-have-a-strange-hover-effect */
 button:hover {
     background-color: @mantle;
 }
@@ -79,26 +53,51 @@ button:hover {
     /* padding: 0 5px; */
     padding-left: 8px;
     padding-right: 8px;
-    background-color: transparent;
+    background-color: @base;
+    margin-top: 8px;
+    margin-bottom: 8px;
     color: @peach;
 }
 
 #workspaces button:hover {
-    background: rgba(0, 0, 0, 0.2);
+    background-color: @peach;
+    color: @base;
 }
 
 #workspaces button.urgent {
     background-color: @red;
     color: @base;
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+#workspaces button.urgent:hover {
+    background-color: @base;
+    color: @red;
 }
 
 #workspaces button.default {
+    background-color: @base;
     color: @peach;
+    margin-top: 8px;
+    margin-bottom: 8px;
 }
 
+#workspaces button.default:hover {
+    background-color: @peach;
+    color: @base;
+}
 
 #workspaces button.empty {
+    background-color: @base;
     color: @teal;
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+#workspaces button.empty:hover {
+    background-color: @teal;
+    color: @base;
 }
 
 #workspaces button.active {
@@ -106,6 +105,11 @@ button:hover {
     color: @base;
     margin-top: 8px;
     margin-bottom: 8px;
+}
+
+#workspaces button.active:hover {
+    background-color: @mauve;
+    color: @base;
 }
 
 #mode {
