@@ -32,32 +32,31 @@ $base:      #303446;
 $mantle:    #292c3c;
 $crust:     #232634;
 
-
 .dashboard {
   background-color: $base;
-  // margin: 0px 12px 0px 12px;
   padding-top: 4px;
   padding-bottom: 4px;
   color: $text;
   font-weight: bold;
-  font-family: FiraCode Nerd Font;
-  font-size: 48px;
+  font-family: Font Awesome;
+  font-size: 2.5em;
   border: 2px solid $peach;
   border-radius: 8px;
   border-style: solid;
+  // box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
 }
 
 .dash-box {
-  padding-right: 32px;
-  padding-left: 32px;
+  padding-right: .5em;
+  padding-left: .5em;
 }
 
 .shutdown {
-  margin-top: 32px;
-  margin-bottom: 32px;
+  margin-top: .5em;
+  margin-bottom: .5em;
   border-radius: 5px;
-  padding: 4px;
-  padding-right: 16px;
+  padding: .05em;
+  padding-right: .33em;
   background-color: $base;
   color: $red;
 }
@@ -68,11 +67,11 @@ $crust:     #232634;
 }
 
 .reboot {
-  margin-top: 32px;
-  margin-bottom: 32px;
+  margin-top: .5em;
+  margin-bottom: .5em;
   border-radius: 5px;
-  padding: 4px;
-  padding-right: 16px;
+  padding: .05em;
+  padding-right: .33em;
   background-color: $base;
   color: $maroon;
 }
@@ -83,11 +82,11 @@ $crust:     #232634;
 }
 
 .lock {
-  margin-top: 32px;
-  margin-bottom: 32px;
+  margin-top: .5em;
+  margin-bottom: .5em;
   border-radius: 5px;
-  padding: 4px;
-  padding-right: 6px;
+  padding: .05em;
+  padding-right: .08em;
   background-color: $base;
   color: $peach;
 }
@@ -98,11 +97,11 @@ $crust:     #232634;
 }
 
 .logout {
-  margin-top: 32px;
-  margin-bottom: 32px;
+  margin-top: .5em;
+  margin-bottom: .5em;
   border-radius: 5px;
-  padding: 4px;
-  padding-right: 16px;
+  padding: .05em;
+  padding-right: .33em;
   background-color: $base;
   color: $yellow;
 }
