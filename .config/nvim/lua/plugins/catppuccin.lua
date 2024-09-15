@@ -28,6 +28,8 @@ return {
                 barbar = true,
                 dashboard = true,
                 mason = true,
+                rainbow_delimiters = true,
+                which_key = true,
                 indent_blankline = {
                     enabled = true,
                     scope_color = "", -- catppuccin color (eg. `lavender`) Default: text
