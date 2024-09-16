@@ -68,5 +68,31 @@ return {
                 },
             },
         })
+        cmp.setup.cmdline("/", {
+            view = {
+                entries = { name = "wildmenu", separator = "|" }
+            },
+        })
+        cmp.setup.cmdline("?", {
+            view = {
+                entries = { name = "wildmenu", separator = "|" }
+            },
+        })
+        cmp.setup.cmdline(":", {
+            view = {
+                entries = { name = "wildmenu", separator = "|" }
+            },
+            mapping = cmp.mapping.preset.cmdline(),
+            sources = cmp.config.sources({
+                { name = "path" }, -- file system paths
+                { name = "cmdline" },
+            },
+            {
+                name = "cmdline",
+                option = {
+                    ignore_cmds = { "Man", "!" },
+                }
+            }),
+        })
     end,
 }
