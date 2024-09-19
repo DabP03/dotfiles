@@ -35,7 +35,7 @@
     },
     "clock": {
         "interval": 60,
-        "format": "  {:%H:%M}",
+        "format": "   {:%d.%m.%y    %H:%M}",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
         "format-alt": "  {:%d.%m.%Y}"
     },
@@ -82,7 +82,7 @@
         "spacing": 8
     },
     "custom/media": {
-        "format": "{icon}{}",
+        "format": "{icon} {}",
         "escape": true,
         "return-type": "json",
         "max-length": 40,
@@ -127,7 +127,7 @@
     },
     "clock": {
         "interval": 60,
-        "format": "  {:%H:%M}",
+        "format": "   {:%d.%m.%y    %H:%M}",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
         "format-alt": "  {:%d.%m.%Y}"
     },
