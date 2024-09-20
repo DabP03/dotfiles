@@ -90,7 +90,8 @@ class PlayerManager:
             # reverse order, so that the most recently added ones are preferred
             for player in players[::-1]:
                 if player.props.status == "Playing":
-                    return player # if none are playing, show the first one
+                    return player
+            # if none are playing, show the first one
             return players[0]
         else:
             logger.debug("No players found")
