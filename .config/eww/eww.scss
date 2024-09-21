@@ -59,11 +59,12 @@ $crust:     #232634;
   padding-right: .33em;
   background-color: $base;
   color: $red;
+  transition-property: color;
+  transition-duration: .5s;
 }
 
 .shutdown:hover {
-  background-color: $red;
-  color: $base;
+  color: $text;
 }
 
 .reboot {
@@ -74,11 +75,12 @@ $crust:     #232634;
   padding-right: .33em;
   background-color: $base;
   color: $maroon;
+  transition-property: color;
+  transition-duration: .5s;
 }
 
 .reboot:hover {
-  background-color: $maroon;
-  color: $base;
+  color: $text;
 }
 
 .lock {
@@ -89,11 +91,12 @@ $crust:     #232634;
   padding-right: .08em;
   background-color: $base;
   color: $peach;
+  transition-property: color;
+  transition-duration: .5s;
 }
 
 .lock:hover {
-  background-color: $peach;
-  color: $base;
+  color: $text;
 }
 
 .logout {
@@ -104,9 +107,10 @@ $crust:     #232634;
   padding-right: .33em;
   background-color: $base;
   color: $yellow;
+  transition-property: color;
+  transition-duration: .5s;
 }
 
 .logout:hover {
-  background-color: $yellow;
-  color: $base;
+  color: $text;
 }

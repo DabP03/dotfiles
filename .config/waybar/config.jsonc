@@ -16,6 +16,7 @@
     "modules-right": [
         "tray",
         "battery",
+        "power-profiles-daemon",
         "pulseaudio",
         "network",
         "clock",
@@ -35,24 +36,35 @@
     },
     "clock": {
         "interval": 60,
-        "format": "   {:%d.%m.%y    %H:%M}",
+        "format": " {:%d.%m.%y  %H:%M}",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-        "format-alt": "  {:%d.%m.%Y}"
+        "format-alt": " {:%d.%m.%Y}"
     },
     "battery": {
         "states": {
             "warning": 30,
             "critical": 15
         },
-        "format": "{icon}   {capacity}%",
-        "format-full": "{icon}  {capacity}%",
-        "format-charging": "  {capacity}%",
-        "format-plugged": "  {capacity}%",
+        "format": "{icon} {capacity}%",
+        "format-full": "{icon} {capacity}%",
+        "format-charging": " {capacity}%",
+        "format-plugged": " {capacity}%",
         "format-alt": "{time} {icon}",
         "format-icons": ["", "", "", "", ""]
     },
+    "power-profiles-daemon": {
+        "format": "{icon}",
+        "tooltip-format": "Power profile: {profile}\nDriver: {driver}",
+        "tooltip": true,
+        "format-icons": {
+            "default": "",
+            "performance": "",
+            "balanced": "",
+            "power-saver": ""
+        }
+    },
     "network": {
-        "format-wifi": "   {essid}",
+        "format-wifi": "  {essid}",
         "format-ethernet": "Ethernet ",
         "tooltip-format": "{ifname} via {gwaddr} ",
         "format-linked": "{ifname} (No IP) ",
@@ -62,7 +74,7 @@
         "on-click-right": "wifi4wofi",
     },
     "pulseaudio": {
-        "format": "{icon}  {volume}%",
+        "format": "{icon}{volume}%",
         "format-bluetooth": "{volume}% {icon} {format_source}",
         "format-bluetooth-muted": " {icon} {format_source}",
         "format-muted": " {format_source}",
@@ -73,7 +85,7 @@
             "phone": "",
             "portable": "",
             "car": "",
-            "default": ["", " ", " "]
+            "default": [" ", " ", " "]
         },
         "on-click": "pavucontrol"
     },
@@ -127,24 +139,24 @@
     },
     "clock": {
         "interval": 60,
-        "format": "   {:%d.%m.%y    %H:%M}",
+        "format": " {:%d.%m.%y  %H:%M}",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-        "format-alt": "  {:%d.%m.%Y}"
+        "format-alt": " {:%d.%m.%Y}"
     },
     "battery": {
         "states": {
             "warning": 30,
             "critical": 15
         },
-        "format": "{icon}   {capacity}%",
-        "format-full": "{icon}  {capacity}%",
-        "format-charging": "  {capacity}%",
+        "format": "{icon} {capacity}%",
+        "format-full": "{icon} {capacity}%",
+        "format-charging": " {capacity}%",
         "format-plugged": "  {capacity}%",
         "format-alt": "{time} {icon}",
         "format-icons": ["", "", "", "", ""]
     },
     "network": {
-        "format-wifi": "   {essid}",
+        "format-wifi": "  {essid}",
         "format-ethernet": "Ethernet ",
         "tooltip-format": "{ifname} via {gwaddr} ",
         "format-linked": "{ifname} (No IP) ",
@@ -154,7 +166,7 @@
         "on-click-right": "wifi4wofi",
     },
     "pulseaudio": {
-        "format": "{icon}  {volume}%",
+        "format": "{icon}{volume}%",
         "format-bluetooth": "{volume}% {icon} {format_source}",
         "format-bluetooth-muted": " {icon} {format_source}",
         "format-muted": " {format_source}",
@@ -165,7 +177,7 @@
             "phone": "",
             "portable": "",
             "car": "",
-            "default": ["", " ", " "]
+            "default": [" ", " ", " "]
         },
         "on-click": "pavucontrol"
     },
