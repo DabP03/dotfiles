@@ -1,17 +1,123 @@
 [{
     "position": "top",
-    "output": ["eDP-1", "DP-1"],
-    "margin-top": 5,
+    "output": ["DP-1"],
+    "margin-top": 6,
     "margin-bottom" : 0,
-    "margin-left": 10,
-    "margin-right": 10,
-    "height" : 48,
+    "margin-left": 6,
+    "margin-right": 6,
+    "height" : 50,
     "modules-left": [
         "hyprland/workspaces",
         "hyprland/window",
     ],
     "modules-center": [
         "custom/media",
+    ],
+    "modules-right": [
+        "tray",
+        "power-profiles-daemon",
+        "pulseaudio",
+        "network",
+        "clock",
+    ],
+    "hyprland/window": {
+        "format": "{class}",
+        "max-length": 25,
+        "separate-outputs": true,
+    },
+    "hyprland/workspaces": {
+        "format": "{id}",
+        "on-click": "activate",
+        "sort-by-number": true,
+        "persistent-workspaces": {
+            "*": 10,
+        }
+    },
+    "custom/spotify": {
+        "format": "{0} {1}",
+        "escape": true,
+        "return-type": "json",
+        "max-length": 40,
+        "interval": 30, // Remove this if your script is endless and write in loop
+        "on-click": "playerctl -p spotify play-pause",
+        "on-click-right": "killall spotify",
+        "smooth-scrolling-threshold": 10, // This value was tested using a trackpad, it should be lowered if using a mouse.
+        "on-scroll-up" : "playerctl -p spotify next",
+        "on-scroll-down" : "playerctl -p spotify previous",
+        "exec": "$HOME/.config/waybar/mediaplayer.py 2> /dev/null", // Script in resources/custom_modules folder
+        "exec-if": "pgrep spotify"
+    },
+    "clock": {
+        "interval": 60,
+        "format": " {:%d.%m.%y  %H:%M}",
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+        "format-alt": " {:%d.%m.%Y}"
+    },
+    "power-profiles-daemon": {
+        "format": "{icon}",
+        "tooltip-format": "Power profile: {profile}\nDriver: {driver}",
+        "tooltip": true,
+        "format-icons": {
+            "default": " Performance",
+            "performance": " Performance",
+            "balanced": "  Balanced",
+            "power-saver": "  Power Saver"
+        }
+    },
+    "network": {
+        "format-wifi": "  {essid}",
+        "format-ethernet": "Ethernet ",
+        "tooltip-format": "{ifname} via {gwaddr} ",
+        "format-linked": "{ifname} (No IP) ",
+        "format-disconnected": " ⚠ ",
+        "format-alt": "{ifname}: {ipaddr}/{cidr}",
+        // "on-click": "wifi4wofi",
+        "on-click-right": "wifi4wofi",
+    },
+    "pulseaudio": {
+        "format": "{icon}{volume}%",
+        "format-bluetooth": "{volume}% {icon} {format_source}",
+        "format-bluetooth-muted": " {icon} {format_source}",
+        "format-muted": " {format_source}",
+        "format-icons": {
+            "headphone": "",
+            "hands-free": "",
+            "headset": "",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": [" ", " ", " "]
+        },
+        "on-click": "pavucontrol"
+    },
+    "tray": {
+        "icon-size": 16,
+        "spacing": 8
+    },
+    "custom/media": {
+        "format": "{0} {1}",
+        "escape": true,
+        "return-type": "json",
+        "max-length": 40,
+        "on-click": "playerctl play-pause",
+        "on-click-right": "playerctl stop",
+        "smooth-scrolling-threshold": 10, // This value was tested using a trackpad, it should be lowered if using a mouse.
+        "on-scroll-up": "playerctl next",
+        "on-scroll-down": "playerctl previous",
+        "exec": "/home/piotr/.config/waybar/scripts/mediaplayer.py 2> /dev/null", // Script in resources/custom_modules folder
+    },
+},
+{
+    "position": "top",
+    "output": ["eDP-1"],
+    "margin-top": 6,
+    "margin-bottom" : 0,
+    "margin-left": 6,
+    "margin-right": 6,
+    "height" : 48,
+    "modules-left": [
+        "hyprland/workspaces",
+        "hyprland/window",
     ],
     "modules-right": [
         "tray",
@@ -93,26 +199,14 @@
         "icon-size": 16,
         "spacing": 8
     },
-    "custom/media": {
-        "format": "{0} {1}",
-        "escape": true,
-        "return-type": "json",
-        "max-length": 40,
-        "on-click": "playerctl play-pause",
-        "on-click-right": "playerctl stop",
-        "smooth-scrolling-threshold": 10, // This value was tested using a trackpad, it should be lowered if using a mouse.
-        "on-scroll-up": "playerctl next",
-        "on-scroll-down": "playerctl previous",
-        "exec": "/home/piotr/.config/waybar/scripts/mediaplayer.py 2> /dev/null", // Script in resources/custom_modules folder
-    },
 },
 {
     "position": "top",
     "output": ["HDMI-A-1", "HDMI-A-2"],
-    "margin-top": 5,
+    "margin-top": 6,
     "margin-bottom" : 0,
-    "margin-left": 10,
-    "margin-right": 10,
+    "margin-left": 6,
+    "margin-right": 6,
     "height" : 48,
     "modules-left": [
         "hyprland/workspaces",

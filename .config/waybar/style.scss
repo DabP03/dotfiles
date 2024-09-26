@@ -1,0 +1,253 @@
+$rosewater: #f2d5cf;
+$flamingo: #eebebe;
+$pink: #f4b8e4;
+$mauve: #ca9ee6;
+$red: #e78284;
+$maroon: #ea999c;
+$peach: #ef9f76;
+$yellow: #e5c890;
+$green: #a6d189;
+$teal: #81c8be;
+$sky: #99d1db;
+$sapphire: #85c1dc;
+$blue: #8caaee;
+$lavender: #babbf1;
+$text: #c6d0f5;
+$subtext1: #b5bfe2;
+$subtext0: #a5adce;
+$overlay2: #949cbb;
+$overlay1: #838ba7;
+$overlay0: #737994;
+$surface2: #626880;
+$surface1: #51576d;
+$surface0: #414559;
+$base: #303446;
+$mantle: #292c3c;
+$crust: #232634;
+
+* {
+    all: unset;
+}
+
+* {
+    font-family: Fira Mono Nerd Font, FontAwesome;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+#waybar {
+    box-shadow: inset 0px 0px 3px rgba(26, 26, 26, 0.93);
+    border-radius: 16px;
+}
+
+#waybar > box {
+    background-color: $base;
+    color: $text;
+    border: solid 2px $peach;
+    border-radius: 16px;
+    margin: 1px;
+}
+
+button {
+    border: none;
+    padding: 4px;
+    border-radius: 8px;
+}
+
+menu {
+    background-color: $base;
+    color: $text;
+    border: solid 3px $peach;
+    border-radius: 8px;
+    padding: 8px;
+}
+
+tooltip {
+    box-shadow: 0px 4px 3px rgba(26, 26, 26, 0.93);
+    background-color: $base;
+    color: $text;
+    border-radius: 5px;
+    border: solid 2px $peach;
+    margin: 8px;
+    padding: 4px;
+}
+
+button:hover {
+    background-color: $mantle;
+}
+
+#workspaces {
+    background-color: transparent;
+    border-radius: 8px;
+    /* margin-left: 0px; */
+    margin-left: 6px;
+    padding-right: 8px;
+    padding-left: 8px;
+    padding: 4px 10px 4px 10px;
+}
+
+#workspaces button {
+    /* padding: 0 5px; */
+    border-radius: 8px;
+    padding-left: 8px;
+    padding-right: 8px;
+    background-color: transparent;
+    margin-top: 6px;
+    margin-bottom: 6px;
+    color: $peach;
+}
+
+#workspaces button:hover {
+    background-color: $peach;
+    color: $base;
+}
+
+#workspaces button.urgent {
+    color: $red;
+    background-color: transparent;
+}
+
+#workspaces button.urgent:hover {
+    color: $base;
+    background-color: $red;
+}
+
+#workspaces button.default {
+    color: $peach;
+    background-color: transparent;
+}
+
+#workspaces button.default:hover {
+    color: $base;
+    background-color: $peach;
+}
+
+#workspaces button.empty {
+    color: $yellow;
+    background-color: transparent;
+}
+
+#workspaces button.empty:hover {
+    color: $base;
+    background-color: $yellow;
+}
+
+#workspaces button.visible {
+    color: $base;
+    background-color: $peach;
+}
+
+#workspaces button.visible:hover {
+    color: $base;
+    background-color: $peach;
+}
+
+#workspaces button.active {
+    color: $base;
+    background-color: $mauve;
+}
+
+#workspaces button.active:hover {
+    color: $base;
+    background-color: $mauve;
+}
+
+#mode {
+    background-color: #64727D;
+    box-shadow: inset 0 -3px #ffffff;
+}
+
+#clock,
+#battery,
+#network,
+#pulseaudio,
+#custom-media,
+#tray,
+#power-profiles-daemon,
+#window {
+    padding: 4px 10px 4px 10px;
+    color: $base;
+    border-radius: 8px;
+    margin: 6px;
+    margin-left: 0px;
+}
+
+#clock:hover,
+#battery:hover,
+#network:hover,
+#pulseaudio:hover,
+#custom-media:hover,
+#tray:hover,
+#power-profiles-daemon:hover,
+#window:hover {
+    opacity: .8;
+}
+
+.modules-right {
+    padding-right: 8px;
+}
+
+#window {
+    background-color: $red;
+}
+
+#tray menu menuitem {
+    border-radius: 5px;
+    padding: 4px;
+}
+
+#tray menu menuitem:hover {
+    background-color: $text;
+    color: $base;
+}
+
+window#waybar.empty #window {
+    background-color: transparent;
+}
+
+#custom-media {
+  /* background-color: $mauve; */
+  background: $red;
+  background: linear-gradient(45deg, $maroon 0%, $mauve 100%);
+}
+
+#tray {
+    padding-right: 2px;
+    background-color: $base;
+}
+
+#battery {
+    background-color: $teal;
+}
+
+#battery.charging, #battery.plugged {
+    background-color: $teal;
+}
+
+#power-profiles-daemon {
+    background-color: $sky;
+}
+
+#pulseaudio {
+    background-color: $sapphire;
+}
+
+#pulseaudio.muted {
+    background-color: $sapphire;
+}
+
+#network {
+    background-color: $blue;
+}
+
+#network.disconnected {
+    background-color: $red;
+}
+
+#clock {
+    background-color: $lavender;
+}
+
+label:focus {
+    background-color: $base;
+}
