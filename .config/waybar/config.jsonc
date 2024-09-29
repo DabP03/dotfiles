@@ -11,13 +11,14 @@
         "hyprland/window",
     ],
     "modules-center": [
-        "custom/media",
+        "custom/media"
+        // "custom/spotify"
     ],
     "modules-right": [
         "tray",
         "power-profiles-daemon",
         "pulseaudio",
-        "network",
+        // "network",
         "clock",
     ],
     "hyprland/window": {
@@ -34,18 +35,10 @@
         }
     },
     "custom/spotify": {
-        "format": "{0} {1}",
-        "escape": true,
+        "format": "{}",
         "return-type": "json",
-        "max-length": 40,
-        "interval": 30, // Remove this if your script is endless and write in loop
-        "on-click": "playerctl -p spotify play-pause",
-        "on-click-right": "killall spotify",
-        "smooth-scrolling-threshold": 10, // This value was tested using a trackpad, it should be lowered if using a mouse.
-        "on-scroll-up" : "playerctl -p spotify next",
-        "on-scroll-down" : "playerctl -p spotify previous",
-        "exec": "$HOME/.config/waybar/mediaplayer.py 2> /dev/null", // Script in resources/custom_modules folder
-        "exec-if": "pgrep spotify"
+        "on-click-right": "spotifatius toggle-liked",
+        "exec": "spotifatius monitor"
     },
     "clock": {
         "interval": 60,
@@ -124,7 +117,7 @@
         "battery",
         "power-profiles-daemon",
         "pulseaudio",
-        "network",
+        // "network",
         "clock",
     ],
     "hyprland/window": {
@@ -214,8 +207,8 @@
     ],
     "modules-right": [
         "battery",
-        "pulseaudio",
-        "network",
+        // "pulseaudio",
+        // "network",
         "clock",
     ],
     "hyprland/window": {

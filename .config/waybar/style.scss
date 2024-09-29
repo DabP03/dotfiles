@@ -211,6 +211,12 @@ window#waybar.empty #window {
   background: linear-gradient(45deg, $maroon 0%, $mauve 100%);
 }
 
+#custom-spotify {
+  /* background-color: $mauve; */
+  background: $red;
+  background: linear-gradient(45deg, $maroon 0%, $mauve 100%);
+}
+
 #tray {
     padding-right: 2px;
     background-color: $base;
@@ -245,7 +251,7 @@ window#waybar.empty #window {
 }
 
 #clock {
-    background-color: $lavender;
+    background-color: $blue;
 }
 
 label:focus {
