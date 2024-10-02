@@ -227,6 +227,11 @@ window#waybar.empty #window {
   background-color: #8caaee;
 }
 
+#clock.edp {
+  background: #e78284;
+  background: linear-gradient(45deg, #ea999c 0%, #ca9ee6 100%);
+}
+
 label:focus {
   background-color: #303446;
 }

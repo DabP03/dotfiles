@@ -254,6 +254,11 @@ window#waybar.empty #window {
     background-color: $blue;
 }
 
+#clock.edp {
+  background: $red;
+  background: linear-gradient(45deg, $maroon 0%, $mauve 100%);
+}
+
 label:focus {
     background-color: $base;
 }

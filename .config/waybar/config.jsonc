@@ -120,13 +120,14 @@
         "hyprland/workspaces",
         "hyprland/window",
     ],
+    "modules-center": [
+        "clock#edp",
+    ],
     "modules-right": [
         "tray",
-        "battery",
-        "power-profiles-daemon",
         "pulseaudio",
-        // "network",
-        "clock",
+        "power-profiles-daemon",
+        "battery",
     ],
     "hyprland/window": {
         "format": "{class}",
@@ -141,7 +142,7 @@
             "*": 10,
         }
     },
-    "clock": {
+    "clock#edp": {
         "interval": 60,
         "format": " {:%d.%m.%y  %H:%M}",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
