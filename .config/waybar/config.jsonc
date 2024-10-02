@@ -85,7 +85,15 @@
     },
     "tray": {
         "icon-size": 16,
-        "spacing": 8
+        "spacing": 8,
+        "reverse-direction": true,
+    },
+    "idle_inhibitor": {
+        "format": "{icon}",
+        "format-icons": {
+            "activated": "",
+            "deactivated": ""
+        }
     },
     "custom/media": {
         "format": "{0} {1}",

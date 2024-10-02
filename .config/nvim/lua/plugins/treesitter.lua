@@ -43,6 +43,15 @@ return {
                     },
                     include_surrounding_whitespace = false,
                 },
+                swap = {
+                    enable = true,
+                    swap_next = {
+                        ["<leader>a"] = { query = "@parameter.inner", desc = "Move parameter right" },
+                    },
+                    swap_previous = {
+                        ["<leader>A"] = { query = "@parameter.outer", desc = "Move parameter left" },
+                    }
+                }
             },
         })
     end
