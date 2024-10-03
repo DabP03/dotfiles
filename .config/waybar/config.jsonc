@@ -18,7 +18,7 @@
         "tray",
         "power-profiles-daemon",
         "pulseaudio",
-        // "network",
+        "network",
         "clock",
     ],
     "hyprland/window": {
@@ -125,6 +125,7 @@
     ],
     "modules-right": [
         "tray",
+        "network",
         "pulseaudio",
         "power-profiles-daemon",
         "battery",
