@@ -15,6 +15,7 @@
     ],
     "modules-right": [
         "tray",
+        "battery",
         "power-profiles-daemon",
         "pulseaudio",
         "network",
@@ -48,6 +49,18 @@
             "balanced": "󰗑",
             "power-saver": "󰌪"
         }
+    },
+    "battery": {
+        "states": {
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "{icon} {capacity}%",
+        "format-full": "{icon} {capacity}%",
+        "format-charging": "󰂄 {capacity}%",
+        "format-plugged": "󱐥 {capacity}%",
+        "format-alt": "{time} {icon}",
+        "format-icons": ["󰂎", "󱊡", "󱊢", "󱊣"]
     },
     "network": {
         "format-wifi": "󰤨 {essid}",
