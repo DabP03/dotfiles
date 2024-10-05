@@ -11,15 +11,13 @@
         "hyprland/window",
     ],
     "modules-center": [
-        "custom/media"
-        // "custom/spotify"
+        "clock",
     ],
     "modules-right": [
         "tray",
         "power-profiles-daemon",
         "pulseaudio",
         "network",
-        "clock",
     ],
     "hyprland/window": {
         "format": "{class}",
@@ -42,7 +40,7 @@
     },
     "clock": {
         "interval": 60,
-        "format": " {:%d.%m.%y  %H:%M}",
+        "format": " {:%d.%m.%Y  %H:%M}",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
         "format-alt": " {:%d.%m.%Y}"
     },
@@ -51,10 +49,10 @@
         "tooltip-format": "Power profile: {profile}\nDriver: {driver}",
         "tooltip": true,
         "format-icons": {
-            "default": " Performance",
-            "performance": " Performance",
-            "balanced": "  Balanced",
-            "power-saver": "  Power Saver"
+            "default": "  ",
+            "performance": "  ",
+            "balanced": "   ",
+            "power-saver": "   "
         }
     },
     "network": {
@@ -91,8 +89,8 @@
     "idle_inhibitor": {
         "format": "{icon}",
         "format-icons": {
-            "activated": "",
-            "deactivated": ""
+            "activated": " ",
+            "deactivated": " "
         }
     },
     "custom/media": {
@@ -121,7 +119,7 @@
         "hyprland/window",
     ],
     "modules-center": [
-        "clock#edp",
+        "clock",
     ],
     "modules-right": [
         "tray",
@@ -143,9 +141,9 @@
             "*": 10,
         }
     },
-    "clock#edp": {
+    "clock": {
         "interval": 60,
-        "format": " {:%d.%m.%y  %H:%M}",
+        "format": " {:%d.%m.%Y  %H:%M}",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
         "format-alt": " {:%d.%m.%Y}"
     },
@@ -166,10 +164,10 @@
         "tooltip-format": "Power profile: {profile}\nDriver: {driver}",
         "tooltip": true,
         "format-icons": {
-            "default": " Performance",
-            "performance": " Performance",
-            "balanced": "  Balanced",
-            "power-saver": "  Power Saver"
+            "default": "  ",
+            "performance": "  ",
+            "balanced": "   ",
+            "power-saver": "   "
         }
     },
     "network": {
@@ -215,11 +213,13 @@
         "hyprland/workspaces",
         "hyprland/window",
     ],
+    "modules-center": [
+        "clock",
+    ],
     "modules-right": [
         "battery",
-        // "pulseaudio",
-        // "network",
-        "clock",
+        "pulseaudio",
+        "network",
     ],
     "hyprland/window": {
         "format": "{class}",
