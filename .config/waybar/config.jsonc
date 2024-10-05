@@ -1,11 +1,11 @@
 [{
     "position": "top",
-    "output": ["DP-1"],
+    "output": ["DP-1", "eDP-1"],
     "margin-top": 6,
     "margin-bottom" : 0,
     "margin-left": 6,
     "margin-right": 6,
-    "height" : 50,
+    "height" : 54,
     "modules-left": [
         "hyprland/workspaces",
         "hyprland/window",
@@ -32,52 +32,44 @@
             "*": 10,
         }
     },
-    "custom/spotify": {
-        "format": "{}",
-        "return-type": "json",
-        "on-click-right": "spotifatius toggle-liked",
-        "exec": "spotifatius monitor"
-    },
     "clock": {
         "interval": 60,
-        "format": " {:%d.%m.%Y  %H:%M}",
+        "format": "󰃭 {:%d.%m.%Y 󰥔 %H:%M}",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-        "format-alt": " {:%d.%m.%Y}"
+        "format-alt": "󰃭 {:%d.%m.%Y}"
     },
     "power-profiles-daemon": {
         "format": "{icon}",
         "tooltip-format": "Power profile: {profile}\nDriver: {driver}",
         "tooltip": true,
         "format-icons": {
-            "default": "  ",
-            "performance": "  ",
-            "balanced": "   ",
-            "power-saver": "   "
+            "default": "󱐋",
+            "performance": "󱐋",
+            "balanced": "󰗑",
+            "power-saver": "󰌪"
         }
     },
     "network": {
-        "format-wifi": "  {essid}",
-        "format-ethernet": "Ethernet ",
-        "tooltip-format": "{ifname} via {gwaddr} ",
-        "format-linked": "{ifname} (No IP) ",
-        "format-disconnected": " ⚠ ",
+        "format-wifi": "󰤨 {essid}",
+        "format-ethernet": "Ethernet",
+        "tooltip-format": "{ifname} via {gwaddr}",
+        "format-linked": "{ifname} (No IP)",
+        "format-disconnected": "",
         "format-alt": "{ifname}: {ipaddr}/{cidr}",
-        // "on-click": "wifi4wofi",
-        "on-click-right": "wifi4wofi",
     },
     "pulseaudio": {
-        "format": "{icon}{volume}%",
-        "format-bluetooth": "{volume}% {icon} {format_source}",
-        "format-bluetooth-muted": " {icon} {format_source}",
-        "format-muted": " {format_source}",
+        "format": "{icon} {volume}%",
+        "format-bluetooth": "{volume}% {icon}󰂯 {format_source}",
+        "format-bluetooth-muted": "󰝟 {icon}󰂯 {format_source}",
+        "format-muted": "󰝟 {format_source}",
         "format-icons": {
-            "headphone": "",
-            "hands-free": "",
-            "headset": "",
-            "phone": "",
-            "portable": "",
-            "car": "",
-            "default": [" ", " ", " "]
+            "headphone": "󰋋",
+            "hands-free": "󰋋",
+            "headset": "󰋎",
+            "phone": "󰏲",
+            "portable": "󰏲",
+            "car": "󰄋",
+            "default": ["󰕿", "󰖀", "󰕾"]
         },
         "on-click": "pavucontrol"
     },
@@ -89,116 +81,9 @@
     "idle_inhibitor": {
         "format": "{icon}",
         "format-icons": {
-            "activated": " ",
-            "deactivated": " "
+            "activated": "󰔡",
+            "deactivated": "󰔢"
         }
-    },
-    "custom/media": {
-        "format": "{0} {1}",
-        "escape": true,
-        "return-type": "json",
-        "max-length": 40,
-        "on-click": "playerctl play-pause",
-        "on-click-right": "playerctl stop",
-        "smooth-scrolling-threshold": 10, // This value was tested using a trackpad, it should be lowered if using a mouse.
-        "on-scroll-up": "playerctl next",
-        "on-scroll-down": "playerctl previous",
-        "exec": "/home/piotr/.config/waybar/scripts/mediaplayer.py 2> /dev/null", // Script in resources/custom_modules folder
-    },
-},
-{
-    "position": "top",
-    "output": ["eDP-1"],
-    "margin-top": 6,
-    "margin-bottom" : 0,
-    "margin-left": 6,
-    "margin-right": 6,
-    "height" : 48,
-    "modules-left": [
-        "hyprland/workspaces",
-        "hyprland/window",
-    ],
-    "modules-center": [
-        "clock",
-    ],
-    "modules-right": [
-        "tray",
-        "network",
-        "pulseaudio",
-        "power-profiles-daemon",
-        "battery",
-    ],
-    "hyprland/window": {
-        "format": "{class}",
-        "max-length": 25,
-        "separate-outputs": true,
-    },
-    "hyprland/workspaces": {
-        "format": "{id}",
-        "on-click": "activate",
-        "sort-by-number": true,
-        "persistent-workspaces": {
-            "*": 10,
-        }
-    },
-    "clock": {
-        "interval": 60,
-        "format": " {:%d.%m.%Y  %H:%M}",
-        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-        "format-alt": " {:%d.%m.%Y}"
-    },
-    "battery": {
-        "states": {
-            "warning": 30,
-            "critical": 15
-        },
-        "format": "{icon} {capacity}%",
-        "format-full": "{icon} {capacity}%",
-        "format-charging": " {capacity}%",
-        "format-plugged": " {capacity}%",
-        "format-alt": "{time} {icon}",
-        "format-icons": ["", "", "", "", ""]
-    },
-    "power-profiles-daemon": {
-        "format": "{icon}",
-        "tooltip-format": "Power profile: {profile}\nDriver: {driver}",
-        "tooltip": true,
-        "format-icons": {
-            "default": "  ",
-            "performance": "  ",
-            "balanced": "   ",
-            "power-saver": "   "
-        }
-    },
-    "network": {
-        "format-wifi": "  {essid}",
-        "format-ethernet": "Ethernet ",
-        "tooltip-format": "{ifname} via {gwaddr} ",
-        "format-linked": "{ifname} (No IP) ",
-        "format-disconnected": " ⚠ ",
-        "format-alt": "{ifname}: {ipaddr}/{cidr}",
-        // "on-click": "wifi4wofi",
-        "on-click-right": "wifi4wofi",
-    },
-    "pulseaudio": {
-        "format": "{icon}{volume}%",
-        "format-bluetooth": "{volume}% {icon} {format_source}",
-        "format-bluetooth-muted": " {icon} {format_source}",
-        "format-muted": " {format_source}",
-        "format-icons": {
-            "headphone": "",
-            "hands-free": "",
-            "headset": "",
-            "phone": "",
-            "portable": "",
-            "car": "",
-            "default": [" ", " ", " "]
-        },
-        "on-click": "pavucontrol"
-    },
-    "tray": {
-        "icon-size": 16,
-        "spacing": 8
     },
 },
 {
@@ -208,7 +93,7 @@
     "margin-bottom" : 0,
     "margin-left": 6,
     "margin-right": 6,
-    "height" : 48,
+    "height" : 54,
     "modules-left": [
         "hyprland/workspaces",
         "hyprland/window",
@@ -236,46 +121,55 @@
     },
     "clock": {
         "interval": 60,
-        "format": " {:%d.%m.%y  %H:%M}",
+        "format": "󰃭 {:%d.%m.%Y 󰥔 %H:%M}",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-        "format-alt": " {:%d.%m.%Y}"
+        "format-alt": "󰃭 {:%d.%m.%Y}"
     },
-    "battery": {
-        "states": {
-            "warning": 30,
-            "critical": 15
-        },
-        "format": "{icon} {capacity}%",
-        "format-full": "{icon} {capacity}%",
-        "format-charging": " {capacity}%",
-        "format-plugged": "  {capacity}%",
-        "format-alt": "{time} {icon}",
-        "format-icons": ["", "", "", "", ""]
+    "power-profiles-daemon": {
+        "format": "{icon}",
+        "tooltip-format": "Power profile: {profile}\nDriver: {driver}",
+        "tooltip": true,
+        "format-icons": {
+            "default": "󱐋",
+            "performance": "󱐋",
+            "balanced": "󰗑",
+            "power-saver": "󰌪"
+        }
     },
     "network": {
-        "format-wifi": "  {essid}",
-        "format-ethernet": "Ethernet ",
-        "tooltip-format": "{ifname} via {gwaddr} ",
-        "format-linked": "{ifname} (No IP) ",
-        "format-disconnected": " ⚠ ",
+        "format-wifi": "󰤨 {essid}",
+        "format-ethernet": "Ethernet",
+        "tooltip-format": "{ifname} via {gwaddr}",
+        "format-linked": "{ifname} (No IP)",
+        "format-disconnected": "",
         "format-alt": "{ifname}: {ipaddr}/{cidr}",
-        // "on-click": "wifi4wofi",
-        "on-click-right": "wifi4wofi",
     },
     "pulseaudio": {
-        "format": "{icon}{volume}%",
-        "format-bluetooth": "{volume}% {icon} {format_source}",
-        "format-bluetooth-muted": " {icon} {format_source}",
-        "format-muted": " {format_source}",
+        "format": "{icon} {volume}%",
+        "format-bluetooth": "{volume}% {icon}󰂯 {format_source}",
+        "format-bluetooth-muted": "󰝟 {icon}󰂯 {format_source}",
+        "format-muted": "󰝟 {format_source}",
         "format-icons": {
-            "headphone": "",
-            "hands-free": "",
-            "headset": "",
-            "phone": "",
-            "portable": "",
-            "car": "",
-            "default": [" ", " ", " "]
+            "headphone": "󰋋",
+            "hands-free": "󰋋",
+            "headset": "󰋎",
+            "phone": "󰏲",
+            "portable": "󰏲",
+            "car": "󰄋",
+            "default": ["󰕿", "󰖀", "󰕾"]
         },
         "on-click": "pavucontrol"
+    },
+    "tray": {
+        "icon-size": 16,
+        "spacing": 8,
+        "reverse-direction": true,
+    },
+    "idle_inhibitor": {
+        "format": "{icon}",
+        "format-icons": {
+            "activated": "󰈈",
+            "deactivated": "󰈉"
+        }
     },
 }]

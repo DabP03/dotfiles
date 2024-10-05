@@ -30,7 +30,7 @@ $crust: #232634;
 }
 
 * {
-    font-family: Fira Mono Nerd Font, FontAwesome;
+    font-family: Fira Mono Nerd Font, Material Design;
     font-size: 16px;
     font-weight: bold;
 }
@@ -253,9 +253,7 @@ window#waybar.empty #window {
 }
 
 #idle_inhibitor {
-  font-weight: bolder;
   background-color: $maroon;
-  padding-left: 14px;
 }
 
 #clock {

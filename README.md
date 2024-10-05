@@ -4,7 +4,7 @@
 ### PACKEGES TO INSTALL 
 - Install all packages
     ```bash
-    sudo pacman -S --needed stow hyprland hypridle hyprlock hyprpaper hyprshot network-manager-applet waybar dart-sass neovim gcc npm nodejs python qt5ct qt6ct-kde eww zsh tmux python-pylatexenc lsd zoxide pamixer
+    sudo pacman -S --needed stow hyprland hypridle hyprlock hyprpaper hyprshot network-manager-applet waybar dart-sass neovim gcc npm nodejs python qt5ct qt6ct-kde eww zsh tmux python-pylatexenc lsd zoxide pamixer onefetch
     ```
 ### ZSH Configuration
 
