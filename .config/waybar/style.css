@@ -209,6 +209,11 @@ window#waybar.empty #window {
   background-color: #99d1db;
 }
 
+#power-profiles-daemon.balanced {
+  padding-right: 12px;
+  background-color: #99d1db;
+}
+
 #pulseaudio {
   background-color: #85c1dc;
 }

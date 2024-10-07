@@ -236,6 +236,11 @@ window#waybar.empty #window {
     background-color: $sky;
 }
 
+#power-profiles-daemon.balanced {
+    padding-right: 12px;
+    background-color: $sky;
+}
+
 #pulseaudio {
     background-color: $sapphire;
 }
