@@ -4,33 +4,18 @@
 ### PACKEGES TO INSTALL 
 - Install all packages
     ```bash
-    sudo pacman -S --needed hyprland hypridle hyprlock hyprshot network-manager-applet waybar dart-sass neovim gcc npm nodejs python qt5ct qt6ct-kde eww zsh tmux python-pylatexenc lsd zoxide pamixer onefetch vesktop swww kitty stow ttf-fira-code ttf-fira-sans ttf-fira-mono ttf-firacode-nerd git xdg-desktop-portal-hyprland xdg-desktop-portal-wlr lightly-qt lightly-qt6 papirus-icon-theme mako xorg-xcursorgen inkscape just xcur2png rsync lazygit btop paru
+    sudo pacman -S --needed hyprland hypridle hyprlock hyprshot network-manager-applet waybar dart-sass neovim gcc npm nodejs python qt5ct qt6ct-kde eww zsh tmux python-pylatexenc lsd zoxide pamixer onefetch vesktop swww kitty stow ttf-fira-code ttf-fira-sans ttf-fira-mono ttf-firacode-nerd git xdg-desktop-portal-hyprland xdg-desktop-portal-wlr lightly-qt lightly-qt6 papirus-icon-theme mako xorg-xcursorgen inkscape just xcur2png rsync lazygit btop paru arm-none-eabi-gcc rsync
     ```
 ### ZSH Configuration
+- Set ZSH as default shell
+    ```bash
+    chsh -s $(which zsh)
+    ```
+- Install [zplug](https://github.com/zplug/zplug)
+    ```bash
+    curl -sL --proto-redir -all,https https://raw.githubusercontent.com/zplug/installer/master/installer.zsh | zsh
+    ```
 
-- Install [Oh My ZSH](https://ohmyz.sh/)
-    ```bash
-    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-    ```
-- Install [ZSH Autosuggestions](https://github.com/zsh-users/zsh-autosuggestions)
-    ```bash
-    git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
-    ```
-- Install [ZSH Syntax Highlighting](https://github.com/zsh-users/zsh-syntax-highlighting)
-    ```bash
-    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
-    ```
-- Install [ZSH Cattpuccin Theme](https://github.com/catppuccin/zsh-syntax-highlighting)
-    ```bash
-    cd ~/.gitclone
-    git clone https://github.com/catppuccin/zsh-syntax-highlighting.git
-    cd zsh-syntax-highlighting/themes/
-    rsync -a catppuccin_frappe-zsh-syntax-highlighting.zsh ~/.zsh/
-    ```
-- Install [ZSH Autopair](https://github.com/hlissner/zsh-autopair)
-    ```bash
-    git clone https://github.com/hlissner/zsh-autopair ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autopair
-    ```
 ### Cursors
 
 - Install [Catppuccin Cursors](https://github.com/catppuccin/cursors)
@@ -62,4 +47,10 @@
     curl -LO https://raw.githubusercontent.com/PapirusDevelopmentTeam/papirus-folders/master/papirus-folders   
     chmod +x ./papirus-folders
     ./papirus-folders -C cat-frappe-peach --theme Papirus-Dark
+    ```
+
+### Zephyr
+- Install dependencies
+    ```bash
+    paru -Sy --needed python-setuptools python-wheel python-pyserial gperf wget curl xz ninja file cmake bison make flex gcc dtc openocd arm-none-eabi-gcc arm-none-eabi-binutils arm-none-eabi-gdb patchelf dfu-util gcovr python-pytest python-anytree python-breathe python-intelhex python-packaging python-ply python-pyaml python-pyelftools python-pykwalify python-tabulate ccache doxygen python-west
     ```

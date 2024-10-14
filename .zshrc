@@ -1,24 +1,38 @@
-export ZSH="$HOME/.oh-my-zsh"
+# export ZSH="$HOME/.oh-my-zsh"
+source ~/.zplug/init.zsh
 
 #ZSH_THEME="robbyrussell"
+zplug "plugins/git",   from:oh-my-zsh
+# zplug "plugins/copyfile",   from:oh-my-zsh
+# zplug "plugins/copypath",   from:oh-my-zsh
+zplug "plugins/github",   from:oh-my-zsh
+zplug "plugins/fzf",   from:oh-my-zsh
+zplug "plugins/dirhistory",   from:oh-my-zsh
+# zplug "plugins/sudo",   from:oh-my-zsh
+zplug "plugins/fancy-ctrl-z",   from:oh-my-zsh
+zplug "zsh-users/zsh-syntax-highlighting", defer:2
+zplug "zsh-users/zsh-autosuggestions", defer:2
+zplug "hlissner/zsh-autopair", defer:2
+# zplug "jeffreytse/zsh-vi-mode"
 
-plugins=(
-	git
-	zsh-autosuggestions
-	zsh-syntax-highlighting
-    copyfile
-    copypath
-    github
-    fzf
-    dirhistory
-    sudo
-    web-search
-    fancy-ctrl-z
-    zsh-autopair
-)
+# plugins=(
+# 	git
+# 	zsh-autosuggestions
+# 	zsh-syntax-highlighting
+#     copyfile
+#     copypath
+#     github
+#     fzf
+#     dirhistory
+#     sudo
+#     web-search
+#     fancy-ctrl-z
+#     zsh-autopair
+# )
+#
+bindkey -v
 
-
-source $ZSH/oh-my-zsh.sh
+# source $ZSH/oh-my-zsh.sh
 
 ZSH_AUTOSUGGEST_STRATEGY=(completion)
 
@@ -70,3 +84,5 @@ eval "$(zoxide init zsh --cmd cd)"
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+
+zplug load
