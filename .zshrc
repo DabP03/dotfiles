@@ -13,7 +13,20 @@ zplug "plugins/fancy-ctrl-z",   from:oh-my-zsh
 zplug "zsh-users/zsh-syntax-highlighting", defer:2
 zplug "zsh-users/zsh-autosuggestions", defer:2
 zplug "hlissner/zsh-autopair", defer:2
+# zplug "lib/completion", from:oh-my-zsh
 # zplug "jeffreytse/zsh-vi-mode"
+
+
+zstyle ':completion:*' menu select
+
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+
+zstyle ':completion:*' verbose yes
+zstyle ':completion:*:descriptions' format "$fg[yellow]%B--- %d%b"
+zstyle ':completion:*:messages' format '%d'
+zstyle ':completion:*:warnings' format "$fg[red]No matches for:$reset_color %d"
+zstyle ':completion:*:corrections' format '%B%d (errors: %e)%b'
+zstyle ':completion:*' group-name ''
 
 # plugins=(
 # 	git
@@ -30,7 +43,6 @@ zplug "hlissner/zsh-autopair", defer:2
 #     zsh-autopair
 # )
 #
-bindkey -v
 
 # source $ZSH/oh-my-zsh.sh
 
