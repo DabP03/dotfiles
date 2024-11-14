@@ -49,6 +49,16 @@
     ./papirus-folders -C cat-frappe-peach --theme Papirus-Dark
     ```
 
+### XDG
+- Install archlinux-xdg-menu
+    ```bash
+    paru -S archlinux-xdg-menu
+    ```
+- Run this:
+    ```bash
+    XDG_MENU_PREFIX=arch- kbuildsyscoca6
+    ```
+
 ### Zephyr
 - Install dependencies
     ```bash
