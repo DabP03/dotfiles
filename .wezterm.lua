@@ -7,6 +7,7 @@ return {
     tab_bar_at_bottom = true,
     hide_tab_bar_if_only_one_tab = true,
     font_size = 15,
+    enable_wayland = false,
     font = wezterm.font {
         family = 'Fira Code',
         weight = 'Medium',

@@ -2,6 +2,7 @@ return {
     'nvim-treesitter/nvim-treesitter',
     dependencies = {
         "nvim-treesitter/nvim-treesitter-textobjects",
+        { "nushell/tree-sitter-nu", build = ":TSUpdate nu" },
     },
     config = function()
         require("nvim-treesitter.configs").setup({
@@ -43,15 +44,6 @@ return {
                     },
                     include_surrounding_whitespace = false,
                 },
-                swap = {
-                    enable = true,
-                    swap_next = {
-                        ["<leader>a"] = { query = "@parameter.inner", desc = "Move parameter right" },
-                    },
-                    swap_previous = {
-                        ["<leader>A"] = { query = "@parameter.outer", desc = "Move parameter left" },
-                    }
-                }
             },
         })
     end
