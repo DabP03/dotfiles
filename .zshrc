@@ -1,20 +1,13 @@
-# export ZSH="$HOME/.oh-my-zsh"
 source ~/.zplug/init.zsh
 
-#ZSH_THEME="robbyrussell"
 zplug "plugins/git",   from:oh-my-zsh
-# zplug "plugins/copyfile",   from:oh-my-zsh
-# zplug "plugins/copypath",   from:oh-my-zsh
 zplug "plugins/github",   from:oh-my-zsh
 zplug "plugins/fzf",   from:oh-my-zsh
 zplug "plugins/dirhistory",   from:oh-my-zsh
-# zplug "plugins/sudo",   from:oh-my-zsh
 zplug "plugins/fancy-ctrl-z",   from:oh-my-zsh
 zplug "zsh-users/zsh-syntax-highlighting", defer:2
 zplug "zsh-users/zsh-autosuggestions", defer:2
 zplug "hlissner/zsh-autopair", defer:2
-# zplug "lib/completion", from:oh-my-zsh
-# zplug "jeffreytse/zsh-vi-mode"
 
 
 zstyle ':completion:*' menu select
@@ -28,34 +21,21 @@ zstyle ':completion:*:warnings' format "$fg[red]No matches for:$reset_color %d"
 zstyle ':completion:*:corrections' format '%B%d (errors: %e)%b'
 zstyle ':completion:*' group-name ''
 
-# plugins=(
-# 	git
-# 	zsh-autosuggestions
-# 	zsh-syntax-highlighting
-#     copyfile
-#     copypath
-#     github
-#     fzf
-#     dirhistory
-#     sudo
-#     web-search
-#     fancy-ctrl-z
-#     zsh-autopair
-# )
-#
+# History settings
+HISTFILE=~/.zsh_history          # Location of the history file
+HISTSIZE=10000                   # Number of entries kept in memory
+SAVEHIST=10000                   # Number of entries saved to file
+setopt appendhistory             # Append to the history file, don't overwrite it
+setopt incappendhistory          # Add commands to history file immediately
+setopt sharehistory              # Share history between sessions
+setopt histignoredups            # Don't record duplicate entries
+setopt histignorespace           # Ignore commands that start with a space
 
-# source $ZSH/oh-my-zsh.sh
 
 ZSH_AUTOSUGGEST_STRATEGY=(completion)
 
 source ~/.zsh/catppuccin_frappe-zsh-syntax-highlighting.zsh
 
-#pfetch
-# PF_INFO="ascii title os uptime pkgs" PF_SEP="" PF_COL1=4 PF_COL2=9 PF_COL3=1 PF_ALIGN="" PF_ASCII="Catppuccin" pfetch
-
-# alias pfetch='PF_INFO="ascii title os uptime pkgs" PF_SEP="" PF_COL1=4 PF_COL2=9 PF_COL3=1 PF_ALIGN="" PF_ASCII="Catppuccin" pfetch'
-# alias zshconfig="nvim ~/.zshrc"
-# alias ohmyzsh="nvim ~/.oh-my-zsh"
 alias v="nvim"
 alias nv="neovide"
 alias sv="sudo nvim"
@@ -64,7 +44,6 @@ alias pf="fzf --border=none --preview 'bat -n --color=always {}' --bind shift-up
 alias vv="dev-tmux"
 alias gitui="gitui -t frappe.ron"
 alias ssh='env TERM=xterm-256color ssh' # allows kitty to work with ssh
-#alias compileAndRun="compileAndRun"
 alias fman="compgen -c | fzf | xargs man"
 alias ftldr="compgen -c | fzf | xargs tldr"
 alias get_idf='. $HOME/esp/esp-idf/export.sh'
