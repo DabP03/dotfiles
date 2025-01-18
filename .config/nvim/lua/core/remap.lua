@@ -55,6 +55,9 @@ vim.keymap.set("x", "<A-j>", ":move '>+1<CR>gv-gv", opts)
 opts.desc = "Move text up in visual block"
 vim.keymap.set("x", "<A-k>", ":move '<-2<CR>gv-gv", opts)
 
+opts.desc = "Show floating diagnostic window"
+vim.keymap.set("n", "<C-S-k>", "<CMD>lua vim.diagnostic.open_float()<CR>", opts)
+
 opts.desc = ""
 vim.keymap.set("n", "<Esc>", "<Esc>", opts)
 vim.keymap.set("i", "<Esc>", "<Esc>", opts)
