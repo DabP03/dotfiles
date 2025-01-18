@@ -22,17 +22,17 @@ vim.keymap.set("n", "<S-h>", ":bprevious<CR>", opts)
 opts.desc = "Order buffer by number"
 vim.keymap.set("n", "<Space>bb", "<Cmd>BufferOrderByBufferNumber<CR>", opts)
 opts.desc = "Order buffer by name"
-vim.keymap.set('n', '<Space>bn', '<Cmd>BufferOrderByName<CR>', opts)
+vim.keymap.set("n", "<Space>bn", "<Cmd>BufferOrderByName<CR>", opts)
 opts.desc = "Order buffer by directory"
-vim.keymap.set('n', '<Space>bd', '<Cmd>BufferOrderByDirectory<CR>', opts)
+vim.keymap.set("n", "<Space>bd", "<Cmd>BufferOrderByDirectory<CR>", opts)
 opts.desc = "Order buffer by language"
-vim.keymap.set('n', '<Space>bl', '<Cmd>BufferOrderByLanguage<CR>', opts)
+vim.keymap.set("n", "<Space>bl", "<Cmd>BufferOrderByLanguage<CR>", opts)
 opts.desc = "Order buffer by window number"
-vim.keymap.set('n', '<Space>bw', '<Cmd>BufferOrderByWindowNumber<CR>', opts)
+vim.keymap.set("n", "<Space>bw", "<Cmd>BufferOrderByWindowNumber<CR>", opts)
 opts.desc = "Close buffer"
-vim.keymap.set('n', '<Space>bc', '<Cmd>BufferClose<CR>', opts)
+vim.keymap.set("n", "<Space>bc", "<Cmd>BufferClose<CR>", opts)
 opts.desc = "Delete buffer"
-vim.keymap.set('n', '<Space>bd', '<Cmd>BufferDelete<CR>', opts)
+vim.keymap.set("n", "<Space>bd", "<Cmd>BufferDelete<CR>", opts)
 
 -- Move text up and down
 opts.desc = "Move text up in normal"
@@ -101,4 +101,3 @@ vim.keymap.set("i", "<C-Enter>", "<Esc>o", opts)
 
 -- opts.desc = "Restart LSP"
 -- vim.keymap.set("n", "<leader>rs", ":LspRestart<CR>", opts) -- mapping to restart lsp if necessary
-
