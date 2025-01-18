@@ -27,12 +27,16 @@ return {
         mason_lspconfig.setup({
             -- list of servers for mason to install
             ensure_installed = {
+                "clangd",
                 "html",
                 "cssls",
-                "lua_ls",
                 "pyright",
-                "clangd",
-                "rust_analyzer"
+                "eslint",
+                "ts_ls",
+                "rust_analyzer",
+                "lua_ls",
+                "bashls",
+                "hyprls",
             },
             -- auto-install configured servers (with lspconfig)
             automatic_installation = true, -- not the same as ensure_installed
@@ -46,6 +50,9 @@ return {
                 "black", -- python formatter
                 "pylint", -- python linter
                 "eslint_d", -- js linter
+                "htmlhint",
+                "jsonlint",
+                "shellcheck",
             },
         })
     end,

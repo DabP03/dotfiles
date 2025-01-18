@@ -19,9 +19,11 @@ return {
 
         local opts = { noremap = true, silent = true }
         local on_attach = function(client, bufnr)
+            if client.server_capabilities.inlayHintProvider then
+                vim.lsp.inlay_hint.enable(true)
+            end
             opts.buffer = bufnr
 
-            -- set keybinds
             opts.desc = "Show LSP references"
             keymap.set("n", "<leader>sR", "<cmd>Telescope lsp_references<CR>", opts) -- show definition, references
 
@@ -76,17 +78,11 @@ return {
         lspconfig["clangd"].setup({
             capabilities = capabilities,
             on_attach = on_attach,
-            filetypes = {"c", "cpp"},
+            filetypes = {"c", "cpp", "h", "hpp"},
         })
 
         -- configure html server
         lspconfig["html"].setup({
-            capabilities = capabilities,
-            on_attach = on_attach,
-        })
-
-        -- configure typescript server with plugin
-        lspconfig["ts_ls"].setup({
             capabilities = capabilities,
             on_attach = on_attach,
         })
@@ -97,74 +93,50 @@ return {
             on_attach = on_attach,
         })
 
-        -- configure tailwindcss server
-        lspconfig["tailwindcss"].setup({
-            capabilities = capabilities,
-            on_attach = on_attach,
-        })
-
-        -- configure svelte server
-        lspconfig["svelte"].setup({
-            capabilities = capabilities,
-            on_attach = function(client, bufnr)
-                on_attach(client, bufnr)
-
-                vim.api.nvim_create_autocmd("BufWritePost", {
-                    pattern = { "*.js", "*.ts" },
-                    callback = function(ctx)
-                        if client.name == "svelte" then
-                            client.notify("$/onDidChangeTsOrJsFile", { uri = ctx.file })
-                        end
-                    end,
-                })
-            end,
-        })
-
-        -- configure prisma orm server
-        lspconfig["prismals"].setup({
-            capabilities = capabilities,
-            on_attach = on_attach,
-        })
-
-        -- configure graphql language server
-        lspconfig["graphql"].setup({
-            capabilities = capabilities,
-            on_attach = on_attach,
-            filetypes = { "graphql", "gql", "svelte", "typescriptreact", "javascriptreact" },
-        })
-
-        -- configure emmet language server
-        lspconfig["emmet_ls"].setup({
-            capabilities = capabilities,
-            on_attach = on_attach,
-            filetypes = { "html", "typescriptreact", "javascriptreact", "css", "sass", "scss", "less", "svelte" },
-        })
-
         -- configure python server
         lspconfig["pyright"].setup({
             capabilities = capabilities,
             on_attach = on_attach,
         })
 
-        -- configure latex server
-        lspconfig["ltex"].setup({
+        -- configure ts server
+        lspconfig["ts_ls"].setup({
             capabilities = capabilities,
             on_attach = on_attach,
+            settings = {
+                javascript = {
+                    format = {
+                        semicolons = "insert",
+                    },
+                    suggest = {
+                        completeFunctionCalls = true
+                    },
+                    -- inlayHints = {
+                    --     includeInlayParameterNameHints = "literals", -- Show parameter name hints for all arguments
+                    --     includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+                    --     includeInlayFunctionParameterTypeHints = false, -- Show parameter type hints
+                    --     includeInlayVariableTypeHints = false, -- Show variable type hints
+                    --     includeInlayPropertyDeclarationTypeHints = false,
+                    --     includeInlayFunctionLikeReturnTypeHints = false,
+                    --     includeInlayEnumMemberValueHints = false,
+                    -- },
+                },
+            },
         })
 
         -- configure rust analyzer
-        -- lspconfig["rust_analyzer"].setup({
-        --     capabilities = capabilities,
-        --     on_attach = on_attach,
-        --     filetypes = {"rust"},
-        --     settings = {
-        --         ["rust-analyzer"] = {
-        --             cargo = {
-        --                 allFeatures = true,
-        --             },
-        --         },
-        --     },
-        -- })
+        lspconfig["rust_analyzer"].setup({
+            capabilities = capabilities,
+            on_attach = on_attach,
+            filetypes = {"rust"},
+            settings = {
+                ["rust-analyzer"] = {
+                    cargo = {
+                        allFeatures = true,
+                    },
+                },
+            },
+        })
 
         -- configure lua server (with special settings)
         lspconfig["lua_ls"].setup({
@@ -185,6 +157,21 @@ return {
                     },
                 },
             },
+        })
+
+        lspconfig["jsonls"].setup({
+            capabilities = capabilities,
+            on_attach = on_attach,
+        })
+
+        lspconfig["bashls"].setup({
+            capabilities = capabilities,
+            on_attach = on_attach,
+        })
+
+        lspconfig["hyprls"].setup({
+            capabilities = capabilities,
+            on_attach = on_attach,
         })
     end,
 }
