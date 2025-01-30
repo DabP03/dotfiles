@@ -1,9 +1,8 @@
 lastupdatecheck: 0
 recentrepos:
-    - /home/piotr/Code/Wbudowane-Referat
     - /home/piotr/dotfiles
 startuppopupversion: 5
-lastversion: 0.44.1
+lastversion: 0.45.2
 customcommandshistory:
     - q
 hidecommandlog: false

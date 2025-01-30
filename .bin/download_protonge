@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+LATEST_NAME=""
+DOWNLOAD_DIR="$HOME/Downloads"
+EXTRACT_DIR="$HOME/.steam/root/compatibilitytools.d"
+# DOWNLOAD_DIR="./download"
+# EXTRACT_DIR="./extract"
+
+LATEST_NAME="$(curl -s https://api.github.com/repos/GloriousEggroll/proton-ge-custom/releases/latest \
+| grep "GE-Proton.*.tar.gz" \
+| cut -d : -f 2,3 \
+| tr -d '",' \
+| head -n 1)"
+
+TRIMMED_NAME="${LATEST_NAME%.tar.gz}"
+TRIMMED_NAME=$(echo "$TRIMMED_NAME" | xargs)
+
+if [ -d "$EXTRACT_DIR/$TRIMMED_NAME" ]; then
+    echo "Newest Proton GE already downloaded: $TRIMMED_NAME"
+else
+    echo "New version available, downloading..."
+    DOWNLOAD_LINK="$(curl -s https://api.github.com/repos/GloriousEggroll/proton-ge-custom/releases/latest \
+        | grep "GE-Proton.*.tar.gz" \
+        | cut -d : -f 2,3 \
+        | tr -d '",' \
+        | tail -n 1 \
+        | xargs)"
+
+    wget --show-progress "$DOWNLOAD_LINK" -P "$DOWNLOAD_DIR"
+
+    ARCHIVE="$DOWNLOAD_DIR/$(ls $DOWNLOAD_DIR | grep "GE-Proton.*.tar.gz")"
+    echo "Extracting $ARCHIVE to $EXTRACT_DIR..."
+    tar -xf "$ARCHIVE" -C "$EXTRACT_DIR"
+    echo "Extracted"
+    echo "Removing $ARCHIVE"
+    rm "$ARCHIVE"
+    echo "Removed"
+fi
+
+

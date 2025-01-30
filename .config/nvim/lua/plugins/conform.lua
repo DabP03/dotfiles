@@ -11,7 +11,9 @@ return {
 				html = { "prettier" },
 				css = { "prettier" },
 				json = { "prettier" },
-				c = { "ast_grep" },
+				c = { "clang-format" },
+				bash = { "beautysh" },
+				assembly = { "asmfmt" },
 			},
 		})
 
