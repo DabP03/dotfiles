@@ -37,7 +37,6 @@ ZSH_AUTOSUGGEST_STRATEGY=(completion)
 source ~/.zsh/catppuccin_frappe-zsh-syntax-highlighting.zsh
 
 alias v="nvim"
-alias nv="neovide"
 alias sv="sudo nvim"
 alias ls="eza --color=always --icons=always"
 alias pf="fzf --border=none --preview 'bat -n --color=always {}' --bind shift-up:preview-page-up,shift-down:preview-page-down"
@@ -53,7 +52,7 @@ export FZF_DEFAULT_OPTS=" \
 --color=fg:#c6d0f5,header:#e78284,info:#ca9ee6,pointer:#f2d5cf \
 --color=marker:#f2d5cf,fg+:#c6d0f5,prompt:#ca9ee6,hl+:#e78284"
 
-export BAT_THEME="Catppuccin-frappe"
+export BAT_THEME="Catppuccin Frappe"
 
 eval "$(starship init zsh)"
 

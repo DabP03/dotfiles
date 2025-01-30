@@ -6,6 +6,7 @@ return {
 	use_fancy_tab_bar = false,
 	tab_bar_at_bottom = true,
 	hide_tab_bar_if_only_one_tab = true,
+	hide_mouse_cursor_when_typing = true,
 	font_size = 15,
 	enable_wayland = true,
 	initial_rows = 30,
@@ -177,6 +178,16 @@ return {
 			key = "f",
 			mods = "SUPER",
 			action = wezterm.action.Search({ CaseSensitiveString = "" }),
+		},
+		{
+			key = "P",
+			mods = "CTRL|SHIFT",
+			action = wezterm.action.ActivateCommandPalette,
+		},
+		{
+			key = "Y",
+			mods = "CTRL|SHIFT",
+			action = wezterm.action.ActivateCopyMode,
 		},
 	},
 }
