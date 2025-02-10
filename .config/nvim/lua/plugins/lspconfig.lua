@@ -131,8 +131,16 @@ return {
 			filetypes = { "rust" },
 			settings = {
 				["rust-analyzer"] = {
+					checkOnSave = {
+						command = "clippy",
+					},
 					cargo = {
 						allFeatures = true,
+						target = "arm-unknown-linux-gnueabihf",
+						allTargets = false,
+						bindingModeHints = {
+							enable = true,
+						},
 					},
 				},
 			},
