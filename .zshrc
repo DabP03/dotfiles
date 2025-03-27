@@ -42,7 +42,7 @@ alias ls="eza --color=always --icons=always"
 alias pf="fzf --border=none --preview 'bat -n --color=always {}' --bind shift-up:preview-page-up,shift-down:preview-page-down"
 alias vv="dev-tmux"
 alias gitui="gitui -t frappe.ron"
-alias ssh='env TERM=xterm-256color ssh' # allows kitty to work with ssh
+# alias ssh='env TERM=xterm-256color ssh' # allows kitty to work with ssh
 alias fman="compgen -c | fzf | xargs man"
 alias ftldr="compgen -c | fzf | xargs tldr"
 alias get_idf='. $HOME/esp/esp-idf/export.sh'

@@ -66,7 +66,7 @@ return {
 		},
 		-- split horizontal
 		{
-			key = "|",
+			key = "\\",
 			mods = "CTRL|SUPER",
 			action = wezterm.action.SplitHorizontal({ domain = "CurrentPaneDomain" }),
 		},

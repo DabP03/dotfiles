@@ -4,139 +4,101 @@
         "source": "~/.config/fastfetch/tuxarch.jpg",
         "type": "kitty",
         "padding": {
-            "top": 2,
-            "left": 1,
-            "right": 2
+            "right": 10,
+            "top": 0
         }
     },
+    "general": {
+        "multithreading": true
+    },
     "display": {
-        "separator": "  "
+        "separator": "➜   "
     },
     "modules": [
-    // Title
-    {
-        "type": "custom",
-        "format": "{#1}╭───────────────────────────────╮"
-    },
-    // System Information
-    {
-        "type": "custom",
-        "format": "{#1}│    ╭────────────────────╮"
-    },
-    {
-        "type": "custom",
-        "format": "{#1}├──┬─┤ System Information │{#}"
-    },
-    {
-        "type": "custom",
-        "format": "{#1}│  │ ╰────────────────────╯"
-    },
-    {
-        "type": "os",
-        "key": "{#separator}│  ├─ {#keys}󰍹 OS"
-    },
-    {
-        "type": "kernel",
-        "key": "{#separator}│  ├─ {#keys}󰒋 Kernel"
-    },
-    {
-        "type": "uptime",
-        "key": "{#separator}│  ├─ {#keys}󰅐 Uptime"
-    },
-    {
-        "type": "packages",
-        "key": "{#separator}│  ╰─ {#keys}󰏖 Packages",
-        "format": "{all}"
-    },
-    {
-        "type": "custom",
-        "format": "{#1}│"
-    },
-    // Desktop Environment
-    {
-        "type": "custom",
-        "format": "{#1}│    ╭─────────────────────╮"
-    },
-    {
-        "type": "custom",
-        "format": "{#1}├──┬─┤ Desktop Environment │{#}"
-    },
-    {
-        "type": "custom",
-        "format": "{#1}│  │ ╰─────────────────────╯"
-    },
-    {
-        "type": "de",
-        "key": "{#separator}│  ├─ {#keys}󰧨 DE"
-    },
-    {
-        "type": "wm",
-        "key": "{#separator}│  ├─ {#keys}󱂬 WM"
-    },
-    {
-        "type": "wmtheme",
-        "key": "{#separator}│  ├─ {#keys}󰉼 Theme"
-    },
-    {
-        "type": "display",
-        "key": "{#separator}│  ├─ {#keys}󰹑 Resolution"
-    },
-    {
-        "type": "shell",
-        "key": "{#separator}│  ├─ {#keys}󰞷 Shell"
-    },
-    {
-        "type": "terminalfont",
-        "key": "{#separator}│  ╰─ {#keys}󰛖 Font"
-    },
-    {
-        "type": "custom",
-        "format": "{#1}│"
-    },
-    {
-        "type": "custom",
-        "format": "{#1}│    ╭──────────────────────╮"
-    },
-    // Hardware Information
-    {
-        "type": "custom",
-        "format": "{#1}├──┬─┤ Hardware Information │{#}"
-    },
-    {
-        "type": "custom",
-        "format": "{#1}│  │ ╰──────────────────────╯"
-    },
-    {
-        "type": "cpu",
-        "key": "{#separator}│  ├─ {#keys}󰻠 CPU"
-    },
-    {
-        "type": "gpu",
-        "key": "{#separator}│  ├─ {#keys}󰢮 GPU"
-    },
-    {
-        "type": "memory",
-        "key": "{#separator}│  ├─ {#keys}󰍛 Memory"
-    },
-    {
-        "type": "disk",
-        "key": "{#separator}│  ╰─ {#keys}󰋊 Disk (/)",
-        "folders": "/"
-    },
-    {
-        "type": "custom",
-        "format": "{#1}│"
-    },
-    // Colors
-    {
-        "type": "colors",
-        "key": "{#separator}│",
-        "symbol": "circle"
-    },
-    // Footer
-    {
-        "type": "custom",
-        "format": "{#1}╰───────────────────────────────╯"
-    }
+        "break",
+        {
+            "type": "title",
+            "format": "                                {6}{7}{8}"
+        },
+        "break",
+        {
+            "type": "custom",
+            "format": "┌──────────────────────────────────────────────────────────────────────────────┐" // `\u001b` is `\033`, or `\e`
+        },
+        "break",
+        {
+            "key": "     OS           ",
+            "keyColor": "green",
+            "type": "os"
+        },
+        {
+            "key": "    󰌢 Machine      ",
+            "keyColor": "cyan",
+            "type": "host"
+        },
+        {
+            "key": "     Kernel       ",
+            "keyColor": "blue",
+            "type": "kernel"
+        },
+        {
+            "key": "    󰅐 Uptime       ",
+            "keyColor": "green",
+            "type": "uptime"
+        },
+        {
+            "key": "     Packages     ",
+            "keyColor": "cyan",
+            "type": "packages"
+        },
+        {
+            "key": "     WM           ",
+            "keyColor": "blue",
+            "type": "wm"
+        },
+        {
+            "key": "     Shell        ",
+            "keyColor": "green",
+            "type": "shell"
+        },
+        {
+            "key": "     Terminal     ",
+            "keyColor": "cyan",
+            "type": "terminal"
+        },
+        {
+            "key": "     Font         ",
+            "keyColor": "blue",
+            "type": "terminalfont"
+        },
+        {
+            "key": "    󰻠 CPU          ",
+            "keyColor": "green",
+            "type": "cpu"
+        },
+        {
+            "key": "    󰍛 GPU          ",
+            "keyColor": "cyan",
+            "type": "gpu"
+        },
+        {
+            "key": "    󰑭 Memory       ",
+            "keyColor": "blue",
+            "type": "memory"
+        },
+        "break",
+        {
+            "type": "custom",
+            "format": "└──────────────────────────────────────────────────────────────────────────────┘" // `\u001b` is `\033`, or `\e`
+        },
+        "break",
+        {
+            "type": "colors",
+            "paddingLeft": 34,
+            "symbol": "circle",
+            "block": {
+                "width": 10
+            }
+        }
     ]
 }

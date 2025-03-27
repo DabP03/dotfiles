@@ -20,7 +20,7 @@ font-feature = ss03
 font-size = 15
 cursor-style = block
 mouse-hide-while-typing = true
-window-decoration = false
+window-decoration = true
 window-theme = ghostty
 keybind = ctrl+shift+q=unbind
 keybind = ctrl+shift+q=close_surface
