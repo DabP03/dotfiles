@@ -1,0 +1,60 @@
+dirs = [
+    "Documents/pdf",
+    "Documents/word",
+    "Documents/excel",
+    "Documents/markdown",
+    "Documents/txt",
+    "Pictures/png",
+    "Pictures/jpg",
+    "Pictures/webp",
+    "Pictures/gif",
+    "Pictures/svg",
+    "Videos/mp4",
+    "Videos/mkv",
+    "Music/mp3",
+    "Music/wav",
+    "Music/flac",
+    "Files/zip",
+    "Files/rar",
+    "Files/tar",
+    "Files/iso",
+    "Files/img",
+    "Files/torrent",
+    "Files/epub",
+    "Files/schemats",
+]
+
+[mappings]
+    pdf = "Documents/pdf"
+    odt = "Documents/word"
+    doc = "Documents/word"
+    docx = "Documents/word"
+    ods = "Documents/excel"
+    xls = "Documents/excel"
+    xlsx = "Documents/excel"
+    md = "Documents/markdown"
+    txt = "Documents/txt"
+    png = "Pictures/png"
+    jpg = "Pictures/jpg"
+    jpeg = "Pictures/jpg"
+    webp = "Pictures/webp"
+    gif = "Documents/gif"
+    svg = "Documents/svg"
+    mp4 = "Videos/mp4"
+    mkv = "Videos/mkv"
+    mp3 = "Music/mp3"
+    wav = "Music/wav"
+    flac = "Music/flac"
+    zip = "Files/zip"
+    rar = "Files/rar"
+    tar = "Files/tar"
+    bz2 = "Files/tar"
+    gz = "Files/tar"
+    xz = "Files/tar"
+    zst = "Files/tar"
+    iso = "Files/iso"
+    img = "Files/img"
+    torrent = "Files/torrent"
+    epub = "Files/epub"
+    drawio = "Files/schemats"
+
