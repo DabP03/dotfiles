@@ -14,6 +14,7 @@ dirs = [
     "Music/mp3",
     "Music/wav",
     "Music/flac",
+    "Files",
     "Files/zip",
     "Files/rar",
     "Files/tar",
