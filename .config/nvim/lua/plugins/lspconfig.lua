@@ -103,6 +103,8 @@ return {
 		lspconfig["ts_ls"].setup({
 			capabilities = capabilities,
 			on_attach = on_attach,
+			root_dir = require("lspconfig").util.root_pattern("package.json"),
+			single_file_support = false,
 			settings = {
 				javascript = {
 					format = {
@@ -122,6 +124,16 @@ return {
 					-- },
 				},
 			},
+		})
+
+		lspconfig["denols"].setup({
+			capabilities = capabilities,
+			on_attach = on_attach,
+			init_options = {
+				lint = true,
+				unstable = true,
+			},
+			root_dir = require("lspconfig").util.root_pattern("deno.json", "deno.jsonc"),
 		})
 
 		-- configure rust analyzer
