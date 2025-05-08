@@ -1,10 +1,18 @@
+### Enable multilib
+- Enable multilib in /etc/pacman.conf
+
 ### Install Chaotic AUR
 - Install [Chaotic AUR](https://aur.chaotic.cx/)
 
+### Install Paru
+- Install paru
+    ```bash
+    sudo pacman -Sy paru
+    ```
 ### PACKEGES TO INSTALL 
 - Install all packages
     ```bash
-    sudo pacman -S --needed hyprland hypridle hyprlock hyprshot network-manager-applet waybar dart-sass neovim gcc npm nodejs python qt5ct qt6ct-kde eww zsh tmux python-pylatexenc lsd zoxide pamixer onefetch vesktop swww kitty stow ttf-fira-code ttf-fira-sans ttf-fira-mono ttf-firacode-nerd git xdg-desktop-portal-hyprland xdg-desktop-portal-wlr lightly-qt lightly-qt6 papirus-icon-theme mako xorg-xcursorgen inkscape just xcur2png rsync lazygit btop paru arm-none-eabi-gcc rsync eza ghostty
+    paru -S --needed neovim gcc npm nodejs python zsh tmux zoxide pamixer spotify steam vesktop stow ttf-fira-code ttf-fira-sans ttf-fira-mono ttf-firacode-nerd git rsync lazygit btop arm-none-eabi-gcc eza wezterm zen-browser spicetify-cli qbittorrent tidal-hifi gparted vlc
     ```
 ### ZSH Configuration
 - Set ZSH as default shell
