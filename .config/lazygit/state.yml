@@ -1,9 +1,10 @@
 lastupdatecheck: 0
 recentrepos:
-    - /home/piotr/Code/rusty_beagle
+    - /home/piotr/Code/scripts
     - /home/piotr/dotfiles
+    - /home/piotr/Code/rusty_beagle
 startuppopupversion: 5
-lastversion: 0.45.2
+lastversion: 0.48.0
 customcommandshistory:
     - q
 hidecommandlog: false

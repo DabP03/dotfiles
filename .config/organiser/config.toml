@@ -47,6 +47,7 @@ dirs = [
     wav = "Music/wav"
     flac = "Music/flac"
     zip = "Files/zip"
+    7z = "Files/zip"
     rar = "Files/rar"
     tar = "Files/tar"
     bz2 = "Files/tar"

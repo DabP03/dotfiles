@@ -12,7 +12,6 @@ return {
 	initial_rows = 30,
 	initial_cols = 108,
 	audible_bell = "Disabled",
-	front_end = "WebGpu",
 	window_padding = {
 		left = 0,
 		right = 0,
