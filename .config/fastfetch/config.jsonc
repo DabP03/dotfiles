@@ -17,76 +17,70 @@
     "modules": [
         "break",
         {
-            "type": "title",
-            "format": "                                {6}{7}{8}"
-        },
-        "break",
-        {
             "type": "custom",
             "format": "┌──────────────────────────────────────────────────────────────────────────────┐" // `\u001b` is `\033`, or `\e`
         },
         "break",
         {
             "key": "     OS           ",
-            "keyColor": "green",
+            "keyColor": "38;2;255;255;255",
             "type": "os"
         },
         {
             "key": "    󰌢 Machine      ",
-            "keyColor": "cyan",
+            "keyColor": "38;2;192;192;192",
             "type": "host"
         },
         {
             "key": "     Kernel       ",
-            "keyColor": "blue",
+            "keyColor": "38;2;128;128;128",
             "type": "kernel"
         },
         {
             "key": "    󰅐 Uptime       ",
-            "keyColor": "green",
+            "keyColor": "38;2;255;255;255",
             "type": "uptime"
         },
         {
             "key": "     Packages     ",
-            "keyColor": "cyan",
+            "keyColor": "38;2;192;192;192",
             "type": "packages"
         },
         {
             "key": "     WM           ",
-            "keyColor": "blue",
+            "keyColor": "38;2;128;128;128",
             "type": "wm"
         },
         {
             "key": "     Shell        ",
-            "keyColor": "green",
+            "keyColor": "38;2;255;255;255",
             "type": "shell"
         },
         {
             "key": "     Terminal     ",
-            "keyColor": "cyan",
+            "keyColor": "38;2;192;192;192",
             "type": "terminal"
         },
         {
             "key": "     Font         ",
-            "keyColor": "blue",
+            "keyColor": "38;2;128;128;128",
             "type": "terminalfont"
         },
         {
             "key": "    󰻠 CPU          ",
-            "keyColor": "green",
+            "keyColor": "38;2;255;255;255",
             "type": "cpu"
         },
         {
             "key": "    󰍛 GPU          ",
-            "keyColor": "cyan",
+            "keyColor": "38;2;192;192;192",
             "type": "gpu"
         },
         {
             "key": "    󰑭 Memory       ",
-            "keyColor": "blue",
+            "keyColor": "38;2;128;128;128",
             "type": "memory"
         },
-        "break",
         {
             "type": "custom",
             "format": "└──────────────────────────────────────────────────────────────────────────────┘" // `\u001b` is `\033`, or `\e`

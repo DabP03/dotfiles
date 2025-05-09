@@ -46,6 +46,8 @@ alias gitui="gitui -t frappe.ron"
 alias fman="compgen -c | fzf | xargs man"
 alias ftldr="compgen -c | fzf | xargs tldr"
 alias get_idf='. $HOME/esp/esp-idf/export.sh'
+alias anifetch='python ~/.config/anifetch/anifetch.py -f "$HOME/Videos/Touhou-BadApple.mp4" -s "$HOME/Videos/Touhou-BadApple.mp4" -r 10 -W 80 -H 40 -c "--symbols block+border+space-wide-inverted" -ff'
+
 
 export FZF_DEFAULT_OPTS=" \
 --color=bg+:#414559,bg:#303446,spinner:#f2d5cf,hl:#e78284 \
@@ -67,6 +69,16 @@ export VISUAL=nvim
 
 #xdg-mime default nvim.desktop text/plain
 eval "$(zoxide init zsh --cmd cd)"
+
+# yazi
+function y() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+	yazi "$@" --cwd-file="$tmp"
+	if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+		builtin cd -- "$cwd"
+	fi
+	rm -f -- "$tmp"
+}
 
 # bun completions
 [ -s "/home/piotr/.bun/_bun" ] && source "/home/piotr/.bun/_bun"
