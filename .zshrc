@@ -8,7 +8,7 @@ zplug "plugins/fancy-ctrl-z",   from:oh-my-zsh
 zplug "zsh-users/zsh-syntax-highlighting", defer:2
 zplug "zsh-users/zsh-autosuggestions", defer:2
 zplug "hlissner/zsh-autopair", defer:2
-
+zplug "jeffreytse/zsh-vi-mode"
 
 zstyle ':completion:*' menu select
 
@@ -33,7 +33,8 @@ setopt histignorespace           # Ignore commands that start with a space
 
 # zsh vim mode
 ZVM_CURSOR_STYLE_ENABLED=false
-KEYTIMEOUT=1
+ZVM_KEYTIMEOUT=0.01
+ZVM_ESCAPE_KEYTIMEOUT=0.01
 
 ZSH_AUTOSUGGEST_STRATEGY=(completion)
 
@@ -82,12 +83,4 @@ function y() {
 	fi
 	rm -f -- "$tmp"
 }
-
-# bun completions
-[ -s "/home/piotr/.bun/_bun" ] && source "/home/piotr/.bun/_bun"
-
-# bun
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
-
 zplug load
