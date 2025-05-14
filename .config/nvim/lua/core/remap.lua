@@ -11,10 +11,9 @@ opts.desc = "Insert mode - move left"
 vim.keymap.set("i", "<C-h>", "<Left>", opts)
 opts.desc = "Disable search highlighting"
 vim.keymap.set("n", "<CR>", vim.cmd.noh, opts)
-opts.desc = "Exit modes with C-c with abbreviations"
-vim.keymap.set("n", "<C-c>", "<ESC>", opts)
-vim.keymap.set("i", "<C-c>", "<ESC>", opts)
-vim.keymap.set("v", "<C-c>", "<ESC>", opts)
+vim.keymap.set("", "<C-c", "<NOP>")
+opts.desc = "Exit mode with C-c with abbreviations"
+vim.keymap.set("", "<C-c>", "<ESC>", opts)
 
 -- Navigate buffers
 opts.desc = "Next buffer"

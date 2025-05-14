@@ -31,6 +31,9 @@ setopt sharehistory              # Share history between sessions
 setopt histignoredups            # Don't record duplicate entries
 setopt histignorespace           # Ignore commands that start with a space
 
+# zsh vim mode
+ZVM_CURSOR_STYLE_ENABLED=false
+KEYTIMEOUT=1
 
 ZSH_AUTOSUGGEST_STRATEGY=(completion)
 
