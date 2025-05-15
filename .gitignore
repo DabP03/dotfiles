@@ -1,3 +1,4 @@
 .directory
+.config/lazygit/state.yaml
 .config/tmux/plugins*
 !.config/tmux/plugins/.hidden.txt
