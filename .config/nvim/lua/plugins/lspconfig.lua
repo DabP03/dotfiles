@@ -2,7 +2,7 @@ return {
 	"neovim/nvim-lspconfig",
 	event = { "BufReadPre", "BufNewFile" },
 	opts = {
-		inlay_hints = { enabled = true },
+		-- inlay_hints = { enabled = true },
 	},
 	dependencies = {
 		"hrsh7th/cmp-nvim-lsp",
@@ -17,7 +17,9 @@ return {
 
 		local keymap = vim.keymap -- for conciseness
 
-		local opts = { noremap = true, silent = true }
+		local opts = {
+			noremap = true, --[[ silent = true ]]
+		}
 		local on_attach = function(client, bufnr)
 			if client.server_capabilities.inlayHintProvider then
 				vim.lsp.inlay_hint.enable(true)
@@ -143,16 +145,20 @@ return {
 			filetypes = { "rust" },
 			settings = {
 				["rust-analyzer"] = {
-					checkOnSave = {
-						command = "clippy",
-					},
 					cargo = {
 						allFeatures = true,
 						target = "arm-unknown-linux-gnueabihf",
 						allTargets = false,
+					},
+					inlayHints = {
+						parameterHints = { enable = true },
+						typeHints = { enable = true },
+						chainingHints = { enable = true },
+						closingBraceHints = { enable = true },
 						bindingModeHints = {
 							enable = true,
 						},
+						lifetimeElisionHints = { enable = "skip_trivial" },
 					},
 				},
 			},
@@ -193,5 +199,15 @@ return {
 			capabilities = capabilities,
 			on_attach = on_attach,
 		})
+		-- vim.api.nvim_create_autocmd("LspAttach", {
+		-- 	callback = function(args)
+		-- 		local client = vim.lsp.get_client_by_id(args.data.client_id)
+		-- 		if client and client.name == "rust_analyzer" then
+		-- 			vim.defer_fn(function()
+		-- 				vim.lsp.inlay_hint.enable(true, { bufnr = args.buf })
+		-- 			end, 500)
+		-- 		end
+		-- 	end,
+		-- })
 	end,
 }
