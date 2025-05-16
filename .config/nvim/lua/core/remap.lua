@@ -1,65 +1,44 @@
 local opts = { noremap = true, silent = true }
+local keymap_set = function(mode, keybind, action, desc)
+	opts.desc = desc
+	vim.keymap.set(mode, keybind, action, opts)
+end
 
 --Remap space as leader key
-vim.keymap.set("", "<Space>", "<Nop>", opts)
+keymap_set("", "<Space>", "<Nop>", "")
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
-opts.desc = "Insert mode - move right"
-vim.keymap.set("i", "<C-l>", "<Right>", opts)
-opts.desc = "Insert mode - move left"
-vim.keymap.set("i", "<C-h>", "<Left>", opts)
-opts.desc = "Disable search highlighting"
-vim.keymap.set("n", "<CR>", vim.cmd.noh, opts)
-vim.keymap.set("", "<C-c", "<NOP>")
-opts.desc = "Exit mode with C-c with abbreviations"
-vim.keymap.set("", "<C-c>", "<ESC>", opts)
+keymap_set("i", "<C-l>", "<Right>", "Insert mode - move right")
+keymap_set("i", "<C-h>", "<Left>", "Insert mode - move left")
+keymap_set("n", "<CR>", vim.cmd.noh, "Disable search highlighting")
+keymap_set("", "<C-c>", "<NOP>", "Disable C-c")
+keymap_set("", "<C-c>", "<ESC>", "Exit mode with C-c with abbreviations")
 
 -- Navigate buffers
-opts.desc = "Next buffer"
-vim.keymap.set("n", "<S-l>", ":bnext<CR>", opts)
-opts.desc = "Previous buffer"
-vim.keymap.set("n", "<S-h>", ":bprevious<CR>", opts)
-opts.desc = "Order buffer by number"
-vim.keymap.set("n", "<Space>bb", "<Cmd>BufferOrderByBufferNumber<CR>", opts)
-opts.desc = "Order buffer by name"
-vim.keymap.set("n", "<Space>bn", "<Cmd>BufferOrderByName<CR>", opts)
-opts.desc = "Order buffer by directory"
-vim.keymap.set("n", "<Space>bd", "<Cmd>BufferOrderByDirectory<CR>", opts)
-opts.desc = "Order buffer by language"
-vim.keymap.set("n", "<Space>bl", "<Cmd>BufferOrderByLanguage<CR>", opts)
-opts.desc = "Order buffer by window number"
-vim.keymap.set("n", "<Space>bw", "<Cmd>BufferOrderByWindowNumber<CR>", opts)
-opts.desc = "Close buffer"
-vim.keymap.set("n", "<Space>bc", "<Cmd>BufferClose<CR>", opts)
-opts.desc = "Delete buffer"
-vim.keymap.set("n", "<Space>bd", "<Cmd>BufferDelete<CR>", opts)
+keymap_set("n", "<S-l>", ":bnext<CR>", "Next buffer")
+keymap_set("n", "<S-h>", ":bprevious<CR>", "Previous buffer")
+keymap_set("n", "<Space>bb", "<Cmd>BufferOrderByBufferNumber<CR>", "Order buffer by number")
+keymap_set("n", "<Space>bn", "<Cmd>BufferOrderByName<CR>", "Order buffer by name")
+keymap_set("n", "<Space>bd", "<Cmd>BufferOrderByDirectory<CR>", "Order buffer by directory")
+keymap_set("n", "<Space>bl", "<Cmd>BufferOrderByLanguage<CR>", "Order buffer by language")
+keymap_set("n", "<Space>bw", "<Cmd>BufferOrderByWindowNumber<CR>", "Order buffer by window number")
+keymap_set("n", "<Space>bc", "<Cmd>BufferClose<CR>", "Close buffer")
+keymap_set("n", "<Space>bd", "<Cmd>BufferDelete<CR>", "Delete buffer")
 
 -- Move text up and down
-opts.desc = "Move text up in normal"
-vim.keymap.set("n", "<A-k>", "<Esc>:m .-2<CR>==gi", opts)
-opts.desc = "Move text down in normal"
-vim.keymap.set("n", "<A-j>", "<Esc>:m .+1<CR>==gi", opts)
-opts.desc = "Paste in visual"
-vim.keymap.set("v", "p", '"_dP', opts)
+keymap_set("n", "<A-k>", "<Esc>:m .-2<CR>==gi", "Move text up in normal")
+keymap_set("n", "<A-j>", "<Esc>:m .+1<CR>==gi", "Move text down in normal")
+keymap_set("v", "p", '"_dP', "Paste in visual")
 
 -- Visual --
-opts.desc = "Tab highlighted text left"
-vim.keymap.set("v", "<", "<gv", opts)
-opts.desc = "Tab highlighted text right"
-vim.keymap.set("v", ">", ">gv", opts)
+keymap_set("v", "<", "<gv", "Tab highlighted text left")
+keymap_set("v", ">", ">gv", "Tab highlighted text right")
 
 -- Visual Block --
 -- Move text up and down
-opts.desc = "Move text down in visual block"
-vim.keymap.set("x", "<A-j>", ":move '>+1<CR>gv-gv", opts)
-opts.desc = "Move text up in visual block"
-vim.keymap.set("x", "<A-k>", ":move '<-2<CR>gv-gv", opts)
+keymap_set("x", "<A-j>", ":move '>+1<CR>gv-gv", "Move text down in visual block")
+keymap_set("x", "<A-k>", ":move '<-2<CR>gv-gv", "Move text up in visual block")
+keymap_set("n", "<C-A-k>", "<CMD>lua vim.diagnostic.open_float()<CR>", "Show floating diagnostic window")
 
-opts.desc = "Show floating diagnostic window"
-vim.keymap.set("n", "<C-A-k>", "<CMD>lua vim.diagnostic.open_float()<CR>", opts)
-
-opts.desc = ""
-vim.keymap.set("n", "<Esc>", "<Esc>", opts)
-vim.keymap.set("i", "<Esc>", "<Esc>", opts)
-vim.keymap.set("i", "<C-Enter>", "<Esc>o", opts)
+keymap_set({ "n", "i" }, "<Esc>", "<Esc>", "")
