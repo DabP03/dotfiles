@@ -1,0 +1,5 @@
+require("macros.bash")
+require("macros.c")
+require("macros.python")
+require("macros.rust")
+require("macros.general")
