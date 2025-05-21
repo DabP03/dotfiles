@@ -6,6 +6,7 @@ end
 
 --Remap space as leader key
 keymap_set("", "<Space>", "<Nop>", "")
+keymap_set("", "<C-Space>", "<Nop>", "")
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 

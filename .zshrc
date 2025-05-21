@@ -8,7 +8,7 @@ zplug "plugins/fancy-ctrl-z",   from:oh-my-zsh
 zplug "zsh-users/zsh-syntax-highlighting", defer:2
 zplug "zsh-users/zsh-autosuggestions", defer:2
 zplug "hlissner/zsh-autopair", defer:2
-zplug "jeffreytse/zsh-vi-mode"
+zplug "softmoth/zsh-vim-mode"
 
 zstyle ':completion:*' menu select
 
@@ -32,9 +32,9 @@ setopt histignoredups            # Don't record duplicate entries
 setopt histignorespace           # Ignore commands that start with a space
 
 # zsh vim mode
-ZVM_CURSOR_STYLE_ENABLED=false
-ZVM_KEYTIMEOUT=0.01
-ZVM_ESCAPE_KEYTIMEOUT=0.01
+# ZVM_CURSOR_STYLE_ENABLED=false
+# ZVM_KEYTIMEOUT=0.01
+# ZVM_ESCAPE_KEYTIMEOUT=0.01
 
 ZSH_AUTOSUGGEST_STRATEGY=(completion)
 
@@ -63,10 +63,11 @@ export BAT_THEME="Catppuccin Frappe"
 eval "$(starship init zsh)"
 
 # export PATH=$PATH:~/.cargo/bin/
-export PATH="$HOME/.cargo/bin:$PATH"
-export PATH=$PATH=:/usr/include/SDL2
-export PATH=$PATH=:/home/piotr/.config/emacs/bin
-export PATH=$PATH=:/home/piotr/.bin
+path+=("/home/piotr/.bin")
+path+=("$HOME/.cargo/bin:$PATH")
+path+=("/usr/include/SDL2")
+path+=("/home/piotr/.config/emacs/bin")
+export PATH
 
 export EDITOR=nvim
 export VISUAL=nvim
@@ -83,4 +84,63 @@ function y() {
 	fi
 	rm -f -- "$tmp"
 }
+
+#zsh vim stuff
+
+function change-hack() {
+  read -k 1 option
+
+  if [[ $option == 's' ]]; then
+    zle -U Tcs
+  elif [[ $option == 'c' ]]; then
+    zle vi-change-whole-line
+  else
+    zle -U ${NUMERIC}Tvc$option
+  fi
+}
+
+function delete-hack() {
+  read -k 1 option
+
+  if [[ $option == 's' ]]; then
+    zle -U Tds
+  elif [[ $option == 'd' ]]; then
+    zle kill-whole-line
+  else
+    zle -U ${NUMERIC}Tvd$option
+  fi
+}
+
+function yank-hack() {
+  read -k 1 option
+
+  if [[ $option == 's' ]]; then
+    zle -U Tys
+  elif [[ $option == 'y' ]]; then
+    zle vi-yank-whole-line
+  else
+    zle -U ${NUMERIC}Tvy$option
+  fi
+}
+
+zle -N change-hack
+zle -N delete-hack
+zle -N yank-hack
+autoload -Uz surround
+zle -N delete-surround surround
+zle -N change-surround surround
+zle -N add-surround surround
+bindkey -M vicmd 'Tcs' change-surround
+bindkey -M vicmd 'Tds' delete-surround
+bindkey -M vicmd 'Tys' add-surround
+bindkey -M vicmd 'Tvd' vi-delete
+bindkey -M vicmd 'Tvc' vi-change
+bindkey -M vicmd 'Tvy' vi-yank
+bindkey -M vicmd 'c' change-hack
+bindkey -M vicmd 'd' delete-hack
+bindkey -M vicmd 'y' yank-hack
+bindkey -M visual S add-surround
+KEYTIMEOUT=1
+MODE_INDICATOR=""
+
 zplug load

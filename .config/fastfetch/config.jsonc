@@ -2,97 +2,64 @@
     "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
     "logo": {
         "source": "~/.config/fastfetch/tuxarch.jpg",
-        "type": "kitty",
+        "type": "iterm",
         "padding": {
-            "right": 10,
+            "right": 5,
             "top": 0
         }
     },
-    "general": {
-        "multithreading": true
-    },
     "display": {
-        "separator": "➜   "
+        "separator": " ",
+        "color": "#ef9f76",
+        "constants": [
+            "────────────────" // {$1}, used in Custom module
+        ],
+        "key": {
+            "type": "icon",
+            "paddingLeft": 2
+        }
     },
     "modules": [
-        "break",
         {
             "type": "custom",
-            "format": "┌──────────────────────────────────────────────────────────────────────────────┐" // `\u001b` is `\033`, or `\e`
-        },
-        "break",
-        {
-            "key": "     OS           ",
-            "keyColor": "38;2;255;255;255",
-            "type": "os"
+            "format": "\n"
         },
         {
-            "key": "    󰌢 Machine      ",
-            "keyColor": "38;2;192;192;192",
-            "type": "host"
+            "type": "custom", // HardwareStart
+            // {#1} is equivalent to `\u001b[1m`. {#} is equivalent to `\u001b[m`
+            "format": "┌{$1} {#1}Hardware Information{#} {$1}┐"
+        },
+        "host",
+        "cpu",
+        "gpu",
+        "memory",
+        {
+            "type": "custom", // SoftwareStart
+            "format": "├{$1} {#1}Software Information{#} {$1}┤"
         },
         {
-            "key": "     Kernel       ",
-            "keyColor": "38;2;128;128;128",
-            "type": "kernel"
+            "type": "title",
+            "keyIcon": "",
+            "key": "Title", // Title module has no key by default, so that icon is not displayed
+            "format": "{user-name}@{host-name}"
         },
+        "os",
+        "kernel",
+        "de",
+        "shell",
+        "terminal",
+        "terminalfont",
+        "icons",
+        "packages",
+        "uptime",
         {
-            "key": "    󰅐 Uptime       ",
-            "keyColor": "38;2;255;255;255",
-            "type": "uptime"
+            "type": "custom", // InformationEnd
+            "format": "└{$1}──────────────────────{$1}┘"
         },
-        {
-            "key": "     Packages     ",
-            "keyColor": "38;2;192;192;192",
-            "type": "packages"
-        },
-        {
-            "key": "     WM           ",
-            "keyColor": "38;2;128;128;128",
-            "type": "wm"
-        },
-        {
-            "key": "     Shell        ",
-            "keyColor": "38;2;255;255;255",
-            "type": "shell"
-        },
-        {
-            "key": "     Terminal     ",
-            "keyColor": "38;2;192;192;192",
-            "type": "terminal"
-        },
-        {
-            "key": "     Font         ",
-            "keyColor": "38;2;128;128;128",
-            "type": "terminalfont"
-        },
-        {
-            "key": "    󰻠 CPU          ",
-            "keyColor": "38;2;255;255;255",
-            "type": "cpu"
-        },
-        {
-            "key": "    󰍛 GPU          ",
-            "keyColor": "38;2;192;192;192",
-            "type": "gpu"
-        },
-        {
-            "key": "    󰑭 Memory       ",
-            "keyColor": "38;2;128;128;128",
-            "type": "memory"
-        },
-        {
-            "type": "custom",
-            "format": "└──────────────────────────────────────────────────────────────────────────────┘" // `\u001b` is `\033`, or `\e`
-        },
-        "break",
         {
             "type": "colors",
-            "paddingLeft": 34,
-            "symbol": "circle",
-            "block": {
-                "width": 10
-            }
+            "paddingLeft": 21,
+            "symbol": "diamond"
         }
     ]
 }

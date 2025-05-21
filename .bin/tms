@@ -1,0 +1,142 @@
+#!/bin/env bash
+
+# Check if tmux and fzf are installed
+if ! command -v tmux &> /dev/null || ! command -v fzf &> /dev/null; then
+    echo "Error: tmux and fzf are required"
+    exit 1
+fi
+
+# Function to create or attach to a new session
+tms_ns() {
+    # Prompt for session name using fzf's --print-query to capture input
+    local session_name
+    session_name=$(echo | fzf --print-query --prompt="Enter new tmux session name: " --height=10% | tail -n 1)
+
+    if [ -z "$session_name" ]; then
+        echo "No session name provided"
+        return 0
+    fi
+
+    if tmux has-session -t "$session_name" 2>/dev/null; then
+        echo "Session '$session_name' already exists, attaching..."
+        if [ -n "$TMUX" ]; then
+            tmux switch-client -t "$session_name"
+        else
+            tmux attach-session -t "$session_name"
+        fi
+    else
+        tmux new-session -d -s "$session_name"
+        echo "Created new session '$session_name'"
+        if [ -n "$TMUX" ]; then
+            tmux switch-client -t "$session_name"
+        else
+            tmux attach-session -t "$session_name"
+        fi
+    fi
+}
+
+# Function to select an existing session
+tms_ss() {
+    local sessions
+    sessions=$(tmux list-sessions -F "#{session_name}" 2>/dev/null)
+
+    if [ -z "$sessions" ]; then
+        echo "No tmux sessions found"
+        return 0
+    fi
+
+    local selected_session
+    selected_session=$(echo "$sessions" | fzf --prompt="Select tmux session: " --height=40%)
+
+    if [ -n "$selected_session" ]; then
+        if [ -n "$TMUX" ]; then
+            tmux switch-client -t "$selected_session"
+        else
+            tmux attach-session -t "$selected_session"
+        fi
+    fi
+}
+
+# Function to change directory for all panes in the current session
+tms_cd() {
+    local target_dir
+    target_dir=$(echo '' | fzf --print-query --prompt="Enter target CWD for all panes: " --height=10% | tail -n 1)
+
+    if [ -z "$target_dir" ]; then
+        echo "No directory provided or input cancelled."
+        return 0
+    fi
+
+    local expanded_dir
+    if [[ "$target_dir" == "~"* ]]; then
+        expanded_dir="$HOME${target_dir:1}"
+    else
+        expanded_dir="$target_dir"
+    fi
+
+    local panes
+    panes=$(tmux list-panes -s -F "#{pane_id}")
+
+    if [ -z "$panes" ]; then
+        echo "No panes found in the current session."
+        return 1
+    fi
+
+    echo "Changing directory to '$expanded_dir' for all panes in current session..."
+    local pane_id
+    local escaped_dir
+    for pane_id in $panes; do
+        escaped_dir=$(printf "%q" "$expanded_dir")
+        # Use "command cd" to bypass potential zsh aliases/functions for cd
+        tmux send-keys -t "$pane_id" "cd $escaped_dir; clear" C-m
+    done
+    echo "Directory change commands sent."
+}
+
+
+# Main logic
+if [[ $# -eq 1 ]]; then
+    action=$1
+    # Get function definitions
+    # Note: declare -f might output 'function tms_ns {' or 'tms_ns () {'. Both are valid for bash.
+    func_def_ns=$(declare -f tms_ns)
+    func_def_ss=$(declare -f tms_ss)
+    func_def_cd=$(declare -f tms_cd)
+
+    if [[ $action = "ns" ]]; then
+        if [ -z "$TMUX" ]; then
+            tms_ns
+        else
+            # Pass the function definition to the bash -c command
+            tmux popup -d '#{pane_current_path}' -xC -yC -w80% -h30% -E "bash -c '${func_def_ns}; tms_ns'"
+        fi
+    elif [[ $action = "ss" ]]; then
+        if [ -z "$TMUX" ]; then
+            tms_ss
+        else
+            tmux popup -d '#{pane_current_path}' -xC -yC -w80% -h30% -E "bash -c '${func_def_ss}; tms_ss'"
+        fi
+    elif [[ $action = "cd" ]]; then
+        if [ -z "$TMUX" ]; then
+            echo "Error: You must be in a tmux session to use the 'cd' command."
+            exit 1
+        else
+            tmux popup -d '#{pane_current_path}' -xC -yC -w80% -h30% -E "bash -c '${func_def_cd}; tms_cd'"
+        fi
+    else
+        echo "Error: wrong args. Use 'ns', 'ss', or 'cd'."
+        echo "Usage: tms [ns|ss|cd]"
+        echo "  ns: Create or attach to a new session"
+        echo "  ss: Select and attach to an existing session"
+        echo "  cd: Change directory for all panes in the current session"
+        exit 1
+    fi
+else
+    echo "Usage: tms [ns|ss|cd]"
+    echo "  ns: Create or attach to a new session"
+    echo "  ss: Select and attach to an existing session"
+    echo "  cd: Change directory for all panes in the current session"
+    exit 1
+fi
+
+exit 0
