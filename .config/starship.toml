@@ -14,7 +14,7 @@ $git_branch\
 [ ](red)\
 $line_break\
 $character\
-""" 
+"""
 
 [character]
 success_symbol = "[](bold green)"

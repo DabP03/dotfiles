@@ -7,8 +7,6 @@ return {
 		require("ibl").setup({
 			indent = {
 				smart_indent_cap = true,
-				-- char = "|",
-				-- tab_char = '|',
 			},
 			whitespace = {
 				remove_blankline_trail = true,
@@ -39,7 +37,6 @@ return {
 			},
 			scope = {
 				enabled = true,
-				-- char = "|",
 				show_start = false,
 				show_end = false,
 			},

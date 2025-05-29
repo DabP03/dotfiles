@@ -165,5 +165,11 @@ return {
 			capabilities = capabilities,
 			on_attach = on_attach,
 		})
+
+		-- typst
+		lspconfig["tinymist"].setup({
+			capabilities = capabilities,
+			on_attach = on_attach,
+		})
 	end,
 }
