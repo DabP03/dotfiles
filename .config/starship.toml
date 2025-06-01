@@ -13,13 +13,15 @@ $directory\
 $git_branch\
 [ ](red)\
 $line_break\
-$character\
-"""
+$character"""
 
 [character]
-success_symbol = "[](bold green)"
-error_symbol = "[](bold red)"
-vimcmd_symbol = "[](bold green)"
+# success_symbol = "[](bold green)"
+# error_symbol = "[](bold red)"
+# vimcmd_symbol = "[](bold green)"
+success_symbol = "[>>](bold green)"
+error_symbol = "[>>](bold red)"
+vimcmd_symbol = "[<<](bold green)"
 
 [directory]
 truncation_length = 5

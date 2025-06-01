@@ -4,6 +4,6 @@ vim.api.nvim_create_autocmd("BufEnter", {
 	group = "rust",
 	pattern = "*.rs",
 	callback = function()
-		vim.fn.setreg("l", 'yiwoprintln!("": {}", ")')
+		vim.fn.setreg("l", 'yiwoprintln!("": {:?}", ")')
 	end,
 })

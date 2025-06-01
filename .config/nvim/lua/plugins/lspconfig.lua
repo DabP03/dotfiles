@@ -145,6 +145,7 @@ return {
 						library = {
 							[vim.fn.expand("$VIMRUNTIME/lua")] = true,
 							[vim.fn.stdpath("config") .. "/lua"] = true,
+							[vim.fn.expand("~/.luarocks/share/lua/5.4")] = true,
 						},
 					},
 				},

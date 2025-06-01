@@ -69,6 +69,10 @@ path+=("/usr/include/SDL2")
 path+=("/home/piotr/.config/emacs/bin")
 export PATH
 
+#lua
+# export LUA_PATH="$HOME/.luarocks/share/lua/5.4/?.lua;$HOME/.luarocks/share/lua/5.4/?/init.lua;$LUA_PATH"
+# export LUA_CPATH="$HOME/.luarocks/lib/lua/5.4/?.so;$LUA_CPATH"
+
 export EDITOR=nvim
 export VISUAL=nvim
 
@@ -85,7 +89,19 @@ function y() {
 	rm -f -- "$tmp"
 }
 
-#zsh vim stuff
+# git funcs
+function git_all() {
+    if [[ $# -ne 1 ]]
+    then
+        echo "Usage git_all <commit msg>"
+        return
+    fi
+    git add .
+    git commit -m "$1"
+    git push
+}
+
+# zsh vim stuff
 
 function change-hack() {
   read -k 1 option
