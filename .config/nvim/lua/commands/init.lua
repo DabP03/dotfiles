@@ -1,0 +1,5 @@
+require("commands.bash")
+require("commands.c")
+require("commands.python")
+require("commands.rust")
+require("commands.general")

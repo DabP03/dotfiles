@@ -12,6 +12,7 @@ return {
 	initial_rows = 30,
 	initial_cols = 108,
 	audible_bell = "Disabled",
+	front_end = "WebGpu",
 	window_padding = {
 		left = 0,
 		right = 0,
@@ -22,11 +23,6 @@ return {
 		family = "IosevkaTerm Nerd Font",
 		weight = 500,
 		harfbuzz_features = {
-			-- "calt=1",
-			-- "clig=1",
-			-- "liga=1",
-			-- "CLIK=1",
-			-- "JSPT=1",
 			"dlig=1",
 			"cv07=2",
 			"cv10=24",

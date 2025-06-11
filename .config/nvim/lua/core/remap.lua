@@ -19,13 +19,6 @@ keymap_set("", "<C-c>", "<ESC>", "Exit mode with C-c with abbreviations")
 -- Navigate buffers
 keymap_set("n", "<S-l>", ":bnext<CR>", "Next buffer")
 keymap_set("n", "<S-h>", ":bprevious<CR>", "Previous buffer")
--- keymap_set("n", "<Space>bb", "<Cmd>BufferOrderByBufferNumber<CR>", "Order buffer by number")
--- keymap_set("n", "<Space>bn", "<Cmd>BufferOrderByName<CR>", "Order buffer by name")
--- keymap_set("n", "<Space>bd", "<Cmd>BufferOrderByDirectory<CR>", "Order buffer by directory")
--- keymap_set("n", "<Space>bl", "<Cmd>BufferOrderByLanguage<CR>", "Order buffer by language")
--- keymap_set("n", "<Space>bw", "<Cmd>BufferOrderByWindowNumber<CR>", "Order buffer by window number")
--- keymap_set("n", "<Space>bc", "<Cmd>BufferClose<CR>", "Close buffer")
--- keymap_set("n", "<Space>bd", "<Cmd>BufferDelete<CR>", "Delete buffer")
 
 -- Move text up and down
 keymap_set("n", "<A-k>", "<Esc>:m .-2<CR>==gi", "Move text up in normal")

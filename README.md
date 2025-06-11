@@ -26,6 +26,15 @@
 
 ### Cursors
 
+#### Cursors on KDE
+
+- Edit /usr/share/icons/default/index.theme
+    ```bash
+    Inherits=Catppuccin-Frappe-Dark
+    ```
+
+#### Hyprland
+
 - Install [Catppuccin Cursors](https://github.com/catppuccin/cursors)
     ```bash
     cd ~/.gitclone
