@@ -1,0 +1,8 @@
+[user]
+    name = DabP03
+    email = piotrek.dabrowa@gmail.com
+
+[core]
+    compression = 9
+    whitespace = error
+    preloadindex = true

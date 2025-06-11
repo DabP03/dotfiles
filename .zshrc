@@ -46,12 +46,10 @@ alias ls="eza --color=always --icons=always"
 alias pf="fzf --border=none --preview 'bat -n --color=always {}' --bind shift-up:preview-page-up,shift-down:preview-page-down"
 alias vv="dev-tmux"
 alias gitui="gitui -t frappe.ron"
-# alias ssh='env TERM=xterm-256color ssh' # allows kitty to work with ssh
 alias fman="compgen -c | fzf | xargs man"
 alias ftldr="compgen -c | fzf | xargs tldr"
 alias get_idf='. $HOME/esp/esp-idf/export.sh'
 alias anifetch='python ~/.config/anifetch/anifetch.py -f "$HOME/Videos/Touhou-BadApple.mp4" -s "$HOME/Videos/Touhou-BadApple.mp4" -r 10 -W 80 -H 40 -c "--symbols block+border+space-wide-inverted" -ff'
-
 
 export FZF_DEFAULT_OPTS=" \
 --color=bg+:#414559,bg:#303446,spinner:#f2d5cf,hl:#e78284 \
