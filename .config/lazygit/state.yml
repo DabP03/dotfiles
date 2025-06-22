@@ -1,9 +1,10 @@
 lastupdatecheck: 0
 recentrepos:
+    - /home/piotr/Code/rs6502
     - /home/piotr/dotfiles
     - /home/piotr/Code/LogicSim
 startuppopupversion: 5
-lastversion: 0.51.1
+lastversion: 0.52.0
 customcommandshistory:
     - q
 hidecommandlog: false

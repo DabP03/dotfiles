@@ -38,8 +38,8 @@ $crust:     #232634;
   padding-bottom: 4px;
   color: $text;
   font-weight: bold;
-  font-family: Font Awesome;
-  font-size: 2.5em;
+  font-family: Inter;
+  font-size: 2em;
   border: 2px solid $peach;
   border-radius: 8px;
   border-style: solid;
@@ -47,15 +47,14 @@ $crust:     #232634;
 }
 
 .dash-box {
-  padding-right: .75em;
-  padding-left: .5em;
+  padding: .1em;
 }
 
 .shutdown {
-  margin-top: .5em;
-  margin-bottom: .5em;
+  margin-top: .05em;
+  margin-bottom: .05em;
   border-radius: 5px;
-  padding: .05em;
+  padding: .01em;
   background-color: $base;
   color: $red;
   transition-property: color;
@@ -67,10 +66,10 @@ $crust:     #232634;
 }
 
 .reboot {
-  margin-top: .5em;
-  margin-bottom: .5em;
+  margin-top: .05em;
+  margin-bottom: .05em;
   border-radius: 5px;
-  padding: .05em;
+  padding: .01em;
   background-color: $base;
   color: $maroon;
   transition-property: color;
@@ -82,10 +81,10 @@ $crust:     #232634;
 }
 
 .lock {
-  margin-top: .5em;
-  margin-bottom: .5em;
+  margin-top: .05em;
+  margin-bottom: .05em;
   border-radius: 5px;
-  padding: .05em;
+  padding: .01em;
   background-color: $base;
   color: $peach;
   transition-property: color;
@@ -97,10 +96,10 @@ $crust:     #232634;
 }
 
 .logout {
-  margin-top: .5em;
-  margin-bottom: .5em;
+  margin-top: .05em;
+  margin-bottom: .05em;
   border-radius: 5px;
-  padding: .05em;
+  padding: .01em;
   background-color: $base;
   color: $yellow;
   transition-property: color;

@@ -8,7 +8,7 @@ return {
 	hide_tab_bar_if_only_one_tab = true,
 	hide_mouse_cursor_when_typing = true,
 	font_size = 16,
-	enable_wayland = true,
+	enable_wayland = false,
 	initial_rows = 30,
 	initial_cols = 108,
 	audible_bell = "Disabled",

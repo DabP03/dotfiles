@@ -13,7 +13,6 @@ while true; do
         random_background="$directory/$(ls $directory | shuf -n 1)"
 
         swww img "$random_background" --transition-type wipe --transition-angle 45
-        cp "$random_background" ~/.config/background
     fi
     sleep "$time"
 done

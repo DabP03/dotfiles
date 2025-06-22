@@ -12,7 +12,7 @@
 ### PACKEGES TO INSTALL 
 - Install all packages
     ```bash
-    paru -S --needed neovim gcc npm nodejs python zsh tmux zoxide pamixer spotify steam vesktop stow git rsync lazygit btop arm-none-eabi-gcc eza wezterm zen-browser spicetify-cli qbittorrent tidal-hifi gparted vlc gamemode starship inter-font kdeconnect fastfetch fzf unzip firewalld sshfs darkly gamemode gamescope yazi fd jq 7zip power-profiles-daemon arm-none-linux-gnueabihf-toolchain-bin ttc-iosevka
+    paru -S --needed neovim gcc npm nodejs python zsh tmux zoxide pamixer spotify steam vesktop stow git rsync lazygit btop arm-none-eabi-gcc eza wezterm zen-browser spicetify-cli qbittorrent tidal-hifi gparted vlc gamemode starship inter-font kdeconnect fastfetch fzf unzip firewalld sshfs darkly gamemode gamescope yazi fd jq 7zip power-profiles-daemon arm-none-linux-gnueabihf-toolchain-bin ttc-iosevka eww waybar swww hyprland hypridle hyprcursor hyprlock hyprshot thunar fuzzel mako networkmanager_dmenu archlinux-xdg-menu qt6ct-kde xdg-desktop-portal-gtk xdg-desktop-portal-hyprland
     ```
 ### ZSH Configuration
 - Set ZSH as default shell

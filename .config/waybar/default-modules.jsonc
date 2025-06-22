@@ -1,0 +1,95 @@
+{
+    "hyprland/window": {
+        "format": "{class}",
+        "rewrite": {
+            "zen": "Zen Browser",
+            "org.wezfurlong.wezterm": "Wezterm",
+            "steam": "Steam",
+            "thunar": "Thunar",
+            "org.kde.dolphin": "Dolphin",
+            "libreoffice-writer": "LibreOffice Writer",
+            "libreoffice-calc": "LibreOffice Calc",
+            "libreoffice-draw": "LibreOffice Draw",
+            "libreoffice-math": "LibreOffice Math",
+            "libreoffice-base": "LibreOffice Base",
+            "discord": "Discord",
+            "vesktop": "Vesktop"
+        },
+        "icon": true,
+        "max-length": 25,
+        "separate-outputs": true
+    },
+    "hyprland/workspaces": {
+        "format": "{id}",
+        "on-click": "activate",
+        "sort-by-number": true,
+        "persistent-workspaces": {
+            "*": 10
+        }
+    },
+    "clock": {
+        "interval": 60,
+        "format": "󰃭  {:%d.%m.%Y 󰥔  %H:%M}",
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+        "format-alt": "󰃭  {:%d.%m.%Y}"
+    },
+    "power-profiles-daemon": {
+        "format": "{icon}",
+        "tooltip-format": "Power profile: {profile}\nDriver: {driver}",
+        "tooltip": true,
+        "format-icons": {
+            "default": "󱐋",
+            "performance": "󱐋",
+            "balanced": "󰗑",
+            "power-saver": "󰌪"
+        }
+    },
+    "battery": {
+        "states": {
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "{icon} {capacity}%",
+        "format-full": "{icon} {capacity}%",
+        "format-charging": "󰂄 {capacity}%",
+        "format-plugged": "󱐥 {capacity}%",
+        "format-alt": "{time} {icon}",
+        "format-icons": ["󰂎", "󱊡", "󱊢", "󱊣"]
+    },
+    "network": {
+        "format-wifi": "󰤨 {essid}",
+        "format-ethernet": "Ethernet",
+        "tooltip-format": "{ifname} via {gwaddr}",
+        "format-linked": "{ifname} (No IP)",
+        "format-disconnected": "",
+        "format-alt": "{ifname}: {ipaddr}/{cidr}"
+    },
+    "pulseaudio": {
+        "format": "{icon} {volume}%",
+        "format-bluetooth": "{volume}% {icon}󰂯 {format_source}",
+        "format-bluetooth-muted": "󰝟 {icon}󰂯 {format_source}",
+        "format-muted": "󰝟 {format_source}",
+        "format-icons": {
+            "headphone": "󰋋",
+            "hands-free": "󰋋",
+            "headset": "󰋎",
+            "phone": "󰏲",
+            "portable": "󰏲",
+            "car": "󰄋",
+            "default": ["󰕿", "󰖀", "󰕾"]
+        },
+        "on-click": "pavucontrol"
+    },
+    "tray": {
+        "icon-size": 16,
+        "spacing": 8,
+        "reverse-direction": true
+    },
+    "idle_inhibitor": {
+        "format": "{icon}",
+        "format-icons": {
+            "activated": "󰔡",
+            "deactivated": "󰔢"
+        }
+    }
+}

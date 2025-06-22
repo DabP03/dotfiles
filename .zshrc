@@ -61,11 +61,11 @@ export BAT_THEME="Catppuccin Frappe"
 eval "$(starship init zsh)"
 
 # export PATH=$PATH:~/.cargo/bin/
-path+=("/home/piotr/.bin")
+path+=("$HOME/piotr/.bin")
 path+=("$HOME/.cargo/bin:$PATH")
 path+=("/usr/include/SDL2")
-path+=("/home/piotr/.config/emacs/bin")
 export PATH
+export PICO_SDK_PATH="$HOME/Code/embedded/pico-sdk"
 
 #lua
 # export LUA_PATH="$HOME/.luarocks/share/lua/5.4/?.lua;$HOME/.luarocks/share/lua/5.4/?/init.lua;$LUA_PATH"
