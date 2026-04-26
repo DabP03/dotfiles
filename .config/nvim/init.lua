@@ -1,4 +1,4 @@
 require("core.remap")
 require("core.set")
-require("core.bootstrap")
+require("core.lsp")
 require("commands.init")

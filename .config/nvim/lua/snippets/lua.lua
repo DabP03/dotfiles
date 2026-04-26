@@ -10,33 +10,33 @@ local fmta = require("luasnip.extras.fmt").fmta
 -- local rep = require("luasnip.extras").rep
 
 return {
-	s(
-		{ trig = "([^%s]+)(%s?)([-+*/])=", wordTrig = false, regTrig = true, snippetType = "autosnippet" },
-		fmta([[<> = <> <> <>]], {
-			f(function(_, snip)
-				return snip.captures[1]
-			end),
-			f(function(_, snip)
-				return snip.captures[1]
-			end),
-			f(function(_, snip)
-				return snip.captures[3]
-			end),
-			i(1),
-		})
-	),
-	s(
-		{ trig = "([^%s]+)(%s?)([+-])([-+])", wordTrig = false, regTrig = true, snippetType = "autosnippet" },
-		fmta([[<> = <> <> 1]], {
-			f(function(_, snip)
-				return snip.captures[1]
-			end),
-			f(function(_, snip)
-				return snip.captures[1]
-			end),
-			f(function(_, snip)
-				return snip.captures[3]
-			end),
-		})
-	),
+	-- s(
+	-- 	{ trig = "([^%s]+)(%s?)([-+*/])=", wordTrig = false, regTrig = true, snippetType = "autosnippet" },
+	-- 	fmta([[<> = <> <> <>]], {
+	-- 		f(function(_, snip)
+	-- 			return snip.captures[1]
+	-- 		end),
+	-- 		f(function(_, snip)
+	-- 			return snip.captures[1]
+	-- 		end),
+	-- 		f(function(_, snip)
+	-- 			return snip.captures[3]
+	-- 		end),
+	-- 		i(1),
+	-- 	})
+	-- ),
+	-- s(
+	-- 	{ trig = "([^%s]+)(%s?)([+-])([-+])", wordTrig = false, regTrig = true, snippetType = "autosnippet" },
+	-- 	fmta([[<> = <> <> 1]], {
+	-- 		f(function(_, snip)
+	-- 			return snip.captures[1]
+	-- 		end),
+	-- 		f(function(_, snip)
+	-- 			return snip.captures[1]
+	-- 		end),
+	-- 		f(function(_, snip)
+	-- 			return snip.captures[3]
+	-- 		end),
+	-- 	})
+	-- ),
 }

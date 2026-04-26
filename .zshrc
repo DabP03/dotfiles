@@ -1,14 +1,15 @@
-source ~/.zplug/init.zsh
+source /usr/share/zsh/scripts/zplug/init.zsh
 
 zplug "plugins/git",   from:oh-my-zsh
 zplug "plugins/github",   from:oh-my-zsh
 zplug "plugins/fzf",   from:oh-my-zsh
 zplug "plugins/dirhistory",   from:oh-my-zsh
 zplug "plugins/fancy-ctrl-z",   from:oh-my-zsh
-zplug "zsh-users/zsh-syntax-highlighting", defer:2
+# zplug "zsh-users/zsh-syntax-highlighting", defer:2
 zplug "zsh-users/zsh-autosuggestions", defer:2
 zplug "hlissner/zsh-autopair", defer:2
-zplug "softmoth/zsh-vim-mode"
+zplug "zdharma-continuum/fast-syntax-highlighting", defer:2
+# zplug "softmoth/zsh-vim-mode"
 
 zstyle ':completion:*' menu select
 
@@ -42,7 +43,7 @@ source ~/.zsh/catppuccin_frappe-zsh-syntax-highlighting.zsh
 
 alias v="nvim"
 alias sv="sudo nvim"
-alias ls="eza --color=always --icons=always"
+alias ls="eza --hyperlink --color=always --icons=always"
 alias pf="fzf --border=none --preview 'bat -n --color=always {}' --bind shift-up:preview-page-up,shift-down:preview-page-down"
 alias vv="dev-tmux"
 alias gitui="gitui -t frappe.ron"
@@ -61,8 +62,8 @@ export BAT_THEME="Catppuccin Frappe"
 eval "$(starship init zsh)"
 
 # export PATH=$PATH:~/.cargo/bin/
-path+=("$HOME/piotr/.bin")
-path+=("$HOME/.cargo/bin:$PATH")
+path+=("$HOME/.bin")
+# path+=("$HOME/.cargo/bin:$PATH")
 path+=("/usr/include/SDL2")
 export PATH
 export PICO_SDK_PATH="$HOME/Code/embedded/pico-sdk"
@@ -98,63 +99,20 @@ function git_all() {
     git commit -m "$1"
     git push
 }
-
-# zsh vim stuff
-
-function change-hack() {
-  read -k 1 option
-
-  if [[ $option == 's' ]]; then
-    zle -U Tcs
-  elif [[ $option == 'c' ]]; then
-    zle vi-change-whole-line
-  else
-    zle -U ${NUMERIC}Tvc$option
-  fi
-}
-
-function delete-hack() {
-  read -k 1 option
-
-  if [[ $option == 's' ]]; then
-    zle -U Tds
-  elif [[ $option == 'd' ]]; then
-    zle kill-whole-line
-  else
-    zle -U ${NUMERIC}Tvd$option
-  fi
-}
-
-function yank-hack() {
-  read -k 1 option
-
-  if [[ $option == 's' ]]; then
-    zle -U Tys
-  elif [[ $option == 'y' ]]; then
-    zle vi-yank-whole-line
-  else
-    zle -U ${NUMERIC}Tvy$option
-  fi
-}
-
-zle -N change-hack
-zle -N delete-hack
-zle -N yank-hack
-autoload -Uz surround
-zle -N delete-surround surround
-zle -N change-surround surround
-zle -N add-surround surround
-bindkey -M vicmd 'Tcs' change-surround
-bindkey -M vicmd 'Tds' delete-surround
-bindkey -M vicmd 'Tys' add-surround
-bindkey -M vicmd 'Tvd' vi-delete
-bindkey -M vicmd 'Tvc' vi-change
-bindkey -M vicmd 'Tvy' vi-yank
-bindkey -M vicmd 'c' change-hack
-bindkey -M vicmd 'd' delete-hack
-bindkey -M vicmd 'y' yank-hack
-bindkey -M visual S add-surround
-KEYTIMEOUT=1
-MODE_INDICATOR=""
-
 zplug load
+
+# Force a steady block cursor
+# 2 = steady block, 4 = steady underline, 6 = steady bar
+echo -ne '\e[2 q'
+
+# Ensure the cursor stays steady after every command execution
+precmd_functions+=(set_steady_cursor)
+function set_steady_cursor() {
+    echo -ne '\e[2 q'
+}
+
+# Ensure the cursor stays steady when the Zsh line editor initializes
+zle-line-init() {
+    echo -ne '\e[2 q'
+}
+zle -N zle-line-init

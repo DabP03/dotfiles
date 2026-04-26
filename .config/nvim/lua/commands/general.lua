@@ -1,12 +1,5 @@
 vim.api.nvim_create_augroup("general", { clear = true })
 
--- vim.api.nvim_create_autocmd("BufEnter", {
--- 	group = "general",
--- 	callback = function()
--- 		vim.cmd("BufferOrderByBufferNumber")
--- 	end,
--- })
---
 vim.api.nvim_create_user_command("Tsplit", function(opts)
 	local separator = opts.args
 	if separator == "" then
@@ -48,4 +41,47 @@ end, {
 	nargs = "?",
 	range = true,
 	desc = "Split lines in range on specified character",
+})
+
+vim.api.nvim_create_user_command("PackUpdate", function()
+	vim.pack.update()
+end, { desc = "Update all packages" })
+
+vim.api.nvim_create_user_command("PackList", function()
+	vim.print(vim.pack.get())
+end, { desc = "Get info for all packages" })
+
+vim.api.nvim_create_user_command("PackClean", function(opts)
+	local unused = vim.iter(vim.pack.get())
+		:filter(function(p)
+			return not p.active
+		end)
+		:map(function(p)
+			return p.spec.name
+		end)
+		:totable()
+
+	if #unused == 0 then
+		vim.notify("Nothing to clean — all packages are active.", vim.log.levels.INFO)
+		return
+	end
+
+	if opts.bang then
+		vim.pack.del(unused)
+		vim.notify(
+			("Deleted %d unused package(s):\n  %s"):format(#unused, table.concat(unused, "\n  ")),
+			vim.log.levels.INFO
+		)
+	else
+		vim.notify(
+			("Found %d unused package(s) (run :PackClean! to delete):\n  %s"):format(
+				#unused,
+				table.concat(unused, "\n  ")
+			),
+			vim.log.levels.WARN
+		)
+	end
+end, {
+	bang = true,
+	desc = "Remove packages not declared in current session (! to confirm)",
 })

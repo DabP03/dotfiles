@@ -1,26 +1,31 @@
 shell-integration = zsh
 window-width = 108
 window-height = 30
-theme = catppuccin-frappe
+theme = Catppuccin Frappe
 shell-integration-features = no-cursor
-cursor-style-blink = true
-font-family = "FiraCode Nerd Font"
-font-family-bold ="FiraCode Nerd Font Bold" 
-font-family-italic ="FiraCode Nerd Font Med" 
-font-family-bold-italic ="FiraCode Nerd Font SemBd" 
-font-feature = zero
-font-feature = cv01
-font-feature = cv02
-font-feature = cv21
-font-feature = cv29
-font-feature = cv30
-font-feature = ss04
-font-feature = ss05
-font-feature = ss03
-font-size = 15
+font-family = "IosevkaTerm Nerd Font Propo"
+font-feature = dlig=1
+font-feature = cv07=2
+font-feature = cv10=24
+font-feature = cv36=11
+font-feature = cv42=2
+font-feature = cv59=10
+font-feature = VSAM=1
+font-feature = VSAO=3
+font-feature = VLAB=2
+font-feature = VLAF=2
+font-feature = VLAG=2
+font-feature = VSAG=3
+font-feature = VSAH=3
+font-feature = VSAT=1
+font-feature = VLAD=1
+font-feature = VSAB=3
+font-size = 16
 cursor-style = block
+confirm-close-surface = false
 mouse-hide-while-typing = true
-window-decoration = true
+window-decoration = false
+cursor-style-blink = false
 window-theme = ghostty
 keybind = ctrl+shift+q=unbind
 keybind = ctrl+shift+q=close_surface
