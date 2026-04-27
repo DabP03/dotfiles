@@ -2,4 +2,5 @@
 copy-command = "wl-copy"
 early-exit = true
 actions-on-enter = ["save-to-clipboard"]
+output-filename = "~/Pictures/Screenshots/screenshot-%Y-%m-%d_%H:%M:%S.png"
 

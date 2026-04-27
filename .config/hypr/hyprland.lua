@@ -1,4 +1,4 @@
-local hostname = require("lua.hostname").getHostname()
+local hostname = require("lua.scripts").getHostname()
 
 if hostname == "desktop" then
 	hl.monitor({
@@ -48,6 +48,7 @@ hl.on("hyprland.start", function()
 	hl.exec_cmd("systemctl --user start hyprpolkitagent")
 	hl.exec_cmd("vicinae server")
 	hl.exec_cmd("gsettings set org.gnome.desktop.interface cursor-theme 'catppuccin-frappe-dark-cursors'")
+	require("lua.scripts").randomiseWallpaper(1800000)
 end)
 
 hl.env("HYPRCURSOR_THEME", "catppuccin-frappe-dark-cursors")
@@ -172,6 +173,7 @@ hl.config({
 	},
 })
 
+hl.workspace_rule({ workspace = "spacial:shadowrealm", persistent = true, default = false })
 if hostname == "desktop" then
 	for i = 1, 10 do
 		hl.workspace_rule({ workspace = tostring(i), monitor = "DP-2" })
@@ -210,7 +212,9 @@ hl.animation({ leaf = "zoomFactor", enabled = true, speed = 7, bezier = "quick" 
 local mainMod = "SUPER"
 
 hl.bind(mainMod .. " + Return", hl.dsp.exec_cmd(terminal))
-hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
+hl.bind(mainMod .. " + E", function()
+	require("lua.scripts").toggleDolphin()
+end)
 hl.bind(mainMod .. " + W", hl.dsp.exec_cmd(webBrowser))
 hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + Q", hl.dsp.window.close())
@@ -291,16 +295,8 @@ hl.bind(mainMod .. " + F6", hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%+"), { 
 hl.bind(mainMod .. " + F9", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
 hl.bind(mainMod .. " + F10", hl.dsp.exec_cmd("playerctl previous"), { locked = true })
 hl.bind(mainMod .. " + F11", hl.dsp.exec_cmd("playerctl next"), { locked = true })
-hl.bind(
-	mainMod .. " + SHIFT + F10",
-	hl.dsp.exec_cmd("playerctl volume 0.02-"),
-	{ locked = true }
-)
-hl.bind(
-	mainMod .. " + SHIFT + F11",
-	hl.dsp.exec_cmd("playerctl volume 0.02+"),
-	{ locked = true }
-)
+hl.bind(mainMod .. " + SHIFT + F10", hl.dsp.exec_cmd("playerctl volume 0.02-"), { locked = true })
+hl.bind(mainMod .. " + SHIFT + F11", hl.dsp.exec_cmd("playerctl volume 0.02+"), { locked = true })
 
 hl.bind(
 	mainMod .. " + SHIFT + S",
@@ -389,9 +385,9 @@ hl.window_rule({
 
 -- Layer rules also return a handle.
 local overlayLayerRule = hl.layer_rule({
-    name  = "no-anim-overlay",
-    match = { namespace = "^quickshell$" },
-    no_anim = true,
+	name = "no-anim-overlay",
+	match = { namespace = "^quickshell$" },
+	no_anim = true,
 })
 overlayLayerRule:set_enabled(false)
 
