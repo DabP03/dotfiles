@@ -148,10 +148,8 @@ Rectangle {
                                 bottomMargin: 12
                                 leftMargin: 12
                             }
-                            color: Colors.base
+                            color: Colors.mantle
                             radius: Options.radius
-                            border.color: Colors.peach
-                            border.width: Options.borderWidth
                             implicitHeight: 304
                             implicitWidth: 304
 
@@ -186,10 +184,8 @@ Rectangle {
                                 leftMargin: 12
                                 topMargin: 6
                             }
-                            color: Colors.base
+                            color: Colors.mantle
                             radius: Options.radius
-                            border.color: Colors.peach
-                            border.width: Options.borderWidth
                             implicitWidth: power.implicitWidth + 28
                             implicitHeight: power.implicitWidth + 28
 
@@ -226,10 +222,8 @@ Rectangle {
                                 rightMargin: 12
                                 topMargin: 6
                             }
-                            color: Colors.base
+                            color: Colors.mantle
                             radius: Options.radius
-                            border.color: Colors.peach
-                            border.width: Options.borderWidth
                             implicitWidth: calendarPanel.implicitWidth - datePanel.implicitWidth - 12
                             implicitHeight: power.implicitWidth + 28
 
@@ -241,16 +235,31 @@ Rectangle {
                                 }
 
                                 StyledButton {
-                                    id: power
+
+                                    id: lock
                                     implicitWidth: logout.implicitWidth
                                     implicitHeight: logout.implicitHeight
                                     radius: Options.buttonRadius
-                                    buttonColor: Colors.red
+                                    buttonColor: Colors.blue
                                     buttonTextColor: Colors.base
-                                    buttonText: ""
                                     fontSize: 20
+                                    buttonText: ""
                                     onClick: () => {
-                                        process.exec(["systemctl", "poweroff"])
+                                        process.exec(["hyprlock"])
+                                    }
+                                }
+
+                                StyledButton {
+                                    id: logout
+                                    implicitWidth: (textWidth + 22)
+                                    implicitHeight: (textWidth + 22)
+                                    radius: Options.buttonRadius
+                                    buttonColor: Colors.green
+                                    buttonTextColor: Colors.base
+                                    fontSize: 20
+                                    buttonText: ""
+                                    onClick: () => {
+                                        process.exec(["systemctl", "exit"])
                                     }
                                 }
 
@@ -269,30 +278,16 @@ Rectangle {
                                 }
 
                                 StyledButton {
-                                    id: logout
-                                    implicitWidth: (textWidth + 22)
-                                    implicitHeight: (textWidth + 22)
-                                    radius: Options.buttonRadius
-                                    buttonColor: Colors.green
-                                    buttonTextColor: Colors.base
-                                    fontSize: 20
-                                    buttonText: ""
-                                    onClick: () => {
-                                        process.exec(["systemctl", "exit"])
-                                    }
-                                }
-                                StyledButton {
-
-                                    id: lock
+                                    id: power
                                     implicitWidth: logout.implicitWidth
                                     implicitHeight: logout.implicitHeight
                                     radius: Options.buttonRadius
-                                    buttonColor: Colors.blue
+                                    buttonColor: Colors.red
                                     buttonTextColor: Colors.base
+                                    buttonText: ""
                                     fontSize: 20
-                                    buttonText: ""
                                     onClick: () => {
-                                        process.exec(["hyprlock"])
+                                        process.exec(["systemctl", "poweroff"])
                                     }
                                 }
                             }
