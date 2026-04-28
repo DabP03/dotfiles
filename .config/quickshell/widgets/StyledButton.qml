@@ -13,6 +13,7 @@ Rectangle {
     required property var buttonColor
     required property var buttonText
     required property var buttonTextColor
+    property var fontSize: Options.font.size
 
     MouseArea {
         id: mouseArea
@@ -39,7 +40,7 @@ Rectangle {
         Text {
             id: icon
             color: root.buttonTextColor
-            font.pixelSize: Options.font.size
+            font.pixelSize: fontSize
             font.family: Options.font.family
             font.bold: true
             anchors.centerIn: parent

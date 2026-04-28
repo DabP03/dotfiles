@@ -7,8 +7,6 @@ Item {
     property alias text: songNameLabel.text
     property alias font: songNameLabel.font
     property alias color: songNameLabel.color
-    // property alias scrollDuration: scrollAnimation.scrollDuration
-    // property alias dwellTime: scrollAnimation.dwellTime
     property alias running: scrollAnimation.running
     property alias paused: scrollAnimation.paused
     property alias textWidth: songNameLabel.implicitWidth

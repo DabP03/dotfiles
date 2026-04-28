@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
 import Quickshell
+import Quickshell.Io
 import Quickshell.Widgets
 
 import "root:/config/"
@@ -64,6 +65,9 @@ Rectangle {
         font.pixelSize: Options.font.size
         text: value
     }
+    Process {
+        id: process
+    }
 
     MouseArea {
         id: mouseArea
@@ -71,22 +75,19 @@ Rectangle {
         acceptedButtons: Qt.LeftButton
         hoverEnabled: true // Needed for scroll wheel detection
 
-        function handleClicked(event) {
-            Hyprland.dispatch("workspace " + value)
+        onClicked: {
+            // Hyprland.dispatch("workspace " + value)
+            process.exec(["sh", "-c", `hyprctl eval 'hl.dispatch(hl.dsp.focus({ workspace = "${value}" }))'`])
         }
 
-        function handleWheel(event) {
+        onWheel: (event) => {
             event.accepted = true // Prevent default scroll behavior
             if (event.angleDelta.y > 0) {
-                Hyprland.dispatch("workspace +1")
+                process.exec(["sh", "-c", `hyprctl eval 'hl.dispatch(hl.dsp.focus({ workspace = "+1" }))'`])
             } else {
-                Hyprland.dispatch("workspace -1")
+                process.exec(["sh", "-c", `hyprctl eval 'hl.dispatch(hl.dsp.focus({ workspace = "-1" }))'`])
             }
 
         }
-
-        // Bind signal handlers to functions
-        onClicked: (event) => handleClicked(event)
-        onWheel: (event) => handleWheel(event)
     }
 }

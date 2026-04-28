@@ -18,7 +18,8 @@ Singleton {
     property real barRightBottomRadius: 16
 
     component Font: QtObject {
-        readonly property string family: "GeistMono Nerd Font"
+        readonly property string family: "BlexMono Nerd Font"
+        readonly property string iconFamily: "BlexMono Nerd Font"
         readonly property real size: 16
     }
 

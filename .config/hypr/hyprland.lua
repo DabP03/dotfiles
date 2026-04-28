@@ -36,6 +36,16 @@ local fileManager = "dolphin"
 local menu = "vicinae toggle"
 local webBrowser = "zen-browser"
 
+hl.env("HYPRCURSOR_THEME", "catppuccin-frappe-dark-cursors")
+hl.env("HYPRCURSOR_SIZE", "20")
+hl.env("XCURSOR_SIZE", "20")
+hl.env("QT_QPA_PLATFORM", "wayland;xcb")
+hl.env("QT_QPA_PLATFORMTHEME", "qt6ct")
+hl.env("XDG_MENU_PREFIX", "arch-")
+hl.env("QT_WAYLAND_DISABLE_WINDOWDECORATION", "1")
+hl.env("GTK_USE_PORTAL", "1")
+
+hl.workspace_rule({ workspace = "spacial:shadowrealm", persistent = true, default = false })
 hl.on("hyprland.start", function()
 	hl.exec_cmd("qs -d")
 	hl.exec_cmd("wl-paste --type text --watch cliphist")
@@ -48,17 +58,13 @@ hl.on("hyprland.start", function()
 	hl.exec_cmd("systemctl --user start hyprpolkitagent")
 	hl.exec_cmd("vicinae server")
 	hl.exec_cmd("gsettings set org.gnome.desktop.interface cursor-theme 'catppuccin-frappe-dark-cursors'")
+	hl.exec_cmd(fileManager, { workspace = "special:shadowrealm silent" })
+	hl.exec_cmd(webBrowser, { workspace = "1 silent" })
+	hl.exec_cmd(terminal, { workspace = "2 silent" })
+	hl.exec_cmd("strawberry", { workspace = "10 silent" })
+	hl.exec_cmd("spotify", { workspace = "10 silent" })
 	require("lua.scripts").randomiseWallpaper(1800000)
 end)
-
-hl.env("HYPRCURSOR_THEME", "catppuccin-frappe-dark-cursors")
-hl.env("HYPRCURSOR_SIZE", "20")
-hl.env("XCURSOR_SIZE", "20")
-hl.env("QT_QPA_PLATFORM", "wayland;xcb")
-hl.env("QT_QPA_PLATFORMTHEME", "qt6ct")
-hl.env("XDG_MENU_PREFIX", "arch-")
-hl.env("QT_WAYLAND_DISABLE_WINDOWDECORATION", "1")
-hl.env("GTK_USE_PORTAL", "1")
 
 hl.config({
 	general = {
@@ -173,7 +179,6 @@ hl.config({
 	},
 })
 
-hl.workspace_rule({ workspace = "spacial:shadowrealm", persistent = true, default = false })
 if hostname == "desktop" then
 	for i = 1, 10 do
 		hl.workspace_rule({ workspace = tostring(i), monitor = "DP-2" })
@@ -212,9 +217,7 @@ hl.animation({ leaf = "zoomFactor", enabled = true, speed = 7, bezier = "quick" 
 local mainMod = "SUPER"
 
 hl.bind(mainMod .. " + Return", hl.dsp.exec_cmd(terminal))
-hl.bind(mainMod .. " + E", function()
-	require("lua.scripts").toggleDolphin()
-end)
+hl.bind(mainMod .. " + E", require("lua.scripts").toggleDolphin)
 hl.bind(mainMod .. " + W", hl.dsp.exec_cmd(webBrowser))
 hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + Q", hl.dsp.window.close())
@@ -285,9 +288,20 @@ hl.bind(
 	hl.dsp.exec_cmd("wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"),
 	{ locked = true, repeating = true }
 )
+
 hl.bind(
-	mainMod .. " + F4",
+	mainMod .. " + SHIFT + F1",
 	hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"),
+	{ locked = true, repeating = true }
+)
+hl.bind(
+	mainMod .. " + SHIFT + F2",
+	hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SOURCE@ 5%-"),
+	{ locked = true, repeating = true }
+)
+hl.bind(
+	mainMod .. " + SHIFT + F3",
+	hl.dsp.exec_cmd("wpctl set-volume -l 1 @DEFAULT_AUDIO_SOURCE@ 5%+"),
 	{ locked = true, repeating = true }
 )
 hl.bind(mainMod .. " + F5", hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%-"), { locked = true, repeating = true })
@@ -382,6 +396,22 @@ hl.window_rule({
 	},
 	float = true,
 })
+
+-- hl.window_rule({
+-- 	name = "Strawberry",
+-- 	match = {
+-- 		class = "^(org.strawberrymusicplayer.strawberry)$",
+-- 	},
+-- 	workspace = "10 silent",
+-- })
+--
+-- hl.window_rule({
+-- 	name = "Spotify",
+-- 	match = {
+-- 		class = "^(Spotify)$",
+-- 	},
+-- 	workspace = "10 silent",
+-- })
 
 -- Layer rules also return a handle.
 local overlayLayerRule = hl.layer_rule({

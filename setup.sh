@@ -13,7 +13,7 @@ printf "[chaotic-aur]\n Include = /etc/pacman.d/chaotic-mirrorlist" | sudo tee -
 sudo pacman -Syu paru
 
 # install packages
-paru -S --needed --noconfirm neovim gcc npm nodejs python zsh tmux zoxide pamixer spotify steam vesktop stow git rsync lazygit btop arm-none-eabi-gcc eza wezterm-nightly-bin zen-browser spicetify-cli qbittorrent tidal-hifi gparted vlc starship inter-font kdeconnect fastfetch fzf unzip firewalld sshfs darkly gamescope yazi fd jq 7zip power-profiles-daemon arm-none-linux-gnueabihf-toolchain-bin awww hyprland hypridle hyprcursor hyprlock hyprshot dunst archlinux-xdg-menu qt6ct-kde qt5ct-kde xdg-desktop-portal-gtk xdg-desktop-portal-hyprland caligula quickshell gnome-keyring libsecret catimg luarocks waypaper vicinae nerd-fonts yolk-bin catppuccin-cursors-frappe awww-git zathura zathura-pdf-mupdf darkly-qt6-git zplug papirus-icon-theme
+./pkg_install.sh
 
 # setup yolk
 cd ~/.config/yolk/ || exit 1

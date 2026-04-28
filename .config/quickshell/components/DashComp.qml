@@ -63,7 +63,7 @@ Rectangle {
             font.bold: true
 
             anchors.centerIn: parent
-            text: ""
+            text: Time.time
         }
 
         Loader {
@@ -76,8 +76,11 @@ Rectangle {
                         top: true
                         right: true
                     }
-                    implicitHeight: root.implicitHeight * 4 + 25
-                    implicitWidth: logout.implicitWidth + 28
+                    // implicitHeight: root.implicitHeight * 4 + 25 + calendarPanel.implicitHeight
+                    // implicitWidth: logout.implicitWidth + 28 + 400
+                    // implicitWidth: 28 + calendarPanel.implicitWidth
+                    implicitWidth: 12 + calendarPanel.implicitWidth + 12
+                    implicitHeight: 400
                     margins {
                         top: -2
                         right: Options.margin.inner * root.barDocked
@@ -126,6 +129,7 @@ Rectangle {
                                 if (!lock.containsMouse &&
                                 !power.containsMouse &&
                                 !logout.containsMouse &&
+                                mouseAreaCalendar.containsMouse &&
                                 !restart.containsMouse) {
                                     dynamicLoader.active = false
                                     Options.barRightBottomRadius = 16.0
@@ -136,65 +140,160 @@ Rectangle {
                         Process {
                             id: process
                         }
-
-                        ColumnLayout {
-                            id: column
+                        Rectangle {
+                            id: calendarPanel
                             anchors {
-                                horizontalCenter: parent.horizontalCenter
-                                // verticalCenter: parent.verticalCenter
+                                bottom: parent.bottom
+                                left: parent.left
+                                bottomMargin: 12
+                                leftMargin: 12
+                            }
+                            color: Colors.base
+                            radius: Options.radius
+                            border.color: Colors.peach
+                            border.width: Options.borderWidth
+                            implicitHeight: 304
+                            implicitWidth: 304
+
+                            // Behavior on opacity {
+                            //     NumberAnimation {
+                            //         duration: 200
+                            //         easing.type: Options.easingTypeOut
+                            //     }
+                            // }
+
+                            MouseArea {
+                                id: mouseAreaCalendar
+                                anchors.fill: parent
+                                hoverEnabled: true
+                                onExited: {
+                                    if (!mouseAreaCalendar.containsMouse) {
+                                        dynamicLoader.active = false
+                                    }
+                                }
+                            }
+                            Calendar {
+                                anchors.margins: 2
+                                anchors.horizontalCenter: parent.horizontalCenter
+                            }
+                        }
+
+                        Rectangle {
+                            id: datePanel
+                            anchors {
                                 top: parent.top
+                                left: parent.left
+                                leftMargin: 12
+                                topMargin: 6
                             }
-                            spacing: 4
+                            color: Colors.base
+                            radius: Options.radius
+                            border.color: Colors.peach
+                            border.width: Options.borderWidth
+                            implicitWidth: power.implicitWidth + 28
+                            implicitHeight: power.implicitWidth + 28
 
-                            StyledButton {
-                                id: power
-                                implicitWidth: (logout.textWidth + 25)
-                                implicitHeight: root.implicitHeight
-                                radius: Options.buttonRadius
-                                buttonColor: Colors.red
-                                buttonTextColor: Colors.base
-                                buttonText: ""
-                                onClick: () => {
-                                    process.exec(["systemctl", "poweroff"])
+                            Text {
+                                id: monthText
+                                color: Colors.text
+                                font.family: Options.font.family
+                                font.bold: true
+                                anchors {
+                                    horizontalCenter: parent.horizontalCenter
+                                    top: parent.top
+                                    topMargin: 14
                                 }
+                                text: Time.date
                             }
 
-                            StyledButton {
-                                id: restart
-                                implicitWidth: (logout.textWidth + 25)
-                                implicitHeight: root.implicitHeight
-                                radius: Options.buttonRadius
-                                buttonColor: Colors.yellow
-                                buttonTextColor: Colors.base
-                                buttonText: ""
-                                onClick: () => {
-                                    process.exec(["systemctl", "reboot"])
+                            Text {
+                                color: Colors.text
+                                font.family: Options.font.family
+                                font.bold: true
+                                anchors {
+                                    horizontalCenter: parent.horizontalCenter
+                                    top: monthText.bottom
                                 }
+                                text: Time.year
                             }
+                        }
 
-                            StyledButton {
-                                id: logout
-                                implicitWidth: (textWidth + 25)
-                                implicitHeight: root.implicitHeight
-                                radius: Options.buttonRadius
-                                buttonColor: Colors.green
-                                buttonTextColor: Colors.base
-                                buttonText: ""
-                                onClick: () => {
-                                    process.exec(["systemctl", "exit"])
+                        Rectangle {
+                            id: buttonsPanel
+                            anchors {
+                                top: parent.top
+                                right: parent.right
+                                rightMargin: 12
+                                topMargin: 6
+                            }
+                            color: Colors.base
+                            radius: Options.radius
+                            border.color: Colors.peach
+                            border.width: Options.borderWidth
+                            implicitWidth: calendarPanel.implicitWidth - datePanel.implicitWidth - 12
+                            implicitHeight: power.implicitWidth + 28
+
+                            RowLayout {
+                                id: column
+                                spacing: 8
+                                anchors {
+                                    centerIn: parent
                                 }
-                            }
-                            StyledButton {
 
-                                id: lock
-                                implicitWidth: (logout.textWidth + 25)
-                                implicitHeight: root.implicitHeight
-                                radius: Options.buttonRadius
-                                buttonColor: Colors.blue
-                                buttonTextColor: Colors.base
-                                buttonText: ""
-                                onClick: () => {
-                                    process.exec(["hyprlock"])
+                                StyledButton {
+                                    id: power
+                                    implicitWidth: logout.implicitWidth
+                                    implicitHeight: logout.implicitHeight
+                                    radius: Options.buttonRadius
+                                    buttonColor: Colors.red
+                                    buttonTextColor: Colors.base
+                                    buttonText: ""
+                                    fontSize: 20
+                                    onClick: () => {
+                                        process.exec(["systemctl", "poweroff"])
+                                    }
+                                }
+
+                                StyledButton {
+                                    id: restart
+                                    implicitWidth: logout.implicitWidth
+                                    implicitHeight: logout.implicitHeight
+                                    radius: Options.buttonRadius
+                                    buttonColor: Colors.yellow
+                                    buttonTextColor: Colors.base
+                                    fontSize: 20
+                                    buttonText: ""
+                                    onClick: () => {
+                                        process.exec(["systemctl", "reboot"])
+                                    }
+                                }
+
+                                StyledButton {
+                                    id: logout
+                                    implicitWidth: (textWidth + 22)
+                                    implicitHeight: (textWidth + 22)
+                                    radius: Options.buttonRadius
+                                    buttonColor: Colors.green
+                                    buttonTextColor: Colors.base
+                                    fontSize: 20
+                                    buttonText: ""
+                                    onClick: () => {
+                                        process.exec(["systemctl", "exit"])
+                                    }
+                                }
+                                StyledButton {
+
+                                    id: lock
+                                    implicitWidth: logout.implicitWidth
+                                    implicitHeight: logout.implicitHeight
+                                    radius: Options.buttonRadius
+                                    buttonColor: Colors.blue
+                                    buttonTextColor: Colors.base
+                                    fontSize: 20
+                                    buttonText: ""
+                                    onClick: () => {
+                                        process.exec(["hyprlock"])
+                                    }
                                 }
                             }
                         }

@@ -5,11 +5,10 @@ zplug "plugins/github",   from:oh-my-zsh
 zplug "plugins/fzf",   from:oh-my-zsh
 zplug "plugins/dirhistory",   from:oh-my-zsh
 zplug "plugins/fancy-ctrl-z",   from:oh-my-zsh
-# zplug "zsh-users/zsh-syntax-highlighting", defer:2
 zplug "zsh-users/zsh-autosuggestions", defer:2
 zplug "hlissner/zsh-autopair", defer:2
 zplug "zdharma-continuum/fast-syntax-highlighting", defer:2
-# zplug "softmoth/zsh-vim-mode"
+zplug "jeffreytse/zsh-vi-mode"
 
 zstyle ':completion:*' menu select
 
@@ -21,6 +20,9 @@ zstyle ':completion:*:messages' format '%d'
 zstyle ':completion:*:warnings' format "$fg[red]No matches for:$reset_color %d"
 zstyle ':completion:*:corrections' format '%B%d (errors: %e)%b'
 zstyle ':completion:*' group-name ''
+
+ZVM_SYSTEM_CLIPBOARD_ENABLED=true
+ZVM_CURSOR_STYLE_ENABLED=false
 
 # History settings
 HISTFILE=~/.zsh_history          # Location of the history file

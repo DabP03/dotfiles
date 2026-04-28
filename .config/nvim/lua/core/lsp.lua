@@ -14,7 +14,7 @@ vim.diagnostic.config({
 	virtual_lines = {
 		current_line = true,
 	},
-	update_in_insert = true,
+	update_in_insert = false,
 })
 
 -- Color as virtual text

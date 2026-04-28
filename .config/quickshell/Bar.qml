@@ -73,31 +73,32 @@ Scope {
                     }
                 }
 
-                ClockComp {
-                    id: clock
-                    anchors.centerIn: parent
-                    anchors.verticalCenter: parent.verticalCenter
-                }
+                // ClockComp {
+                //     id: clock
+                //     visible: {
+                //         return Players.active != null
+                //     }
+                //     anchors.verticalCenter: parent.verticalCenter
+                //     anchors.right: battery.left
+                //     anchors.rightMargin: Options.margin.inner
+                // }
 
                 Tray {
                     id: tray
 
                     barDocked: panelWindow.monitorHasWindows
                     anchors.verticalCenter: parent.verticalCenter
-                    anchors.right: player.left
+                    anchors.right: battery.left
                     anchors.rightMargin: Options.margin.inner
                     bar: panelWindow
                 }
 
                 PlayerComp {
                     id: player
-                    barDocked: panelWindow.monitorHasWindows
-                    visible: {
-                        return Players.active != null
-                    }
+                    anchors.centerIn: parent
                     anchors.verticalCenter: parent.verticalCenter
-                    anchors.right: battery.left
-                    anchors.rightMargin: Options.margin.inner * (Players.active != null)
+                    barDocked: panelWindow.monitorHasWindows
+
                 }
 
                 Battery {

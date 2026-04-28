@@ -51,7 +51,7 @@ Rectangle {
             id: icon
             color: Colors.base 
             font.pixelSize: Options.font.size
-            font.family: "Font Awesome"
+            font.family: Options.font.iconFamily
             font.bold: true
             anchors.centerIn: parent
             text: {

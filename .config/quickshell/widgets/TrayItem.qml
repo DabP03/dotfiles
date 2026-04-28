@@ -36,12 +36,11 @@ MouseArea {
             - Options.width.audio
             - Options.width.network
             - Options.width.dash
-            - Options.width.player
             - (30 * SystemTray.items.values.length)
         )
-        - (Options.margin.inner * 5)
+        - (Options.margin.inner * 4)
         - Options.margin.inner * root.barDocked
-        - 70 // WTF
+        - 64 // WTF
         anchor.rect.y: icon.y + bar.height - 32
         anchor.rect.height: root.height
         anchor.edges: Edges.Bottom

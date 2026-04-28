@@ -66,7 +66,7 @@ Rectangle {
             Text {
                 id: symbol
                 color: Colors.base
-                font.family: Options.font.family
+                font.family: Options.font.iconFamily
                 font.bold: true
                 font.pixelSize: Options.font.size + 2
                 text: Network.symbol

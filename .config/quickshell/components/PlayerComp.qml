@@ -185,20 +185,19 @@ Rectangle {
                 exclusionMode: ExclusionMode.Normal
                 anchors {
                     top: true
-                    right: true
                 }
                 margins {
                     top: -2
                     // wtf
-                    right: Options.width.dash
-                        + Options.width.network
-                        + Options.width.audio
-                        + (Options.margin.inner * 6 + Options.margin.inner * root.barDocked)
-                        + Options.width.battery 
-                        + Options.width.player 
-                        - playerPanel.implicitWidth 
-                        + (playerPanel.implicitWidth - Options.width.player) 
-                        / 2
+                    // right: Options.width.dash
+                    //     + Options.width.network
+                    //     + Options.width.audio
+                    //     + (Options.margin.inner * 6 + Options.margin.inner * root.barDocked)
+                    //     + Options.width.battery 
+                    //     + Options.width.player 
+                    //     - playerPanel.implicitWidth 
+                    //     + (playerPanel.implicitWidth - Options.width.player) 
+                    //     / 2
                 }
                 color: "transparent"
 
