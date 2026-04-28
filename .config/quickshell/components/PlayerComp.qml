@@ -79,7 +79,7 @@ Rectangle {
             id: volumeIndicator
             anchors.top: parent.top
             anchors.horizontalCenter: parent.horizontalCenter
-            implicitWidth: parent.implicitWidth + 4
+            implicitWidth: parent.implicitWidth + 4  * (Players.active != null)
             implicitHeight: parent.implicitHeight * (1 - Players.volume)
             color: Colors.base
             opacity: 0
@@ -106,7 +106,7 @@ Rectangle {
                 leftMargin: 8
             }
             height: 28
-            width: 28
+            width: 28  * (Players.active != null)
             imgSource: Players.active.trackArtUrl
             radius: Options.radius
         }
