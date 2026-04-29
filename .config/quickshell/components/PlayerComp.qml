@@ -113,6 +113,7 @@ Rectangle {
 
         Text {
             id: playPauseIcon
+            property bool playPauseVisible: false
             anchors {
                 verticalCenter: songImg.verticalCenter
                 horizontalCenter: songImg.horizontalCenter
@@ -129,7 +130,7 @@ Rectangle {
             font.pixelSize: Options.font.size + 4
             font.family: Options.font.family
             font.bold: true
-            opacity: 0
+            opacity: (playPauseVisible && Players.active != null) ? 1 : 0
 
             Behavior on opacity {
                 NumberAnimation {
@@ -140,16 +141,17 @@ Rectangle {
 
             Timer {
                 id: playPauseTimer
-
                 interval: 500
                 running: false
                 repeat: false
-
-                onTriggered: if (Players.active.playbackState == MprisPlaybackState.Playing) playPauseIcon.opacity = 0
+                onTriggered: {
+                    if (Players.active?.playbackState == MprisPlaybackState.Playing)
+                    playPauseIcon.playPauseVisible = false
+                }
             }
 
             onTextChanged: {
-                opacity = 1
+                playPauseVisible = true   // set the property, not opacity directly
                 playPauseTimer.restart()
             }
 
@@ -373,8 +375,8 @@ Rectangle {
                                 } else if (loopState == 1) {
                                     return "󰑘"
                                 } else
-                                    return "󰑖"
-                                }
+                                return "󰑖"
+                            }
                             onClick: () => {
                                 Players.loop()
                             }

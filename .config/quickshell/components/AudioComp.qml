@@ -29,8 +29,14 @@ Rectangle {
     }
 
     MouseArea {
-        id: mouseArea
-        anchors.fill: parent
+        id: mouseArea1
+        implicitWidth: parent.implicitWidth / 2
+        implicitHeight: parent.implicitHeight
+        anchors {
+            top: parent.top
+            bottom: parent.bottom
+            left: parent.left
+        }
         hoverEnabled: true
         onWheel: (event) => {
             event.accepted = true // Prevent default scroll behavior
@@ -47,10 +53,35 @@ Rectangle {
         }
     }
 
+    MouseArea {
+        id: mouseArea2
+        implicitWidth: parent.implicitWidth / 2
+        implicitHeight: parent.implicitHeight
+        anchors {
+            top: parent.top
+            bottom: parent.bottom
+            right: parent.right
+        }
+        hoverEnabled: true
+        onWheel: (event) => {
+            event.accepted = true // Prevent default scroll behavior
+            let increment = event.angleDelta.y > 0 ? 0.05 : -0.05
+            let newVolume = Math.max(0, Math.min(1, Audio.micVolume + increment))
+            Audio.setVolume(newVolume, Audio.source)
+        }
+        onClicked: (event) => {
+            if (dynamicLoader.active) {
+                dynamicLoader.active = false  // Hide/destroy
+            } else {
+                dynamicLoader.active = true   // Create/show
+            }
+        }
+    }
+
     Rectangle {
         anchors.fill: parent
         radius: 8
-        color: mouseArea.containsMouse ? Qt.lighter(Colors.teal, 1.1) : Colors.teal
+        color: (mouseArea1.containsMouse || mouseArea2.containsMouse) ? Qt.lighter(Colors.teal, 1.1) : Colors.teal
 
         Behavior on color {
             ColorAnimation {

@@ -306,11 +306,13 @@ hl.bind(
 )
 hl.bind(mainMod .. " + F5", hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%-"), { locked = true, repeating = true })
 hl.bind(mainMod .. " + F6", hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%+"), { locked = true, repeating = true })
-hl.bind(mainMod .. " + F9", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
-hl.bind(mainMod .. " + F10", hl.dsp.exec_cmd("playerctl previous"), { locked = true })
-hl.bind(mainMod .. " + F11", hl.dsp.exec_cmd("playerctl next"), { locked = true })
-hl.bind(mainMod .. " + SHIFT + F10", hl.dsp.exec_cmd("playerctl volume 0.02-"), { locked = true })
-hl.bind(mainMod .. " + SHIFT + F11", hl.dsp.exec_cmd("playerctl volume 0.02+"), { locked = true })
+
+local media = require("lua.playerctl")
+hl.bind(mainMod .. " + F9", media.play_pause, { locked = true })
+hl.bind(mainMod .. " + F10", media.previous, { locked = true })
+hl.bind(mainMod .. " + F11", media.next, { locked = true })
+hl.bind(mainMod .. " + SHIFT + F10", media.volume_down, {repeating = true, locked = true})
+hl.bind(mainMod .. " + SHIFT + F11", media.volume_up, {repeating = true, locked = true})
 
 hl.bind(
 	mainMod .. " + SHIFT + S",
