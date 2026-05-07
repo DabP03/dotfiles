@@ -76,16 +76,15 @@ Rectangle {
         hoverEnabled: true // Needed for scroll wheel detection
 
         onClicked: {
-            // Hyprland.dispatch("workspace " + value)
-            process.exec(["sh", "-c", `hyprctl eval 'hl.dispatch(hl.dsp.focus({ workspace = "${value}" }))'`])
+            Hyprland.dispatch(`hl.dsp.focus({ workspace = "${value}" })`)
         }
 
         onWheel: (event) => {
             event.accepted = true // Prevent default scroll behavior
             if (event.angleDelta.y > 0) {
-                process.exec(["sh", "-c", `hyprctl eval 'hl.dispatch(hl.dsp.focus({ workspace = "+1" }))'`])
+                Hyprland.dispatch(`hl.dsp.focus({ workspace = "+1" })`)
             } else {
-                process.exec(["sh", "-c", `hyprctl eval 'hl.dispatch(hl.dsp.focus({ workspace = "-1" }))'`])
+                Hyprland.dispatch(`hl.dsp.focus({ workspace = "-1" })`)
             }
 
         }

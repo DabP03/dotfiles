@@ -76,14 +76,11 @@ Rectangle {
                         top: true
                         right: true
                     }
-                    // implicitHeight: root.implicitHeight * 4 + 25 + calendarPanel.implicitHeight
-                    // implicitWidth: logout.implicitWidth + 28 + 400
-                    // implicitWidth: 28 + calendarPanel.implicitWidth
                     implicitWidth: 12 + calendarPanel.implicitWidth + 12
                     implicitHeight: 400
                     margins {
                         top: -2
-                        right: Options.margin.inner * root.barDocked
+                        right: Options.margin.inner
                     }
                     color: "transparent"
 

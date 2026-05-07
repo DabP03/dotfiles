@@ -18,20 +18,20 @@ Singleton {
     readonly property string icon: {
         if (isLaptopBattery) {
             if (charging) {
-                return " "
+                return ""
             } else if (percentage < .1) {
-                return "  "
+                return ""
             } else if (percentage < .25) {
-                return "  "
+                return ""
             } else if (percentage < .5) {
-                return "  "
+                return ""
             } else if (percentage < .75) {
-                return "  "
+                return ""
             } else {
-                return "  "
+                return ""
             }
         } else {
-                return "<span font=\"FontAwesome 5 Free Solid\"></span>"
+                return ""
         }
     }
 }
