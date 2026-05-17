@@ -11,6 +11,7 @@ vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Telescope find f
 vim.keymap.set("n", "<leader>fg", builtin.live_grep, { desc = "Telescope live grep" })
 vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Telescope buffers" })
 vim.keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "Telescope help" })
+vim.keymap.set("n", "<leader>ft", builtin.treesitter, { desc = "Telescope treesitter" })
 vim.keymap.set("n", "<leader>flr", builtin.lsp_references, { desc = "Telescope lsp references" })
 vim.keymap.set("n", "<leader>fli", builtin.lsp_implementations, { desc = "Telescope lsp implementations" })
 vim.keymap.set("n", "<leader>fld", builtin.lsp_definitions, { desc = "Telescope lsp definitions" })
@@ -21,6 +22,8 @@ vim.keymap.set("n", "<leader>fp", builtin.planets, { desc = "Telescope planets" 
 vim.keymap.set("n", "<leader>gc", builtin.git_commits, { desc = "Telescope git commits" })
 vim.keymap.set("n", "<leader>gb", builtin.git_branches, { desc = "Telescope git branches" })
 vim.keymap.set("n", "<leader>gs", builtin.git_status, { desc = "Telescope git status" })
+
+
 
 local actions = require("telescope.actions")
 
@@ -131,6 +134,7 @@ telescope.setup({
 		buffers = { theme = "ivy" },
 		help_tags = { theme = "ivy" },
 		lsp_references = { theme = "ivy" },
+		treesitter = { theme = "ivy" },
 		man_pages = { theme = "ivy" },
 		diagnostics = { theme = "ivy" },
 		git_commits = { theme = "ivy" },

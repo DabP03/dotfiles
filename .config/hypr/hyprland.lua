@@ -32,7 +32,7 @@ else
 end
 
 local terminal = "ghostty"
-local fileManager = "dolphin"
+-- local fileManager = "dolphin"
 local menu = "vicinae toggle"
 local webBrowser = "zen-browser"
 
@@ -44,6 +44,13 @@ hl.env("QT_QPA_PLATFORMTHEME", "qt6ct")
 hl.env("XDG_MENU_PREFIX", "arch-")
 hl.env("QT_WAYLAND_DISABLE_WINDOWDECORATION", "1")
 hl.env("GTK_USE_PORTAL", "1")
+
+-- hl.env("AQ_NO_ATOMIC", "1")
+-- hl.config({
+-- 	cursor = {
+-- 		no_hardware_cursors = true,
+-- 	},
+-- })
 
 hl.workspace_rule({ workspace = "spacial:shadowrealm", persistent = true, default = false })
 hl.on("hyprland.start", function()
@@ -59,6 +66,8 @@ hl.on("hyprland.start", function()
 	hl.exec_cmd("vicinae server")
 	hl.exec_cmd("gsettings set org.gnome.desktop.interface cursor-theme 'catppuccin-frappe-dark-cursors'")
 	hl.exec_cmd("easyeffects -w")
+	hl.exec_cmd("syncthing")
+	hl.exec_cmd("keepassxc --minimized")
 	require("lua.scripts").randomiseWallpaper(1800000)
 end)
 
@@ -231,6 +240,9 @@ hl.bind(mainMod .. " + J", hl.dsp.focus({ direction = "down" }))
 hl.bind(mainMod .. " + K", hl.dsp.focus({ direction = "up" }))
 hl.bind(mainMod .. " + L", hl.dsp.focus({ direction = "right" }))
 
+hl.bind(mainMod .. " + mouse_down", hl.dsp.focus({ direction = "left" }))
+hl.bind(mainMod .. " + mouse_up", hl.dsp.focus({ direction = "right" }))
+
 for i = 1, 10 do
 	local key = i % 10 -- 10 maps to key 0
 	hl.bind(mainMod .. " + " .. key, hl.dsp.focus({ workspace = i }))
@@ -239,8 +251,8 @@ for i = 1, 10 do
 	hl.bind(mainMod .. " + CTRL + SHIFT + " .. key, hl.dsp.window.move({ workspace = i + 10 }))
 end
 
-hl.bind(mainMod .. " + mouse_down", hl.dsp.focus({ workspace = "e+1" }))
-hl.bind(mainMod .. " + mouse_up", hl.dsp.focus({ workspace = "e-1" }))
+hl.bind(mainMod .. " + CTRL + mouse_down", hl.dsp.focus({ workspace = "e+1" }))
+hl.bind(mainMod .. " + CTRL + mouse_up", hl.dsp.focus({ workspace = "e-1" }))
 
 hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag(), { mouse = true })
 hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
@@ -307,8 +319,8 @@ local media = require("lua.playerctl")
 hl.bind(mainMod .. " + F9", media.play_pause, { locked = true })
 hl.bind(mainMod .. " + F10", media.previous, { locked = true })
 hl.bind(mainMod .. " + F11", media.next, { locked = true })
-hl.bind(mainMod .. " + SHIFT + F10", media.volume_down, {repeating = true, locked = true})
-hl.bind(mainMod .. " + SHIFT + F11", media.volume_up, {repeating = true, locked = true})
+hl.bind(mainMod .. " + SHIFT + F10", media.volume_down, { repeating = true, locked = true })
+hl.bind(mainMod .. " + SHIFT + F11", media.volume_up, { repeating = true, locked = true })
 
 hl.bind(
 	mainMod .. " + SHIFT + S",
