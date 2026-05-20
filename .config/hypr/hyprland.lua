@@ -45,14 +45,8 @@ hl.env("XDG_MENU_PREFIX", "arch-")
 hl.env("QT_WAYLAND_DISABLE_WINDOWDECORATION", "1")
 hl.env("GTK_USE_PORTAL", "1")
 
--- hl.env("AQ_NO_ATOMIC", "1")
--- hl.config({
--- 	cursor = {
--- 		no_hardware_cursors = true,
--- 	},
--- })
-
 hl.workspace_rule({ workspace = "spacial:shadowrealm", persistent = true, default = false })
+require("lua.scripts").randomiseWallpaper(1800000)
 hl.on("hyprland.start", function()
 	hl.exec_cmd("qs -d")
 	hl.exec_cmd("wl-paste --type text --watch cliphist")
@@ -68,8 +62,8 @@ hl.on("hyprland.start", function()
 	hl.exec_cmd("easyeffects -w")
 	hl.exec_cmd("syncthing")
 	hl.exec_cmd("keepassxc --minimized")
-	require("lua.scripts").randomiseWallpaper(1800000)
 end)
+
 
 hl.config({
 	general = {
@@ -122,8 +116,9 @@ hl.config({
 
 hl.config({
 	scrolling = {
-		fullscreen_on_one_column = true,
+		fullscreen_on_one_column = false,
 		focus_fit_method = true,
+        column_width = "0.667"
 	},
 })
 
@@ -431,11 +426,10 @@ local overlayLayerRule = hl.layer_rule({
 })
 overlayLayerRule:set_enabled(false)
 
--- Hyprland-run windowrule
-hl.window_rule({
-	name = "move-hyprland-run",
-	match = { class = "hyprland-run" },
 
-	move = "20 monitor_h-120",
-	float = true,
+hl.window_rule({
+	name = "scrolling_full_width",
+	match = { class = "zen|discord|steam" },
+
+	scrolling_width = 1.0,
 })

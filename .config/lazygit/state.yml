@@ -1,6 +1,7 @@
 lastupdatecheck: 0
 recentrepos:
     - /home/piotr/dotfiles
+    - /home/piotr/Code/typst
     - /home/piotr/Code/grafy
 startuppopupversion: 5
 didshowhunkstaginghint: true
