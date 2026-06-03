@@ -1,4 +1,5 @@
 [general]
+fullscreen = true
 copy-command = "wl-copy"
 early-exit = true
 actions-on-enter = ["save-to-clipboard"]

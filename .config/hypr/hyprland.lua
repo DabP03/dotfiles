@@ -399,7 +399,8 @@ hl.window_rule({
 	match = {
 		class = "^(com.gabm.satty)$",
 	},
-	float = true,
+	-- float = true,
+    no_anim = true
 })
 
 -- hl.window_rule({

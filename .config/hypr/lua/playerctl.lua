@@ -24,7 +24,7 @@ end
 
 local function run(cmd)
     local player = get_active_player()
-    local player_flag = player and ("--player=" .. player) or ("--player=spotify,tidal,strawberry")
+    local player_flag = player and ("--player=" .. player) or ("--player=spotify,tidal-hifi,strawberry")
     os.execute("playerctl " .. player_flag .. " " .. cmd)
 end
 

@@ -5,7 +5,7 @@ recentrepos:
     - /home/piotr/Code/grafy
 startuppopupversion: 5
 didshowhunkstaginghint: true
-lastversion: 0.61.1
+lastversion: 0.62.0
 customcommandshistory:
     - q
 hidecommandlog: false
