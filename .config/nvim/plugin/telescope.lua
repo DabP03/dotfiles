@@ -18,6 +18,7 @@ vim.keymap.set("n", "<leader>fld", builtin.lsp_definitions, { desc = "Telescope 
 vim.keymap.set("n", "<leader>fd", builtin.diagnostics, { desc = "Telescope diagnostics" })
 vim.keymap.set("n", "<leader>fm", builtin.man_pages, { desc = "Telescope man pages" })
 vim.keymap.set("n", "<leader>fp", builtin.planets, { desc = "Telescope planets" })
+vim.keymap.set("n", "<leader>fs", builtin.spell_suggest, { desc = "Telescope spell" })
 
 vim.keymap.set("n", "<leader>gc", builtin.git_commits, { desc = "Telescope git commits" })
 vim.keymap.set("n", "<leader>gb", builtin.git_branches, { desc = "Telescope git branches" })

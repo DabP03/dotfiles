@@ -1,11 +1,11 @@
 lastupdatecheck: 0
 recentrepos:
     - /home/piotr/dotfiles
-    - /home/piotr/Code/typst
     - /home/piotr/Code/grafy
+    - /home/piotr/Code/typst
 startuppopupversion: 5
 didshowhunkstaginghint: true
-lastversion: 0.62.0
+lastversion: 0.62.2
 customcommandshistory:
     - q
 hidecommandlog: false

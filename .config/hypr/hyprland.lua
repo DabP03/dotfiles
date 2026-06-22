@@ -1,5 +1,7 @@
 local hostname = require("lua.scripts").getHostname()
 
+local fit_method = 1
+
 if hostname == "desktop" then
 	hl.monitor({
 		output = "DP-2",
@@ -62,8 +64,8 @@ hl.on("hyprland.start", function()
 	hl.exec_cmd("easyeffects -w")
 	hl.exec_cmd("syncthing")
 	hl.exec_cmd("keepassxc --minimized")
+	-- hl.exec_cmd("LD_PRELOAD=/usr/lib32/libextest.so steam", { workspace = "3 silent" })
 end)
-
 
 hl.config({
 	general = {
@@ -117,8 +119,8 @@ hl.config({
 hl.config({
 	scrolling = {
 		fullscreen_on_one_column = false,
-		focus_fit_method = true,
-        column_width = "0.667"
+		focus_fit_method = fit_method,
+		column_width = "0.667",
 	},
 })
 
@@ -347,6 +349,14 @@ hl.bind(mainMod .. " + ALT + H", hl.dsp.window.swap({ direction = "left" }))
 hl.bind(mainMod .. " + ALT + L", hl.dsp.window.swap({ direction = "right" }))
 
 hl.bind(mainMod .. " + SHIFT + F", hl.dsp.layout("colresize +conf"))
+hl.bind(mainMod .. " + C", function()
+	fit_method = fit_method ~ 1
+	hl.config({
+		scrolling = {
+			focus_fit_method = fit_method,
+		},
+	})
+end)
 
 hl.window_rule({
 	name = "suppress-maximize-events",
@@ -400,7 +410,7 @@ hl.window_rule({
 		class = "^(com.gabm.satty)$",
 	},
 	-- float = true,
-    no_anim = true
+	no_anim = true,
 })
 
 -- hl.window_rule({
@@ -426,7 +436,6 @@ local overlayLayerRule = hl.layer_rule({
 	no_anim = true,
 })
 overlayLayerRule:set_enabled(false)
-
 
 hl.window_rule({
 	name = "scrolling_full_width",
