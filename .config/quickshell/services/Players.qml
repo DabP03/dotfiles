@@ -47,7 +47,7 @@ Singleton {
     }
     readonly property real volume: active.volume
     property list<var> shownPlayers: [
-        "Spotify",
+        "spotify",
         "tidal-hifi",
         "Strawberry"
     ]
