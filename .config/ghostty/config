@@ -2,7 +2,7 @@ shell-integration = zsh
 window-width = 108
 window-height = 30
 theme = Catppuccin Frappe
-shell-integration-features = no-cursor
+shell-integration-features = ssh-terminfo,ssh-env,no-cursor
 font-family = "IosevkaTerm Nerd Font Propo"
 font-feature = dlig=1
 font-feature = cv07=2

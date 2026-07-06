@@ -32,7 +32,7 @@ Rectangle {
         font.bold: true
         font.pixelSize: Options.font.size - 2
         font.family: Options.font.family
-        text: name || node.properties["application.name"] || "Unknown"
+        text: name || node.properties["application.name"] || node.nickname || "Unknown"
         dwellTime: 3000
 
     }

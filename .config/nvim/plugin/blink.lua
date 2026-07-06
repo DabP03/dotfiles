@@ -92,11 +92,4 @@ require("blink.cmp").setup({
 		default = { "lsp", "path", "snippets", "buffer" },
 	},
 	fuzzy = { implementation = "prefer_rust" },
-	cmdline = {
-		completion = {
-			menu = {
-				auto_show = true,
-			},
-		},
-	},
 })

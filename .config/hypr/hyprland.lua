@@ -64,6 +64,7 @@ hl.on("hyprland.start", function()
 	hl.exec_cmd("easyeffects -w")
 	hl.exec_cmd("syncthing")
 	hl.exec_cmd("keepassxc --minimized")
+	hl.exec_cmd("dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP")
 	-- hl.exec_cmd("LD_PRELOAD=/usr/lib32/libextest.so steam", { workspace = "3 silent" })
 end)
 
@@ -443,3 +444,4 @@ hl.window_rule({
 
 	scrolling_width = 1.0,
 })
+

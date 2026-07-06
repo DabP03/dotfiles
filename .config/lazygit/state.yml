@@ -5,7 +5,7 @@ recentrepos:
     - /home/piotr/Code/typst
 startuppopupversion: 5
 didshowhunkstaginghint: true
-lastversion: 0.62.2
+lastversion: 0.63.0
 customcommandshistory:
     - q
 hidecommandlog: false

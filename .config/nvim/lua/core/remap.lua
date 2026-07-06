@@ -12,10 +12,6 @@ vim.keymap.set("n", "<CR>", vim.cmd.noh, { desc = "Disable search highlighting" 
 vim.keymap.set("", "<C-c>", "<NOP>", { desc = "Disable C-c" })
 vim.keymap.set("", "<C-c>", "<ESC>", { desc = "Exit mode with C-c with abbreviations" })
 
--- Navigate buffers
-vim.keymap.set("n", "<S-l>", ":bnext<CR>", { desc = "Next buffer" })
-vim.keymap.set("n", "<S-h>", ":bprevious<CR>", { desc = "Previous buffer" })
-
 -- Visual --
 vim.keymap.set("v", "<", "<gv", { desc = "Tab highlighted text left" })
 vim.keymap.set("v", ">", ">gv", { desc = "Tab highlighted text right" })

@@ -222,11 +222,6 @@ Rectangle {
                         color: Colors.base
                     }
 
-                    PwNodeLinkTracker {
-                        id: linkTracker
-                        node: Pipewire.defaultAudioSink
-                    }
-
                     MixerEntry {
                         id: mixerMain
                         anchors {
@@ -294,7 +289,7 @@ Rectangle {
 
                             Repeater {
                                 id: repeater
-                                model: linkTracker.linkGroups
+                                model: Audio.sinkLinkTracker.linkGroups
 
                                 function itemsContainMouse() {
                                     let sharedState = false
@@ -307,10 +302,8 @@ Rectangle {
 
                                 MixerEntry {
                                     required property PwLinkGroup modelData
-                                    // Each link group contains a source and a target.
-                                    // Since the target is the default sink, we want the source.
                                     node: modelData.source
-                                    name: ""
+                                    name: modelData.source.properties["application.name"] ?? ""
                                 }
                             }
                         }
