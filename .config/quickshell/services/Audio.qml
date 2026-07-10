@@ -15,9 +15,11 @@ Singleton {
     readonly property bool micMuted: source?.audio?.muted ?? false
     readonly property real micVolume: source?.audio?.volume ?? 0
 
-    readonly property PwNodeLinkTracker sinkLinkTracker: PwNodeLinkTracker {
-        node: Pipewire.defaultAudioSink
-    }
+    // readonly property PwNodeLinkTracker sinkLinkTracker: PwNodeLinkTracker {
+    //     node: Pipewire.defaultAudioSink
+    // }
+
+    property var sinks: Pipewire.nodes.values.filter(node => node.isSink)
 
     function setVolume(volume: real, node: PwNode): void {
         if (node == undefined) {

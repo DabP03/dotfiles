@@ -27,9 +27,9 @@ Scope {
             color: "transparent"
 
             margins {
-                top: 8 * monitorHasWindows
-                left: 8 * monitorHasWindows
-                right: 8 * monitorHasWindows
+                top: 0
+                left: 0
+                right: 0
             }
 
             anchors {
@@ -42,8 +42,7 @@ Scope {
                 implicitHeight: parent.height
                 implicitWidth: parent.width
                 color: Colors.base
-                radius: Options.radius * monitorHasWindows
-                bottomRightRadius: Options.barRightBottomRadius * monitorHasWindows
+                radius: 0
 
                 border.color: Colors.peach
                 border.width: Options.borderWidth
@@ -62,7 +61,6 @@ Scope {
                 }
 
                 Rectangle {
-                    visible: !monitorHasWindows
                     color: Colors.base
                     implicitHeight: parent.height - 2
                     implicitWidth: parent.width

@@ -80,7 +80,7 @@ Rectangle {
                     implicitHeight: 400
                     margins {
                         top: -2
-                        right: Options.margin.inner
+                        right: 0
                     }
                     color: "transparent"
 

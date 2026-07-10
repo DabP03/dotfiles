@@ -249,7 +249,6 @@ Rectangle {
                         anchors {
                             horizontalCenter: parent.horizontalCenter
                             top: mixerMainMic.bottom
-                            // topMargin: 35
                         }
                         implicitHeight: 3
                         implicitWidth: playerMenu.implicitWidth * .9
@@ -266,18 +265,8 @@ Rectangle {
                             top: separator.bottom
                             topMargin: 4
                         }
-                        // onHoveredChanged: {
-                        //     console.log("DOWN")
-                        //     console.log("area: " + !mouseAreaLoader.containsMouse)
-                        //     console.log("mixer: " + mixerMain.containsMouse)
-                        //     console.log("repeater: " + repeater.itemsContainMouse())
-                        //     console.log("scroll: " + !scrollView.hovered)
-                        //     if (!mouseAreaLoader.containsMouse && mixerMain.containsMouse && repeater.itemsContainMouse() && !scrollView.hovered) {
-                        //         dynamicLoader.active = false
-                        //     }
-                        // }
+
                         ScrollBar.vertical.policy: ScrollBar.AlwaysOff
-                        // ScrollBar.vertical: ScrollBar {}
 
                         ColumnLayout {
                             id: repeaterColumn
@@ -289,7 +278,7 @@ Rectangle {
 
                             Repeater {
                                 id: repeater
-                                model: Audio.sinkLinkTracker.linkGroups
+                                model: Audio.sinks
 
                                 function itemsContainMouse() {
                                     let sharedState = false
@@ -301,9 +290,9 @@ Rectangle {
                                 }
 
                                 MixerEntry {
-                                    required property PwLinkGroup modelData
-                                    node: modelData.source
-                                    name: modelData.source.properties["application.name"] ?? ""
+                                    required property PwNode modelData
+                                    node: modelData
+                                    name: modelData.properties["application.name"] ?? ""
                                 }
                             }
                         }

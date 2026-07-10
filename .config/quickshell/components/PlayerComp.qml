@@ -182,7 +182,7 @@ Rectangle {
             sourceComponent: PanelWindow {
                 id: playerPanel
                 implicitHeight: 272
-                implicitWidth: Math.max(192, songName.implicitWidth, authorName.implicitWidth, albumName.implicitWidth) + 8
+                implicitWidth: 256 + 8
 
                 exclusionMode: ExclusionMode.Normal
                 anchors {
@@ -242,7 +242,7 @@ Rectangle {
 
                     ScrollingText {
                         id: songName
-                        implicitWidth: textWidth < 300 ? textWidth : 300
+                        implicitWidth: textWidth < 252 ? textWidth : 252
                         anchors {
                             horizontalCenter: parent.horizontalCenter
                             top: menuSongImg.bottom
@@ -259,7 +259,7 @@ Rectangle {
 
                     ScrollingText {
                         id: authorName
-                        implicitWidth: textWidth < 300 ? textWidth : 300
+                        implicitWidth: textWidth < 252 ? textWidth : 252
                         anchors {
                             horizontalCenter: parent.horizontalCenter
                             top: songName.bottom
@@ -276,7 +276,7 @@ Rectangle {
 
                     ScrollingText {
                         id: albumName
-                        implicitWidth: textWidth < 300 ? textWidth : 300
+                        implicitWidth: textWidth < 252 ? textWidth : 252
                         anchors {
                             horizontalCenter: parent.horizontalCenter
                             top: authorName.bottom
