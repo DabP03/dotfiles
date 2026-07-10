@@ -160,7 +160,7 @@ Rectangle {
 
         ScrollingText {
             id: songInfo
-            implicitWidth: textWidth < 300 ? textWidth : 300
+            implicitWidth: textWidth < 320 ? textWidth : 320
             anchors {
                 verticalCenter: parent.verticalCenter
                 left: songImg.right
@@ -181,8 +181,8 @@ Rectangle {
             active: false  // Starts hidden
             sourceComponent: PanelWindow {
                 id: playerPanel
-                implicitHeight: 272
-                implicitWidth: 256 + 8
+                implicitHeight: 460
+                implicitWidth: 300 + 8
 
                 exclusionMode: ExclusionMode.Normal
                 anchors {
@@ -232,8 +232,8 @@ Rectangle {
                             top: parent.top
                             topMargin: 0
                         }
-                        implicitHeight: 142
-                        implicitWidth: 142
+                        implicitHeight: 256
+                        implicitWidth: 256
                         imgSource: Players.active.trackArtUrl
                         radius: Options.radius
                     }
@@ -242,7 +242,7 @@ Rectangle {
 
                     ScrollingText {
                         id: songName
-                        implicitWidth: textWidth < 252 ? textWidth : 252
+                        implicitWidth: textWidth < 300 ? textWidth : 300
                         anchors {
                             horizontalCenter: parent.horizontalCenter
                             top: menuSongImg.bottom
@@ -259,7 +259,7 @@ Rectangle {
 
                     ScrollingText {
                         id: authorName
-                        implicitWidth: textWidth < 252 ? textWidth : 252
+                        implicitWidth: textWidth < 300 ? textWidth : 300
                         anchors {
                             horizontalCenter: parent.horizontalCenter
                             top: songName.bottom
@@ -276,7 +276,7 @@ Rectangle {
 
                     ScrollingText {
                         id: albumName
-                        implicitWidth: textWidth < 252 ? textWidth : 252
+                        implicitWidth: textWidth < 300 ? textWidth : 300
                         anchors {
                             horizontalCenter: parent.horizontalCenter
                             top: authorName.bottom
@@ -300,7 +300,8 @@ Rectangle {
                             && !stopStartButton.containsMouse 
                             && !nextButton.containsMouse 
                             && !shuffleButton.containsMouse 
-                            && !loopButton.containsMouse) {
+                            && !loopButton.containsMouse
+                            && !durationSlider.hovered) {
                                 dynamicLoader.active = false
                             }
                         }
@@ -310,7 +311,7 @@ Rectangle {
                         spacing: 4
                         anchors {
                             horizontalCenter: parent.horizontalCenter
-                            top: albumName.bottom
+                            top: durationRow.bottom
                             topMargin: 8
                         }
 
@@ -344,7 +345,7 @@ Rectangle {
                             implicitHeight: 30
                             buttonColor: Colors.yellow
                             buttonTextColor: Colors.base
-                            buttonText: Players.active.playbackState.toString() == 1 ? "" : ""
+                            buttonText: Players.active.playbackState.toString() == 1 ? "\uf04c" : "\uf04b"
                             onClick: () => {
                                 Players.playPause()
                             }
@@ -381,6 +382,131 @@ Rectangle {
                                 Players.loop()
                             }
                         }
+                    }
+
+                    RowLayout {
+                        id: durationRow
+                        spacing: 6
+                        anchors {
+                            horizontalCenter: parent.horizontalCenter
+                            top: albumName.bottom
+                            topMargin: 8
+                        }
+
+                        Text {
+                            Layout.alignment: Qt.AlignVCenter
+                            text: Players.formatTime(Players.active.position)
+                            color: Colors.text
+                            font.pixelSize: Options.font.size - 2
+                            font.family: Options.font.family
+                        }
+
+                        Slider {
+                            id: durationSlider
+                            implicitWidth: 180
+                            from: 0
+                            to: Players.active.length > 0 ? Players.active.length : 1
+                            enabled: Players.active.canSeek
+
+                            // Imperative updates (not a binding) so dragging the handle
+                            // doesn't fight with position ticks arriving during the seek.
+                            Component.onCompleted: value = Players.active.position
+
+                            Connections {
+                                target: Players.active
+                                function onPositionChanged() {
+                                    if (!durationSlider.pressed) {
+                                        durationSlider.value = Players.active.position
+                                    }
+                                }
+                                function onTrackChanged() {
+                                    durationSlider.value = Players.active.position
+                                }
+                            }
+
+                            onMoved: () => {
+                                Players.active.position = durationSlider.value
+                            }
+                            background: Rectangle {
+                                x: durationSlider.leftPadding
+                                y: durationSlider.topPadding + durationSlider.availableHeight / 2 - height / 2
+                                implicitWidth: 180
+                                implicitHeight: 4
+                                width: durationSlider.availableWidth
+                                height: implicitHeight
+                                radius: 2
+                                color: Colors.surface0
+                                Rectangle {
+                                    width: durationSlider.visualPosition * parent.width
+                                    height: parent.height
+                                    color: Colors.yellow
+                                    radius: 2
+                                }
+                            }
+                            handle: Rectangle {
+                                x: durationSlider.leftPadding + durationSlider.visualPosition * (durationSlider.availableWidth - width)
+                                y: durationSlider.topPadding + durationSlider.availableHeight / 2 - height / 2
+                                implicitWidth: 12
+                                implicitHeight: 12
+                                radius: 13
+                                color: durationSlider.pressed ? Qt.lighter(Colors.yellow, 1.1) : Colors.yellow
+                            }
+                        }
+
+                        Text {
+                            Layout.alignment: Qt.AlignVCenter
+                            text: Players.formatTime(Players.active.length)
+                            color: Colors.text
+                            font.pixelSize: Options.font.size - 2
+                            font.family: Options.font.family
+                        }
+                    }
+
+                    RowLayout {
+                        id: bottomButtons
+                        spacing: 8
+                        anchors {
+                            horizontalCenter: parent.horizontalCenter
+                            top: controlButtons.bottom
+                            topMargin: 8
+                        }
+
+
+                        Rectangle {
+                            id: sourceRect
+                            implicitHeight: 30
+                            implicitWidth: sourceRow.implicitWidth + 16
+                            radius: Options.radius
+                            color: Colors.mantle
+
+                            RowLayout {
+                                id: sourceRow
+                                anchors.centerIn: parent
+
+                                spacing: 4
+
+                                Rectangle {
+                                    id: playerImgContainer
+                                    implicitHeight: 24
+                                    implicitWidth: 24
+                                    color: "transparent"
+                                    Image {
+                                        id: playerImg
+                                        anchors.fill: parent
+                                        source: Quickshell.iconPath(Players.getSourceIcon(Players.active.identity))
+                                    }
+                                }
+
+                                Text {
+                                    text: Players.getSourceName(Players.active.identity)
+                                    color: Colors.text
+                                    font.bold: true
+                                    font.pixelSize: Options.font.size - 2
+                                    font.family: Options.font.family
+                                }
+                            }
+                        }
+
                     }
                 }
             }

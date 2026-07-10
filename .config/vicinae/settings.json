@@ -74,8 +74,22 @@
       "developer": {
          "enabled": false
       },
+      "files": {
+         "preferences": {
+            "autoIndexing": false,
+            "excludedIndexingPaths": [],
+            "indexingPaths": [
+               "/home/piotr"
+            ]
+         }
+      },
       "font": {
-         "enabled": true
+         "enabled": true,
+         "entrypoints": {
+            "browse": {
+               "enabled": true
+            }
+         }
       },
       "system": {
          "enabled": false,

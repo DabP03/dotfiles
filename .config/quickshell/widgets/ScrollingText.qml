@@ -20,7 +20,7 @@ Item {
     property int dwellTime: 2000
 
     // Scroll duration (exposed)
-    property int scrollDuration: 10 * songNameLabel.implicitWidth
+    property int scrollDuration: 12 * songNameLabel.implicitWidth
 
     // Main scrolling animation
     SequentialAnimation {

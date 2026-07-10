@@ -99,6 +99,7 @@ Rectangle {
                         border.width: Options.borderWidth
                         topLeftRadius: 0
                         topRightRadius: 0
+                        bottomRightRadius: 0
                         implicitHeight: menuPanel.implicitHeight
                         implicitWidth: menuPanel.implicitWidth
 
@@ -115,6 +116,16 @@ Rectangle {
                             height: Options.borderWidth
                             anchors.top: parent.top
                             anchors.horizontalCenter: parent.horizontalCenter
+                            color: Colors.base
+                        }
+
+                        Rectangle {
+                            id: sideBorder
+                            width: Options.borderWidth
+                            height: parent.implicitHeight - 2
+
+                            anchors.right: parent.right
+                            anchors.top: parent.top
                             color: Colors.base
                         }
 

@@ -1,7 +1,5 @@
 local hostname = require("lua.scripts").getHostname()
 
-local fit_method = 1
-
 if hostname == "desktop" then
 	hl.monitor({
 		output = "DP-2",
@@ -49,7 +47,9 @@ hl.env("QT_WAYLAND_DISABLE_WINDOWDECORATION", "1")
 hl.workspace_rule({ workspace = "spacial:shadowrealm", persistent = true, default = false })
 require("lua.scripts").randomiseWallpaper(1800000)
 hl.on("hyprland.start", function()
-    hl.exec_cmd("dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP HYPRLAND_INSTANCE_SIGNATURE XDG_SESSION_TYPE")
+	hl.exec_cmd(
+		"dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP HYPRLAND_INSTANCE_SIGNATURE XDG_SESSION_TYPE"
+	)
 	hl.exec_cmd("systemctl --user start hyprland-session.target")
 	hl.exec_cmd("qs -d")
 	hl.exec_cmd("wl-paste --type text --watch cliphist")
@@ -64,12 +64,13 @@ hl.on("hyprland.start", function()
 	hl.exec_cmd("easyeffects -w")
 	hl.exec_cmd("syncthing")
 	hl.exec_cmd("keepassxc --minimized")
+    hl.exec_cmd("sh -c 'sleep 5 && gpu-screen-recorder -w screen -c mp4 -f 144 -a \"$(pactl get-default-sink).monitor\" -a \"$(pactl get-default-source)\" -r 30 -o ~/Videos/ScreenRecordings -sc ~/.config/hypr/lua/gsr-notify.sh'")
 end)
 
 hl.config({
 	general = {
 		gaps_in = 4,
-		gaps_out = 8,
+		gaps_out = 4,
 		border_size = 2,
 		col = {
 			active_border = "rgb(ef9f76)",
@@ -118,7 +119,7 @@ hl.config({
 hl.config({
 	scrolling = {
 		fullscreen_on_one_column = false,
-		focus_fit_method = fit_method,
+		focus_fit_method = 1,
 		column_width = "0.667",
 	},
 })
@@ -219,12 +220,16 @@ local mainMod = "SUPER"
 
 hl.bind(mainMod .. " + Return", hl.dsp.exec_cmd(terminal))
 hl.bind(mainMod .. " + E", require("lua.scripts").toggleDolphin)
+hl.bind(mainMod .. " + SHIFT + E", hl.dsp.exec_cmd("dolphin"))
 hl.bind(mainMod .. " + W", hl.dsp.exec_cmd(webBrowser))
 hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + Q", hl.dsp.window.close())
 hl.bind(mainMod .. " + R", hl.dsp.exec_cmd(menu))
-hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
+hl.bind(mainMod .. " + P", hl.dsp.layout("promote"))
 hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen({ action = "toggle" }))
+hl.bind(mainMod .. " + C", hl.dsp.layout("fit expand"))
+hl.bind(mainMod .. " + CTRL + SHIFT + S", hl.dsp.exec_cmd("pkill -SIGUSR1 -f gpu-screen-recorder"))
+
 
 hl.bind(mainMod .. " + Left", hl.dsp.focus({ direction = "left" }))
 hl.bind(mainMod .. " + Down", hl.dsp.focus({ direction = "down" }))
@@ -348,14 +353,6 @@ hl.bind(mainMod .. " + ALT + H", hl.dsp.window.swap({ direction = "left" }))
 hl.bind(mainMod .. " + ALT + L", hl.dsp.window.swap({ direction = "right" }))
 
 hl.bind(mainMod .. " + SHIFT + F", hl.dsp.layout("colresize +conf"))
-hl.bind(mainMod .. " + C", function()
-	fit_method = fit_method ~ 1
-	hl.config({
-		scrolling = {
-			focus_fit_method = fit_method,
-		},
-	})
-end)
 
 hl.window_rule({
 	name = "suppress-maximize-events",
@@ -401,6 +398,7 @@ hl.window_rule({
 		class = "^(hyprland-share-picker)$",
 	},
 	float = true,
+	size = { "(monitor_w*0.75)", "(monitor_h*0.75)" },
 })
 
 hl.window_rule({
@@ -412,21 +410,23 @@ hl.window_rule({
 	no_anim = true,
 })
 
--- hl.window_rule({
--- 	name = "Strawberry",
--- 	match = {
--- 		class = "^(org.strawberrymusicplayer.strawberry)$",
--- 	},
--- 	workspace = "10 silent",
--- })
---
--- hl.window_rule({
--- 	name = "Spotify",
--- 	match = {
--- 		class = "^(Spotify)$",
--- 	},
--- 	workspace = "10 silent",
--- })
+hl.window_rule({
+	name = "File Picker",
+	match = {
+		class = "^(org.freedesktop.impl.portal.desktop.kde)$",
+	},
+	float = true,
+	size = { "(monitor_w*0.75)", "(monitor_h*0.75)" },
+})
+
+hl.window_rule({
+	name = "Dolphin",
+	match = {
+		class = "^(org.kde.dolphin)$",
+	},
+	float = true,
+	size = { "(monitor_w*0.75)", "(monitor_h*0.75)" },
+})
 
 -- Layer rules also return a handle.
 local overlayLayerRule = hl.layer_rule({
@@ -443,3 +443,8 @@ hl.window_rule({
 	scrolling_width = 1.0,
 })
 
+hl.window_rule({
+	name = "Games cursor",
+	match = { content = "game", fullscreen = true },
+	confine_pointer = true,
+})

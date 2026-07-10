@@ -20,7 +20,7 @@ function _M.toggleDolphin()
 	local active = hl.get_active_window()
 
 	if #wins == 0 then
-		hl.exec_cmd("dolphin")
+		hl.exec_cmd("dolphin", {float = false})
 		return
 	end
 

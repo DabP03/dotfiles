@@ -322,13 +322,29 @@ Rectangle {
                                 }
 
 
-                                MixerGroup {
+                                ColumnLayout {
+                                    id: groupDelegate
                                     required property var modelData
-                                    // Layout.alignment: Qt.AlignHCenter
-                                    appName: modelData.appName
-                                    nodes: modelData.nodes
-                                }
+                                    required property int index
+                                    Layout.alignment: Qt.AlignHCenter
+                                    spacing: 16
 
+                                    property bool containsMouse: groupItem.containsMouse
+
+                                    MixerGroup {
+                                        id: groupItem
+                                        appName: groupDelegate.modelData.appName
+                                        nodes: groupDelegate.modelData.nodes
+                                    }
+
+                                    Rectangle {
+                                        visible: groupDelegate.index < repeater.count - 1
+                                        Layout.fillWidth: true
+                                        Layout.leftMargin: 24
+                                        implicitHeight: Options.borderWidth
+                                        color: Colors.surface0
+                                    }
+                                }
                             }
                         }
                     }
