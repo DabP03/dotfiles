@@ -169,8 +169,8 @@ Rectangle {
             active: false  // Starts hidden
             sourceComponent: PanelWindow {
                 id: playerPanel
-                implicitHeight: topBorder.implicitHeight + mixerMain.implicitHeight + mixerMainMic.implicitHeight + (separator.implicitHeight * (repeater.count != 0)) + (mixerMain.implicitHeight * (repeater.count != 0)) + (10 * (repeater.count != 0))
-                implicitWidth: 200
+                implicitHeight: topBorder.implicitHeight + 8 + mainRow.implicitHeight + (separator.implicitHeight * (repeater.count != 0)) + (scrollView.implicitHeight * (repeater.count != 0)) + (16 * (repeater.count != 0))
+                implicitWidth: Math.max(220, mainRow.implicitWidth + 24, repeaterColumn.implicitWidth + 24)
 
                 exclusionMode: ExclusionMode.Normal
                 anchors {
@@ -179,14 +179,7 @@ Rectangle {
                 }
                 margins {
                     top: -2
-                    // wtf
-                    right: Options.width.dash
-                    + Options.width.network
-                    + (Options.margin.inner * 4 + Options.margin.inner * root.barDocked)
-                    + Options.width.audio
-                    - playerPanel.implicitWidth
-                    + (playerPanel.implicitWidth - Options.width.audio)
-                    / 2
+                    right: 0
                 }
                 color: "transparent"
 
@@ -222,33 +215,72 @@ Rectangle {
                         color: Colors.base
                     }
 
-                    MixerEntry {
-                        id: mixerMain
+                    ColumnLayout {
+                        id: mainRow
                         anchors {
                             horizontalCenter: parent.horizontalCenter
                             top: topBorder.bottom
-                            // topMargin: 35
+                            topMargin: 8
                         }
-                        node: Audio.sink
-                        name: Audio.sink.nickname
-                    }
+                        spacing: 8
 
-                    MixerEntry {
-                        id: mixerMainMic
-                        anchors {
-                            horizontalCenter: parent.horizontalCenter
-                            top: mixerMain.bottom
-                            // topMargin: 35
+                        ColumnLayout {
+                            id: outputColumn
+                            spacing: 4
+
+                            Text {
+                                Layout.alignment: Qt.AlignHCenter
+                                text: "Output"
+                                color: Colors.text
+                                opacity: 0.6
+                                font.bold: true
+                                font.pixelSize: Options.font.size - 3
+                                font.family: Options.font.family
+                            }
+
+                            MixerEntry {
+                                id: mixerMain
+                                node: Audio.sink
+                                name: Audio.sink.nickname
+                            }
                         }
-                        node: Audio.source
-                        name: Audio.source.nickname
+
+                        Rectangle {
+                            Layout.fillWidth: true
+                            Layout.topMargin: 4
+                            Layout.bottomMargin: 4
+                            implicitHeight: Options.borderWidth
+                            color: Colors.surface0
+                        }
+
+                        ColumnLayout {
+                            id: inputColumn
+                            spacing: 4
+
+                            Text {
+                                Layout.alignment: Qt.AlignHCenter
+                                text: "Input"
+                                color: Colors.text
+                                opacity: 0.6
+                                font.bold: true
+                                font.pixelSize: Options.font.size - 3
+                                font.family: Options.font.family
+                            }
+
+                            MixerEntry {
+                                id: mixerMainMic
+                                node: Audio.source
+                                name: Audio.source.nickname
+                            }
+                        }
                     }
 
                     Rectangle {
                         id: separator
                         anchors {
                             horizontalCenter: parent.horizontalCenter
-                            top: mixerMainMic.bottom
+                            top: mainRow.bottom
+                            topMargin: 8
                         }
                         implicitHeight: 3
                         implicitWidth: playerMenu.implicitWidth * .9
@@ -258,7 +290,7 @@ Rectangle {
                     ScrollView {
                         id: scrollView
                         implicitWidth: playerPanel.implicitWidth - 2
-                        implicitHeight: mixerMain.implicitHeight
+                        implicitHeight: Math.min(repeaterColumn.implicitHeight, 220)
                         clip: false
                         anchors {
                             horizontalCenter: parent.horizontalCenter
@@ -270,30 +302,33 @@ Rectangle {
 
                         ColumnLayout {
                             id: repeaterColumn
-                            spacing: 4
+                            spacing: 12
                             anchors {
-                                verticalCenter: parent.verticalCenter
+                                top: parent.top
                                 horizontalCenter: parent.horizontalCenter
                             }
 
                             Repeater {
                                 id: repeater
-                                model: Audio.sinks
+                                model: Audio.groupedSinks
 
                                 function itemsContainMouse() {
                                     let sharedState = false
                                     for (let i = 0; i < repeater.count; i++) {
                                         let item = repeater.itemAt(i)
-                                        sharedState = sharedState || item.containsMouse
+                                        sharedState = sharedState || (item && item.containsMouse)
                                     }
                                     return sharedState
                                 }
 
-                                MixerEntry {
-                                    required property PwNode modelData
-                                    node: modelData
-                                    name: modelData.properties["application.name"] ?? ""
+
+                                MixerGroup {
+                                    required property var modelData
+                                    // Layout.alignment: Qt.AlignHCenter
+                                    appName: modelData.appName
+                                    nodes: modelData.nodes
                                 }
+
                             }
                         }
                     }

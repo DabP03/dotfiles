@@ -15,11 +15,32 @@ Singleton {
     readonly property bool micMuted: source?.audio?.muted ?? false
     readonly property real micVolume: source?.audio?.volume ?? 0
 
-    // readonly property PwNodeLinkTracker sinkLinkTracker: PwNodeLinkTracker {
-    //     node: Pipewire.defaultAudioSink
-    // }
 
-    property var sinks: Pipewire.nodes.values.filter(node => node.isSink)
+    property var sinks: Pipewire.nodes.values.filter(node => node.isSink && node.isStream)
+
+    // sinks grouped by application, e.g. { appName: "Firefox", nodes: [tab1, tab2, ...] }.
+    // Apps with a single stream stay as a flat entry; apps with multiple streams
+    // (like a browser with several tabs playing audio) become a tree.
+    property var groupedSinks: {
+        const groups = {}
+        const order = []
+
+        for (const node of sinks) {
+            const appName = node.properties["application.name"]
+                ?? node.nickname
+                ?? node.name
+                ?? "Unknown"
+
+            if (!groups[appName]) {
+                groups[appName] = { appName: appName, nodes: [] }
+                order.push(appName)
+            }
+
+            groups[appName].nodes.push(node)
+        }
+
+        return order.map(name => groups[name])
+    }
 
     function setVolume(volume: real, node: PwNode): void {
         if (node == undefined) {

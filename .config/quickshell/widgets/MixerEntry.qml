@@ -8,25 +8,23 @@ import "root:/config/"
 import "root:/services/"
 import "root:/widgets/"
 
-Rectangle {
+ColumnLayout {
+    id: root
     required property PwNode node;
     required property string name;
+    property real sliderScale: 1.0
     property bool containsMouse: (!decButton.containsMouse && !incButton.containsMouse && !slider.hovered && !audioSinkPercent.containsMouse)
 
-    implicitHeight: audioSinkName.implicitHeight + panelRow.implicitHeight + audioSinkPercent.implicitHeight + 4 + 4 * 2 + 4
-
-    color: "transparent"
+    spacing: 4
 
     PwObjectTracker { objects: [ node ] }
 
     ScrollingText {
         id: audioSinkName
-        implicitWidth: textWidth < 200 ? textWidth : 200
-
-        anchors {
-            bottom: panelRow.top
-            bottomMargin: 2
-            horizontalCenter: parent.horizontalCenter
+        Layout.alignment: Qt.AlignHCenter
+        implicitWidth: {
+            let cap = 200 * root.sliderScale
+            return textWidth < cap ? textWidth : cap
         }
         color: Colors.text
         font.bold: true
@@ -34,15 +32,11 @@ Rectangle {
         font.family: Options.font.family
         text: name || node.properties["application.name"] || node.nickname || "Unknown"
         dwellTime: 3000
-
     }
 
     RowLayout {
         id: panelRow
-        implicitHeight: decButton.implicitHeight + slider.implicitHeight + incButton.implicitHeight
-        anchors {
-            centerIn: parent
-        }
+        Layout.alignment: Qt.AlignHCenter
         spacing: 4
 
         StyledButton {
@@ -59,6 +53,7 @@ Rectangle {
 
         Slider {
             id: slider
+            implicitWidth: 200 * root.sliderScale
             from: 0
             value: Math.round(node.audio.volume * 100) / 100
             to: 1
@@ -68,7 +63,7 @@ Rectangle {
             background: Rectangle {
                 x: slider.leftPadding
                 y: slider.topPadding + slider.availableHeight / 2 - height / 2
-                implicitWidth: 100
+                implicitWidth: 200 * root.sliderScale
                 implicitHeight: 4
                 width: slider.availableWidth
                 height: implicitHeight
@@ -106,13 +101,9 @@ Rectangle {
 
     StyledButton {
         id: audioSinkPercent
-        anchors {
-            top: panelRow.bottom
-            bottomMargin: 2
-            horizontalCenter: parent.horizontalCenter
-        }
+        Layout.alignment: Qt.AlignHCenter
         implicitWidth: textWidth + 8
-        implicitHeight: 25
+        implicitHeight: 20
         buttonColor: Colors.base
         buttonTextColor: Colors.text
         buttonText: Math.round(node.audio.volume * 100) + "%"
@@ -120,13 +111,4 @@ Rectangle {
             Audio.mute(node)
         }
     }
-
-    // Text {
-    //     id: audioSinkPercent
-    //     color: Colors.text
-    //     font.bold: true
-    //     font.pixelSize: Options.font.size - 2
-    //     font.family: Options.font.family
-    //     text: Math.round(node.audio.volume * 100) + "%"
-    // }
 }
