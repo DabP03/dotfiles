@@ -118,3 +118,5 @@ zle-line-init() {
     echo -ne '\e[2 q'
 }
 zle -N zle-line-init
+
+. "$HOME/.local/bin/env"

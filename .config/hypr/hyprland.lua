@@ -64,7 +64,8 @@ hl.on("hyprland.start", function()
 	hl.exec_cmd("easyeffects -w")
 	hl.exec_cmd("syncthing")
 	hl.exec_cmd("keepassxc --minimized")
-    hl.exec_cmd("sh -c 'sleep 5 && gpu-screen-recorder -w screen -c mp4 -f 144 -a \"$(pactl get-default-sink).monitor\" -a \"$(pactl get-default-source)\" -r 30 -o ~/Videos/ScreenRecordings -sc ~/.config/hypr/lua/gsr-notify.sh'")
+    hl.exec_cmd("solaar --window=hide")
+    hl.exec_cmd("sh -c 'sleep 10 && gpu-screen-recorder -w screen -c mp4 -f 60 -a $(pactl get-default-sink).monitor -a $(pactl get-default-source) -r 30 -o ~/Videos/ScreenRecordings -sc ~/.config/hypr/lua/gsr-notify.sh'")
 end)
 
 hl.config({
@@ -398,7 +399,7 @@ hl.window_rule({
 		class = "^(hyprland-share-picker)$",
 	},
 	float = true,
-	size = { "(monitor_w*0.75)", "(monitor_h*0.75)" },
+	size = { "(monitor_w*0.72)", "(monitor_h*0.72)" },
 })
 
 hl.window_rule({
@@ -408,6 +409,7 @@ hl.window_rule({
 	},
 	-- float = true,
 	no_anim = true,
+    center = true,
 })
 
 hl.window_rule({
@@ -416,7 +418,18 @@ hl.window_rule({
 		class = "^(org.freedesktop.impl.portal.desktop.kde)$",
 	},
 	float = true,
-	size = { "(monitor_w*0.75)", "(monitor_h*0.75)" },
+	size = { "(monitor_w*0.72)", "(monitor_h*0.72)" },
+    center = true,
+})
+
+hl.window_rule({
+	name = "MPV",
+	match = {
+		class = "^(mpv)$",
+	},
+	float = true,
+	size = { "(monitor_w*0.72)", "(monitor_h*0.72)" },
+    center = true,
 })
 
 hl.window_rule({
@@ -425,7 +438,8 @@ hl.window_rule({
 		class = "^(org.kde.dolphin)$",
 	},
 	float = true,
-	size = { "(monitor_w*0.75)", "(monitor_h*0.75)" },
+	size = { "(monitor_w*0.72)", "(monitor_h*0.72)" },
+    center = true,
 })
 
 -- Layer rules also return a handle.
