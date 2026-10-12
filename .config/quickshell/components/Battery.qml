@@ -180,7 +180,7 @@ Rectangle {
                                     buttonTextColor: Power.profile == PowerProfile.Performance || containsMouse ? Colors.base : Colors.green
                                     buttonText: ""
                                     onClick: () => {
-                                        Hyprland.dispatch("exec powerprofilesctl set performance")
+                                        PowerProfiles.profile = PowerProfile.Performance
                                     }
                                     Behavior on color {
                                         ColorAnimation {
@@ -205,7 +205,7 @@ Rectangle {
                                     buttonTextColor: Power.profile == PowerProfile.Balanced || containsMouse ? Colors.base : Colors.green
                                     buttonText: ""
                                     onClick: () => {
-                                        Hyprland.dispatch("exec powerprofilesctl set balanced")
+                                        PowerProfiles.profile = PowerProfile.Balanced
                                     }
                                     Behavior on color {
                                         ColorAnimation {
@@ -230,7 +230,7 @@ Rectangle {
                                     buttonTextColor: Power.profile == PowerProfile.PowerSaver || containsMouse ? Colors.base : Colors.green
                                     buttonText: ""
                                     onClick: () => {
-                                        Hyprland.dispatch("exec powerprofilesctl set saver")
+                                        PowerProfiles.profile = PowerProfile.PowerSaver
                                     }
                                     Behavior on color {
                                         ColorAnimation {

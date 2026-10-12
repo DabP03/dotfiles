@@ -4,8 +4,7 @@ recentrepos:
     - /home/piotr/Code/grafy
     - /home/piotr/Code/typst
 startuppopupversion: 5
-didshowhunkstaginghint: true
-lastversion: 0.65.1
+lastversion: 0.66.0
 customcommandshistory:
     - q
 hidecommandlog: false
