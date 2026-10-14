@@ -4,6 +4,7 @@ import QtQuick.Controls
 import Quickshell
 import Quickshell.Services.UPower
 import Quickshell.Widgets
+import Quickshell.Hyprland
 
 import "root:/config/"
 import "root:/services/"
@@ -11,6 +12,7 @@ import "root:/widgets/"
 
 Rectangle {
     id: root
+    required property var bar
     required property bool barDocked
     color: "transparent"
     implicitHeight: parent.implicitHeight - 16
@@ -26,13 +28,7 @@ Rectangle {
         anchors.fill: parent
         hoverEnabled: true // Needed for scroll wheel detection
 
-        onClicked: (event) => {
-            if (dynamicLoader.active) {
-                dynamicLoader.active = false  // Hide/destroy
-            } else {
-                dynamicLoader.active = true   // Create/show
-            }
-        }
+        onClicked: popup.toggle()
     }
 
     Rectangle {
@@ -63,181 +59,148 @@ Rectangle {
             } 
         }
 
-        Loader {
-            id: dynamicLoader
-            active: false  // Starts hidden
-            sourceComponent: Component {
-                PanelWindow {
-                    id: menuPanel
+        BarPopup {
+            id: popup
+            target: root
+            bar: root.bar
+            implicitHeight: performance.implicitHeight + balanced.implicitHeight + saver.implicitHeight + 10 * 3 + (timeToEmpty.implicitHeight) * timeToEmpty.visible
+            implicitWidth: Math.max((timeToEmpty.implicitWidth) * Power.isLaptopBattery, performance.implicitWidth + 10) + 20
+
+            Rectangle {
+                id: menu
+                property bool shown: false
+                anchors.topMargin: 10
+                color: Colors.base
+                radius: Options.radius
+                border.color: Colors.peach
+                border.width: Options.borderWidth
+                topLeftRadius: 0
+                topRightRadius: 0
+                implicitHeight: popup.implicitHeight
+                implicitWidth: popup.implicitWidth
+                Behavior on opacity {
+                    NumberAnimation {
+                        duration: 200
+                        easing.type: Options.easingTypeOut
+                    }
+                }
+
+                Rectangle {
+                    id: topBorder
+                    width: parent.width - Options.borderWidth * 2
+                    height: Options.borderWidth
+                    anchors.top: parent.top
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    color: Colors.base
+                }
+
+                ColumnLayout {
+                    id: baterryItems
                     anchors {
-                        top: true
-                        right: true
+                        horizontalCenter: parent.horizontalCenter
+                        // verticalCenter: parent.verticalCenter
+                        top: parent.top
                     }
-                    implicitHeight: performance.implicitHeight + balanced.implicitHeight + saver.implicitHeight + 10 * 3 + (timeToEmpty.implicitHeight) * timeToEmpty.visible
-                    implicitWidth: Math.max((timeToEmpty.implicitWidth) * Power.isLaptopBattery, performance.implicitWidth + 10) + 20
-                    margins {
-                        top: -2
-                        right: Options.width.dash
-                        + Options.width.network
-                        + Options.width.audio
-                        + (Options.margin.inner * 5 + Options.margin.inner * root.barDocked)
-                        + Options.width.battery
-                        - menuPanel.implicitWidth
-                        + (menuPanel.implicitWidth - Options.width.battery)
-                        / 2
-                        - 2
+                    spacing: 10
+
+                    Text {
+                        anchors {
+                            horizontalCenter: parent.horizontalCenter
+                        }
+                        id: timeToEmpty
+                        visible: Power.isLaptopBattery
+                        color: Colors.text
+                        font.pixelSize: Options.font.size - 2
+                        font.family: Options.font.family
+                        font.bold: true
+
+                        text: if (Power.charging) {
+                            return " " + Math.floor(Power.timeToFull / 3600) + ":" + (Math.floor(Power.timeToFull / 60) % 60).toString().padStart(2, '0') + "h"
+                        } else {
+                            return " " + Math.floor(Power.timeToEmpty / 3600) + ":" + (Math.floor(Power.timeToEmpty / 60) % 60).toString().padStart(2, '0') + "h"
+                        }
+
                     }
 
-                    color: "transparent"
-                    Rectangle {
-                        id: menu
-                        property bool shown: false
-                        anchors.topMargin: 10
-                        color: Colors.base
-                        radius: Options.radius
-                        border.color: Colors.peach
-                        border.width: Options.borderWidth
-                        topLeftRadius: 0
-                        topRightRadius: 0
-                        implicitHeight: menuPanel.implicitHeight
-                        implicitWidth: menuPanel.implicitWidth
-                        Behavior on opacity {
-                            NumberAnimation {
-                                duration: 200
-                                easing.type: Options.easingTypeOut
-                            }
+                    ColumnLayout {
+                        id: column
+                        anchors {
+                            horizontalCenter: parent.horizontalCenter
+                            // verticalCenter: parent.verticalCenter
                         }
+                        spacing: 8
 
-                        Rectangle {
-                            id: topBorder
-                            width: parent.width - Options.borderWidth * 2
-                            height: Options.borderWidth
-                            anchors.top: parent.top
-                            anchors.horizontalCenter: parent.horizontalCenter
-                            color: Colors.base
-                        }
-
-                        MouseArea {
-                            anchors.fill: parent
-                            hoverEnabled: true
-
-                            onExited: {
-                                if (!performance.containsMouse &&
-                                !saver.containsMouse &&
-                                !balanced.containsMouse) {
-                                    dynamicLoader.active = false
-                                }
-                            }
-                        }
-                        ColumnLayout {
-                            id: baterryItems
-                            anchors {
-                                horizontalCenter: parent.horizontalCenter
-                                // verticalCenter: parent.verticalCenter
-                                top: parent.top
-                            }
-                            spacing: 10
-
-                            Text {
-                                anchors {
-                                    horizontalCenter: parent.horizontalCenter
-                                }
-                                id: timeToEmpty
-                                visible: Power.isLaptopBattery
-                                color: Colors.text
-                                font.pixelSize: Options.font.size - 2
-                                font.family: Options.font.family
-                                font.bold: true
-
-                                text: if (Power.charging) {
-                                    return " " + Math.floor(Power.timeToFull / 3600) + ":" + (Math.floor(Power.timeToFull / 60) % 60).toString().padStart(2, '0') + "h"
+                        StyledButton {
+                            id: performance
+                            implicitWidth: (performance.textWidth + 25)
+                            implicitHeight: root.implicitHeight
+                            radius: Options.buttonRadius
+                            buttonColor: {
+                                if (Power.profile == PowerProfile.Performance) {
+                                    return containsMouse ? Qt.lighter(Colors.green, 1.1) : Colors.green 
                                 } else {
-                                    return " " + Math.floor(Power.timeToEmpty / 3600) + ":" + (Math.floor(Power.timeToEmpty / 60) % 60).toString().padStart(2, '0') + "h"
+                                    return containsMouse ? Colors.green : Colors.base
                                 }
-
                             }
-
-                            ColumnLayout {
-                                id: column
-                                anchors {
-                                    horizontalCenter: parent.horizontalCenter
-                                    // verticalCenter: parent.verticalCenter
+                            buttonTextColor: Power.profile == PowerProfile.Performance || containsMouse ? Colors.base : Colors.green
+                            buttonText: ""
+                            onClick: () => {
+                                PowerProfiles.profile = PowerProfile.Performance
+                            }
+                            Behavior on color {
+                                ColorAnimation {
+                                    duration: 100 // Transition duration in milliseconds
+                                    easing.type: Options.easingTypeIn // Smooth easing curve
                                 }
-                                spacing: 8
+                            }
+                        }
 
-                                StyledButton {
-                                    id: performance
-                                    implicitWidth: (performance.textWidth + 25)
-                                    implicitHeight: root.implicitHeight
-                                    radius: Options.buttonRadius
-                                    buttonColor: {
-                                        if (Power.profile == PowerProfile.Performance) {
-                                            return containsMouse ? Qt.lighter(Colors.green, 1.1) : Colors.green 
-                                        } else {
-                                            return containsMouse ? Colors.green : Colors.base
-                                        }
-                                    }
-                                    buttonTextColor: Power.profile == PowerProfile.Performance || containsMouse ? Colors.base : Colors.green
-                                    buttonText: ""
-                                    onClick: () => {
-                                        PowerProfiles.profile = PowerProfile.Performance
-                                    }
-                                    Behavior on color {
-                                        ColorAnimation {
-                                            duration: 100 // Transition duration in milliseconds
-                                            easing.type: Options.easingTypeIn // Smooth easing curve
-                                        }
-                                    }
+                        StyledButton {
+                            id: balanced
+                            implicitWidth: (performance.textWidth + 25)
+                            implicitHeight: root.implicitHeight
+                            radius: Options.buttonRadius
+                            buttonColor: {
+                                if (Power.profile == PowerProfile.Balanced) {
+                                    return containsMouse ? Qt.lighter(Colors.green, 1.1) : Colors.green 
+                                } else {
+                                    return containsMouse ? Colors.green : Colors.base
                                 }
-
-                                StyledButton {
-                                    id: balanced
-                                    implicitWidth: (performance.textWidth + 25)
-                                    implicitHeight: root.implicitHeight
-                                    radius: Options.buttonRadius
-                                    buttonColor: {
-                                        if (Power.profile == PowerProfile.Balanced) {
-                                            return containsMouse ? Qt.lighter(Colors.green, 1.1) : Colors.green 
-                                        } else {
-                                            return containsMouse ? Colors.green : Colors.base
-                                        }
-                                    }
-                                    buttonTextColor: Power.profile == PowerProfile.Balanced || containsMouse ? Colors.base : Colors.green
-                                    buttonText: ""
-                                    onClick: () => {
-                                        PowerProfiles.profile = PowerProfile.Balanced
-                                    }
-                                    Behavior on color {
-                                        ColorAnimation {
-                                            duration: 100 // Transition duration in milliseconds
-                                            easing.type: Options.easingTypeIn // Smooth easing curve
-                                        }
-                                    }
+                            }
+                            buttonTextColor: Power.profile == PowerProfile.Balanced || containsMouse ? Colors.base : Colors.green
+                            buttonText: ""
+                            onClick: () => {
+                                PowerProfiles.profile = PowerProfile.Balanced
+                            }
+                            Behavior on color {
+                                ColorAnimation {
+                                    duration: 100 // Transition duration in milliseconds
+                                    easing.type: Options.easingTypeIn // Smooth easing curve
                                 }
+                            }
+                        }
 
-                                StyledButton {
-                                    id: saver
-                                    implicitWidth: (performance.textWidth + 25)
-                                    implicitHeight: root.implicitHeight
-                                    radius: Options.buttonRadius
-                                    buttonColor: {
-                                        if (Power.profile == PowerProfile.PowerSaver) {
-                                            return containsMouse ? Qt.lighter(Colors.green, 1.1) : Colors.green 
-                                        } else {
-                                            return containsMouse ? Colors.green : Colors.base
-                                        }
-                                    }
-                                    buttonTextColor: Power.profile == PowerProfile.PowerSaver || containsMouse ? Colors.base : Colors.green
-                                    buttonText: ""
-                                    onClick: () => {
-                                        PowerProfiles.profile = PowerProfile.PowerSaver
-                                    }
-                                    Behavior on color {
-                                        ColorAnimation {
-                                            duration: 100 // Transition duration in milliseconds
-                                            easing.type: Options.easingTypeIn // Smooth easing curve
-                                        }
-                                    }
+                        StyledButton {
+                            id: saver
+                            implicitWidth: (performance.textWidth + 25)
+                            implicitHeight: root.implicitHeight
+                            radius: Options.buttonRadius
+                            buttonColor: {
+                                if (Power.profile == PowerProfile.PowerSaver) {
+                                    return containsMouse ? Qt.lighter(Colors.green, 1.1) : Colors.green 
+                                } else {
+                                    return containsMouse ? Colors.green : Colors.base
+                                }
+                            }
+                            buttonTextColor: Power.profile == PowerProfile.PowerSaver || containsMouse ? Colors.base : Colors.green
+                            buttonText: ""
+                            onClick: () => {
+                                PowerProfiles.profile = PowerProfile.PowerSaver
+                            }
+                            Behavior on color {
+                                ColorAnimation {
+                                    duration: 100 // Transition duration in milliseconds
+                                    easing.type: Options.easingTypeIn // Smooth easing curve
                                 }
                             }
                         }

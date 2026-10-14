@@ -120,10 +120,10 @@ Control {
                     }
                 }
 
-                onClicked: (date) => {
-                    control.selectedDate = date
-                    console.log("Selected:", date.toLocaleDateString())
-                }
+                // onClicked: (date) => {
+                //     control.selectedDate = date
+                //     console.log("Selected:", date.toLocaleDateString())
+                // }
             }
         }
     }

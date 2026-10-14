@@ -94,6 +94,7 @@ Scope {
 
                 PlayerComp {
                     id: player
+                    bar: panelWindow
                     anchors.centerIn: parent
                     anchors.verticalCenter: parent.verticalCenter
                     barDocked: panelWindow.monitorHasWindows
@@ -102,6 +103,7 @@ Scope {
 
                 Battery {
                     id: battery
+                    bar: panelWindow
                     barDocked: panelWindow.monitorHasWindows
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.right: audio.left
@@ -110,6 +112,7 @@ Scope {
 
                 AudioComp {
                     id: audio
+                    bar: panelWindow
                     barDocked: panelWindow.monitorHasWindows
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.right: network.left
@@ -125,6 +128,7 @@ Scope {
 
                 DashComp {
                     id: dash
+                    bar: panelWindow
                     barDocked: panelWindow.monitorHasWindows
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.right: parent.right

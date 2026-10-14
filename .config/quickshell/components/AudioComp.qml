@@ -4,6 +4,7 @@ import QtQuick.Controls
 import Quickshell
 import Quickshell.Widgets
 import Quickshell.Services.Pipewire
+import Quickshell.Hyprland
 
 import "root:/config/"
 import "root:/services/"
@@ -11,6 +12,7 @@ import "root:/widgets/"
 
 Rectangle {
     id: root
+    required property var bar
     required property bool barDocked
     color: "transparent"
     implicitHeight: parent.implicitHeight - 16
@@ -44,13 +46,7 @@ Rectangle {
             let newVolume = Math.max(0, Math.min(1, Audio.volume + increment))
             Audio.setVolume(newVolume)
         }
-        onClicked: (event) => {
-            if (dynamicLoader.active) {
-                dynamicLoader.active = false  // Hide/destroy
-            } else {
-                dynamicLoader.active = true   // Create/show
-            }
-        }
+        onClicked: popup.toggle()
     }
 
     MouseArea {
@@ -69,13 +65,7 @@ Rectangle {
             let newVolume = Math.max(0, Math.min(1, Audio.micVolume + increment))
             Audio.setVolume(newVolume, Audio.source)
         }
-        onClicked: (event) => {
-            if (dynamicLoader.active) {
-                dynamicLoader.active = false  // Hide/destroy
-            } else {
-                dynamicLoader.active = true   // Create/show
-            }
-        }
+        onClicked: popup.toggle()
     }
 
     Rectangle {
@@ -164,24 +154,13 @@ Rectangle {
             }
         }
 
-        Loader {
-            id: dynamicLoader
-            active: false  // Starts hidden
-            sourceComponent: PanelWindow {
-                id: playerPanel
-                implicitHeight: topBorder.implicitHeight + 8 + mainRow.implicitHeight + (separator.implicitHeight * (repeater.count != 0)) + (scrollView.implicitHeight * (repeater.count != 0)) + (16 * (repeater.count != 0))
-                implicitWidth: Math.max(220, mainRow.implicitWidth + 24, repeaterColumn.implicitWidth + 24)
-
-                exclusionMode: ExclusionMode.Normal
-                anchors {
-                    top: true
-                    right: true
-                }
-                margins {
-                    top: -2
-                    right: 0
-                }
-                color: "transparent"
+        BarPopup {
+            id: popup
+            visible: false
+            target: root
+            bar: root.bar
+            implicitHeight: topBorder.implicitHeight + 8 + mainRow.implicitHeight + (separator.implicitHeight * (repeater.count != 0)) + (scrollView.implicitHeight * (repeater.count != 0)) + (16 * (repeater.count != 0))
+            implicitWidth: Math.max(220, mainRow.implicitWidth + 24, repeaterColumn.implicitWidth + 24)
 
                 Rectangle {
                     id: playerMenu
@@ -192,19 +171,8 @@ Rectangle {
                     topRightRadius: 0
                     border.color: Colors.peach
                     border.width: Options.borderWidth
-                    implicitHeight: playerPanel.implicitHeight
-                    implicitWidth: playerPanel.implicitWidth
-
-                    MouseArea {
-                        id: mouseAreaLoader
-                        anchors.fill: parent
-                        hoverEnabled: true
-                        onExited: {
-                            if (!mouseAreaLoader.containsMouse && mixerMain.containsMouse && mixerMainMic.containsMouse && repeater.itemsContainMouse() && !scrollView.hovered) {
-                                dynamicLoader.active = false
-                            }
-                        }
-                    }
+                    implicitHeight: popup.implicitHeight
+                    implicitWidth: popup.implicitWidth
 
                     Rectangle {
                         id: topBorder
@@ -276,7 +244,7 @@ Rectangle {
                     }
 
                     Rectangle {
-                        id: separator
+                        id: separator2
                         anchors {
                             horizontalCenter: parent.horizontalCenter
                             top: mainRow.bottom
@@ -289,12 +257,12 @@ Rectangle {
 
                     ScrollView {
                         id: scrollView
-                        implicitWidth: playerPanel.implicitWidth - 2
+                        implicitWidth: popup.implicitWidth - 2
                         implicitHeight: Math.min(repeaterColumn.implicitHeight, 220)
                         clip: false
                         anchors {
                             horizontalCenter: parent.horizontalCenter
-                            top: separator.bottom
+                            top: separator2.bottom
                             topMargin: 4
                         }
 
@@ -352,4 +320,3 @@ Rectangle {
             }
         }
     }
-}

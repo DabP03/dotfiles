@@ -448,7 +448,8 @@ local overlayLayerRule = hl.layer_rule({
 	match = { namespace = "^quickshell$" },
 	no_anim = true,
 })
-overlayLayerRule:set_enabled(false)
+overlayLayerRule:set_enabled(true)
+
 
 hl.window_rule({
 	name = "scrolling_full_width",
