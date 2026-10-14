@@ -1,5 +1,11 @@
+-- Variables
 local hostname = require("lua.scripts").getHostname()
+local terminal = "ghostty"
+-- local fileManager = "dolphin"
+local menu = "vicinae toggle"
+local webBrowser = "zen-browser"
 
+-- Monitor
 if hostname == "desktop" then
 	hl.monitor({
 		output = "DP-2",
@@ -31,11 +37,7 @@ else
 	})
 end
 
-local terminal = "ghostty"
--- local fileManager = "dolphin"
-local menu = "vicinae toggle"
-local webBrowser = "zen-browser"
-
+-- Enviroment Variables
 hl.env("HYPRCURSOR_THEME", "catppuccin-frappe-dark-cursors")
 hl.env("HYPRCURSOR_SIZE", "20")
 hl.env("XCURSOR_SIZE", "20")
@@ -44,7 +46,8 @@ hl.env("QT_QPA_PLATFORMTHEME", "qt6ct")
 hl.env("XDG_MENU_PREFIX", "arch-")
 hl.env("QT_WAYLAND_DISABLE_WINDOWDECORATION", "1")
 
-hl.workspace_rule({ workspace = "spacial:shadowrealm", persistent = true, default = false })
+
+-- On Start
 require("lua.scripts").randomiseWallpaper(1800000)
 hl.on("hyprland.start", function()
 	hl.exec_cmd(
@@ -68,6 +71,7 @@ hl.on("hyprland.start", function()
     hl.exec_cmd("sh -c 'sleep 10 && gpu-screen-recorder -w screen -c mp4 -f 60 -a $(pactl get-default-sink).monitor -a $(pactl get-default-source) -r 30 -o ~/Videos/ScreenRecordings -sc ~/.config/hypr/lua/gsr-notify.sh'")
 end)
 
+-- General Config
 hl.config({
 	general = {
 		gaps_in = 4,
@@ -84,6 +88,7 @@ hl.config({
 	},
 })
 
+-- Colors and decorations
 hl.config({
 	decoration = {
 		rounding = 16,
@@ -97,74 +102,6 @@ hl.config({
 			enabled = false,
 		},
 	},
-})
-
-hl.config({
-	animations = {
-		enabled = true,
-	},
-})
-
-hl.config({
-	dwindle = {
-		preserve_split = true,
-	},
-})
-
-hl.config({
-	master = {
-		new_status = "master",
-	},
-})
-
-hl.config({
-	scrolling = {
-		fullscreen_on_one_column = false,
-		focus_fit_method = 1,
-		column_width = "0.667",
-	},
-})
-
-hl.config({
-	misc = {
-		force_default_wallpaper = -1,
-		disable_hyprland_logo = false,
-	},
-})
-
-hl.config({
-	input = {
-		kb_layout = "pl",
-		kb_variant = "",
-		kb_model = "",
-		kb_options = "caps:escape",
-		kb_rules = "",
-		follow_mouse = 1,
-		repeat_rate = 35,
-		repeat_delay = 200,
-		touchpad = {
-			natural_scroll = true,
-		},
-	},
-})
-
-if hostname == "desktop" then
-	hl.config({
-		input = {
-			accel_profile = "flat",
-			sensitivity = 0,
-		},
-	})
-else
-	hl.config({
-		input = {
-			accel_profile = "adaptive",
-			sensitivity = 0.2,
-		},
-	})
-end
-
-hl.config({
 	group = {
 		col = {
 			border_active = "rgb(ef9f76)",
@@ -182,6 +119,74 @@ hl.config({
 	},
 })
 
+-- Dwindle
+hl.config({
+	dwindle = {
+		preserve_split = true,
+	},
+})
+
+-- Master
+hl.config({
+	master = {
+		new_status = "master",
+	},
+})
+
+-- Scrolling
+hl.config({
+	scrolling = {
+		fullscreen_on_one_column = false,
+		focus_fit_method = 1,
+		column_width = "0.667",
+	},
+})
+
+-- Misc
+hl.config({
+	misc = {
+		force_default_wallpaper = -1,
+		disable_hyprland_logo = false,
+	},
+})
+
+-- Input
+hl.config({
+	input = {
+		kb_layout = "pl",
+		kb_variant = "",
+		kb_model = "",
+		kb_options = "caps:escape",
+		kb_rules = "",
+		follow_mouse = 1,
+		repeat_rate = 35,
+		repeat_delay = 200,
+		touchpad = {
+			natural_scroll = true,
+		},
+	},
+})
+
+-- Mouse/Touchpad
+if hostname == "desktop" then
+	hl.config({
+		input = {
+			accel_profile = "flat",
+			sensitivity = 0,
+		},
+	})
+else
+	hl.config({
+		input = {
+			accel_profile = "adaptive",
+			sensitivity = 0.2,
+		},
+	})
+end
+
+
+-- Workspaces
+hl.workspace_rule({ workspace = "spacial:shadowrealm", persistent = true, default = false })
 if hostname == "desktop" then
 	for i = 1, 10 do
 		hl.workspace_rule({ workspace = tostring(i), monitor = "DP-2" })
@@ -192,6 +197,13 @@ else
 		hl.workspace_rule({ workspace = tostring(i), monitor = "eDP-1" })
 	end
 end
+
+-- Animations
+hl.config({
+	animations = {
+		enabled = true,
+	},
+})
 
 hl.curve("easeOutQuint", { type = "bezier", points = { { 0.23, 1 }, { 0.32, 1 } } })
 hl.curve("easeInOutCubic", { type = "bezier", points = { { 0.65, 0.05 }, { 0.36, 1 } } })
@@ -217,6 +229,7 @@ hl.animation({ leaf = "workspacesIn", enabled = true, speed = 4.8, bezier = "eas
 hl.animation({ leaf = "workspacesOut", enabled = true, speed = 4.8, bezier = "easeOutQuint", style = "slide" })
 hl.animation({ leaf = "zoomFactor", enabled = true, speed = 7, bezier = "quick" })
 
+-- Shortcuts
 local mainMod = "SUPER"
 
 hl.bind(mainMod .. " + Return", hl.dsp.exec_cmd(terminal))
@@ -230,7 +243,6 @@ hl.bind(mainMod .. " + P", hl.dsp.layout("promote"))
 hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen({ action = "toggle" }))
 hl.bind(mainMod .. " + C", hl.dsp.layout("fit expand"))
 hl.bind(mainMod .. " + CTRL + SHIFT + S", hl.dsp.exec_cmd("pkill -SIGUSR1 -f gpu-screen-recorder"))
-
 
 hl.bind(mainMod .. " + Left", hl.dsp.focus({ direction = "left" }))
 hl.bind(mainMod .. " + Down", hl.dsp.focus({ direction = "down" }))
@@ -259,7 +271,6 @@ hl.bind(mainMod .. " + CTRL + mouse_up", hl.dsp.focus({ workspace = "e-1" }))
 hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag(), { mouse = true })
 hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
 
--- Laptop multimedia keys for volume and LCD brightness
 hl.bind(
 	"XF86AudioRaiseVolume",
 	hl.dsp.exec_cmd("wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"),
@@ -343,18 +354,21 @@ hl.bind(mainMod .. " + SHIFT + L", hl.dsp.window.move({ direction = "right" }))
 hl.bind(mainMod .. " + SHIFT + Left", hl.dsp.window.move({ direction = "left" }))
 hl.bind(mainMod .. " + SHIFT + Right", hl.dsp.window.move({ direction = "right" }))
 
---
 hl.bind(mainMod .. " + CTRL + SHIFT + H", hl.dsp.window.move({ workspace = "-1" }))
 hl.bind(mainMod .. " + CTRL + SHIFT + L", hl.dsp.window.move({ workspace = "+1" }))
---
+
 hl.bind(mainMod .. " + CTRL + SHIFT + Left", hl.dsp.window.move({ workspace = "-1" }))
 hl.bind(mainMod .. " + CTRL + SHIFT + Right", hl.dsp.window.move({ workspace = "+1" }))
---
+
 hl.bind(mainMod .. " + ALT + H", hl.dsp.window.swap({ direction = "left" }))
 hl.bind(mainMod .. " + ALT + L", hl.dsp.window.swap({ direction = "right" }))
 
 hl.bind(mainMod .. " + SHIFT + F", hl.dsp.layout("colresize +conf"))
 
+-- Global Shortcuts
+hl.bind("CTRL + SHIFT + M", hl.dsp.pass({ window = "class:^discord$" }))
+
+-- Rules
 hl.window_rule({
 	name = "suppress-maximize-events",
 	match = { class = ".*" },
@@ -442,7 +456,6 @@ hl.window_rule({
     center = true,
 })
 
--- Layer rules also return a handle.
 local overlayLayerRule = hl.layer_rule({
 	name = "no-anim-overlay",
 	match = { namespace = "^quickshell$" },

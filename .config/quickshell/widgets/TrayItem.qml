@@ -27,23 +27,15 @@ MouseArea {
 
     QsMenuAnchor {
         id: menu
-
-        menu: root.item.menu
-        anchor.window: bar
-        anchor.rect.x: root.x + (
-            bar.width
-            - Options.width.battery
-            - Options.width.audio
-            - Options.width.network
-            - Options.width.dash
-            - (30 * SystemTray.items.values.length)
-        )
-        - (Options.margin.inner * 4)
-        - Options.margin.inner * root.barDocked
-        - 64 // WTF
-        anchor.rect.y: icon.y + bar.height - 32
-        anchor.rect.height: root.height
+        anchor.item: root
+        anchor.rect.x: 0
+        anchor.rect.y: bar.height - 3 - root.mapToItem(null, 0, 0).y
+        anchor.rect.width: root.width
+        anchor.rect.height: 0
         anchor.edges: Edges.Bottom
+        anchor.gravity: Edges.Bottom
+        anchor.adjustment: PopupAdjustment.None
+        menu: root.item.menu
     }
 
     IconImage {
