@@ -104,9 +104,9 @@ Rectangle {
                     spacing: 10
 
                     Text {
-                        anchors {
-                            horizontalCenter: parent.horizontalCenter
-                        }
+                        // anchors {
+                        //     horizontalCenter: parent.horizontalCenter
+                        // }
                         id: timeToEmpty
                         visible: Power.isLaptopBattery
                         color: Colors.text
@@ -124,10 +124,10 @@ Rectangle {
 
                     ColumnLayout {
                         id: column
-                        anchors {
-                            horizontalCenter: parent.horizontalCenter
-                            // verticalCenter: parent.verticalCenter
-                        }
+                        // anchors {
+                        //     horizontalCenter: parent.horizontalCenter
+                        //     // verticalCenter: parent.verticalCenter
+                        // }
                         spacing: 8
 
                         StyledButton {

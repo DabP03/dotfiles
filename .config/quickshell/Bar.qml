@@ -121,6 +121,7 @@ Scope {
 
                 NetworkComp {
                     id: network
+                    bar: panelWindow
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.right: dash.left
                     anchors.rightMargin: Options.margin.inner

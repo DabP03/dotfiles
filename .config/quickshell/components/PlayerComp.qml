@@ -189,8 +189,8 @@ Rectangle {
                 topRightRadius: 0
                 border.color: Colors.peach
                 border.width: Options.borderWidth
-                implicitHeight: playerPanel.implicitHeight
-                implicitWidth: playerPanel.implicitWidth
+                implicitHeight: popup.implicitHeight
+                implicitWidth: popup.implicitWidth
 
 
                 Rectangle {
