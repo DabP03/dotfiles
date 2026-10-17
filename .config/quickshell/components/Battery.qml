@@ -16,11 +16,7 @@ Rectangle {
     required property bool barDocked
     color: "transparent"
     implicitHeight: parent.implicitHeight - 16
-    implicitWidth: {
-        let width = icon.implicitWidth + 25
-        Options.width.battery = width;
-        return width;
-    } 
+    implicitWidth: icon.implicitWidth + percent.implicitWidth * Power.isLaptopBattery + 8 + 16 * !Power.isLaptopBattery
     radius: 8
 
     MouseArea {
@@ -43,28 +39,36 @@ Rectangle {
             }
         }
 
-        Text {
-            id: icon
-            color: Colors.base 
-            font.pixelSize: Options.font.size
-            font.family: Options.font.iconFamily
-            font.bold: true
-            anchors.centerIn: parent
-            font.variableAxes: ({ "FILL": 1 })
-            text: {
-                let text = Power.icon
-                if (Power.isLaptopBattery) {
-                    text += " " + Math.round(Power.percentage * 100) + "%"
-                }
-                return text
-            } 
+        RowLayout {
+            anchors {
+                centerIn: parent
+            }
+            spacing: -8
+
+            Icon {
+                id: icon
+                color: Colors.base 
+                bottomPadding: 2
+                fill: 1
+                text: Power.icon
+            }
+
+            Text {
+                id: percent
+                visible: Power.isLaptopBattery
+                color: Colors.base 
+                font.pixelSize: Options.font.size
+                font.family: Options.font.family
+                font.bold: true
+                text: " " + Math.round(Power.percentage * 100) + "%"
+            }
         }
 
         BarPopup {
             id: popup
             target: root
             bar: root.bar
-            implicitHeight: performance.implicitHeight + balanced.implicitHeight + saver.implicitHeight + 10 * 3 + (timeToEmpty.implicitHeight) * timeToEmpty.visible
+            implicitHeight: performance.implicitHeight + balanced.implicitHeight + saver.implicitHeight + 10 * 3 + (timeToEmpty.implicitHeight + 10) * timeToEmpty.visible
             implicitWidth: Math.max((timeToEmpty.implicitWidth) * Power.isLaptopBattery, performance.implicitWidth + 10) + 20
 
             Rectangle {
@@ -109,7 +113,7 @@ Rectangle {
                         //     horizontalCenter: parent.horizontalCenter
                         // }
                         id: timeToEmpty
-                        visible: Power.isLaptopBattery
+                        // visible: Power.isLaptopBattery
                         color: Colors.text
                         font.pixelSize: Options.font.size - 2
                         font.family: Options.font.family
@@ -125,10 +129,10 @@ Rectangle {
 
                     ColumnLayout {
                         id: column
-                        // anchors {
-                        //     horizontalCenter: parent.horizontalCenter
-                        //     // verticalCenter: parent.verticalCenter
-                        // }
+                        anchors {
+                            horizontalCenter: parent.horizontalCenter
+                            // verticalCenter: parent.verticalCenter
+                        }
                         spacing: 8
 
                         StyledButton {
