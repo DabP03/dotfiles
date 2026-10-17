@@ -18,7 +18,7 @@ Item {
 
     // signalStrength is a real in 0.0–1.0
     function signalSymbol(strength) {
-        if (strength > 0.8) return "network_wifi_4_bar";
+        if (strength > 0.8) return "signal_wifi_4_bar";
         if (strength > 0.6) return "network_wifi_3_bar";
         if (strength > 0.4) return "network_wifi_2_bar";
         if (strength > 0.2) return "network_wifi_1_bar";

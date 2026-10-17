@@ -69,9 +69,9 @@ Singleton {
 
     readonly property string signalStrengthSymbol: {
         if (activeSignalStrength > .8) return "signal_wifi_4_bar" 
-        else if (activeSignalStrength > .6) return "signal_wifi_3_bar" 
-        else if (activeSignalStrength > .4) return "signal_wifi_2_bar"
-        else if (activeSignalStrength > .2) return "signal_wifi_1_bar"
+        else if (activeSignalStrength > .6) return "network_wifi_3_bar" 
+        else if (activeSignalStrength > .4) return "network_wifi_2_bar"
+        else if (activeSignalStrength > .2) return "network_wifi_1_bar"
         else return "signal_wifi_statusbar_null"
     }
 
