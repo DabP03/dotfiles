@@ -18,20 +18,20 @@ Singleton {
     readonly property string icon: {
         if (isLaptopBattery) {
             if (charging) {
-                return ""
+                return "electric_bold"
             } else if (percentage < .1) {
-                return ""
+                return "battery_android_0"
             } else if (percentage < .25) {
-                return ""
+                return "battery_android_1"
             } else if (percentage < .5) {
-                return ""
+                return "battery_android_3"
             } else if (percentage < .75) {
-                return ""
+                return "battery_android_5"
             } else {
-                return ""
+                return "battery_android_full"
             }
         } else {
-                return ""
+                return "power"
         }
     }
 }

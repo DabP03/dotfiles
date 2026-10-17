@@ -50,6 +50,7 @@ Rectangle {
             font.family: Options.font.iconFamily
             font.bold: true
             anchors.centerIn: parent
+            font.variableAxes: ({ "FILL": 1 })
             text: {
                 let text = Power.icon
                 if (Power.isLaptopBattery) {
@@ -143,7 +144,8 @@ Rectangle {
                                 }
                             }
                             buttonTextColor: Power.profile == PowerProfile.Performance || containsMouse ? Colors.base : Colors.green
-                            buttonText: ""
+                            buttonText: "electric_bolt"
+                            fontFamily: Options.font.iconFamily
                             onClick: () => {
                                 PowerProfiles.profile = PowerProfile.Performance
                             }
@@ -168,7 +170,8 @@ Rectangle {
                                 }
                             }
                             buttonTextColor: Power.profile == PowerProfile.Balanced || containsMouse ? Colors.base : Colors.green
-                            buttonText: ""
+                            buttonText: "balance"
+                            fontFamily: Options.font.iconFamily
                             onClick: () => {
                                 PowerProfiles.profile = PowerProfile.Balanced
                             }
@@ -193,7 +196,8 @@ Rectangle {
                                 }
                             }
                             buttonTextColor: Power.profile == PowerProfile.PowerSaver || containsMouse ? Colors.base : Colors.green
-                            buttonText: ""
+                            buttonText: "nest_eco_leaf"
+                            fontFamily: Options.font.iconFamily
                             onClick: () => {
                                 PowerProfiles.profile = PowerProfile.PowerSaver
                             }

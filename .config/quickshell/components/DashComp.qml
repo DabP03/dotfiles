@@ -29,10 +29,7 @@ Rectangle {
         anchors.fill: parent
         hoverEnabled: true // Needed for scroll wheel detection
 
-        onClicked: (event) => {
-                popup.visible = !popup.visible  // Hide/destroy
-                grab.active = !grab.active
-        }
+        onClicked: popup.toggle()
     }
 
 
@@ -58,25 +55,14 @@ Rectangle {
             text: Time.time
         }
 
-        PopupWindow {
+
+        BarPopup {
             id: popup
-            visible: false
+            target: root
+            bar: root.bar
+            anchor.rect.x: root.bar.width - root.mapToItem(null, 0, 0).x - popup.implicitWidth / 2 - root.implicitWidth / 2
             implicitWidth: calendarPanel.implicitWidth + 24
             implicitHeight: 400
-            anchor.window: bar
-            anchor.rect.x: parentWindow.width - popup.implicitWidth
-            anchor.rect.y: parentWindow.height - 2
-            anchor.adjustment: PopupAdjustment.None
-            color: "transparent"
-
-            HyprlandFocusGrab {
-                id: grab
-                windows: [ popup ]
-                active: false
-                onCleared: () => {
-                    popup.visible = false
-                }
-            }
 
             Rectangle {
                 id: menu
@@ -205,7 +191,8 @@ Rectangle {
                             buttonColor: Colors.blue
                             buttonTextColor: Colors.base
                             fontSize: 20
-                            buttonText: ""
+                            fontFamily: Options.font.iconFamily
+                            buttonText: "lock"
                             onClick: () => {
                                 process.exec(["hyprlock"])
                             }
@@ -218,8 +205,9 @@ Rectangle {
                             radius: Options.buttonRadius
                             buttonColor: Colors.green
                             buttonTextColor: Colors.base
+                            fontFamily: Options.font.iconFamily
                             fontSize: 20
-                            buttonText: ""
+                            buttonText: "logout"
                             onClick: () => {
                                 process.exec(["systemctl", "exit"])
                             }
@@ -232,8 +220,9 @@ Rectangle {
                             radius: Options.buttonRadius
                             buttonColor: Colors.yellow
                             buttonTextColor: Colors.base
+                            fontFamily: Options.font.iconFamily
                             fontSize: 20
-                            buttonText: ""
+                            buttonText: "restart_alt"
                             onClick: () => {
                                 process.exec(["systemctl", "reboot"])
                             }
@@ -246,7 +235,8 @@ Rectangle {
                             radius: Options.buttonRadius
                             buttonColor: Colors.red
                             buttonTextColor: Colors.base
-                            buttonText: ""
+                            fontFamily: Options.font.iconFamily
+                            buttonText: "mode_off_on"
                             fontSize: 20
                             onClick: () => {
                                 process.exec(["systemctl", "poweroff"])

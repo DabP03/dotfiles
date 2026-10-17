@@ -19,7 +19,7 @@ Singleton {
 
     component Font: QtObject {
         readonly property string family: "BlexMono Nerd Font"
-        readonly property string iconFamily: "BlexMono Nerd Font"
+        readonly property string iconFamily: "Material Symbols Rounded"
         readonly property real size: 16
     }
 

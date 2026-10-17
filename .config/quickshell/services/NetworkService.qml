@@ -28,6 +28,9 @@ Singleton {
     readonly property var wifiDevice: findDevice(DeviceType.Wifi)
     readonly property var wiredDevice: findDevice(DeviceType.Wired)
 
+    readonly property bool hasWifi: wifiDevice !== null
+    readonly property bool hasWired: wiredDevice !== null
+
     function findDevice(type) {
         const devs = Networking.devices.values;
         for (let i = 0; i < devs.length; i++) {
@@ -60,19 +63,21 @@ Singleton {
         return "none";
     }
 
-// "󰤨  "
-// "󰤥  "
-// "󰤢  "
-// "󰤟  "
-// "󰤯  "
-// "󰤮  "
-    readonly property real activeSignalStrength: activeWifiNetwork.signalStrength
+    // Signal strength of the connected Wi-Fi network as a real in 0.0–1.0
+    // (0 when not connected to Wi-Fi). Handy for a bar icon.
+    readonly property real activeSignalStrength: activeWifiNetwork ? activeWifiNetwork.signalStrength : 0
+
     readonly property string signalStrengthSymbol: {
-        if (activeSignalStrength > 80) return "󰤨" 
-        else if (activeSignalStrength > 60) return "󰤥" 
-        else if (activeSignalStrength > 40) return "󰤢"
-        else if (activeSignalStrength > 20) return "󰤟"
-        else return "󰤯"
+        if (activeSignalStrength > .8) return "signal_wifi_4_bar" 
+        else if (activeSignalStrength > .6) return "signal_wifi_3_bar" 
+        else if (activeSignalStrength > .4) return "signal_wifi_2_bar"
+        else if (activeSignalStrength > .2) return "signal_wifi_1_bar"
+        else return "signal_wifi_statusbar_null"
+    }
+
+    // Same value for any network, e.g. in a list delegate: NetworkService.signalOf(modelData)
+    function signalOf(network) {
+        return network ? Number(network.signalStrength) : 0;
     }
 
     // ───────────────────────── Scanning (ref-counted) ─────────────────────────

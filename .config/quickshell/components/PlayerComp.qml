@@ -180,6 +180,7 @@ Rectangle {
             implicitWidth: 300 + 8
             implicitHeight: 460
 
+
             Rectangle {
                 id: playerMenu
                 anchors.fill: parent
