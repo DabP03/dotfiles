@@ -219,11 +219,15 @@ Rectangle {
                         verticalCenter: iconRect.verticalCenter
                         left: iconRect.right
                         leftMargin: 16
+                        right: wifiSwitch.left
+                        rightMargin: 12
                     }
-                    spacing: 4
 
                     Text {
                         id: headerNetworkText
+                        Layout.fillWidth: true
+                        elide: Text.ElideRight
+                        textFormat: Text.PlainText
                         color: Colors.text
                         font.family: Options.font.family
                         font.bold: true
@@ -243,6 +247,18 @@ Rectangle {
                         : NetworkService.activeKind === "wifi" ? "Wifi" + " - " + NetworkService.activeSignalStrength
                         : "Connect to a network" 
                     }
+                }
+                ToggleSwitch {
+                    id: wifiSwitch
+                    visible: NetworkService.wifiDevice !== null
+                    anchors {
+                        verticalCenter: iconRect.verticalCenter
+                        right: parent.right
+                        rightMargin: 42
+                    }
+                    checked: NetworkService.wifiEnabled
+                    enabled: NetworkService.wifiHardwareEnabled
+                    onClicked: NetworkService.setWifiEnabled(!NetworkService.wifiEnabled)
                 }
 
                 Rectangle {
