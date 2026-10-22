@@ -48,7 +48,7 @@ hl.env("QT_WAYLAND_DISABLE_WINDOWDECORATION", "1")
 
 
 -- On Start
-require("lua.scripts").randomiseWallpaper(1800000)
+-- require("lua.scripts").randomiseWallpaper(1800000)
 hl.on("hyprland.start", function()
 	hl.exec_cmd(
 		"dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP HYPRLAND_INSTANCE_SIGNATURE XDG_SESSION_TYPE"
@@ -243,6 +243,8 @@ hl.bind(mainMod .. " + P", hl.dsp.layout("promote"))
 hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen({ action = "toggle" }))
 hl.bind(mainMod .. " + C", hl.dsp.layout("fit expand"))
 hl.bind(mainMod .. " + CTRL + SHIFT + S", hl.dsp.exec_cmd("pkill -SIGUSR1 -f gpu-screen-recorder"))
+
+hl.bind(mainMod .. " + SHIFT + W", hl.dsp.exec_cmd("qs ipc call wallpaperPicker toggle"))
 
 hl.bind(mainMod .. " + Left", hl.dsp.focus({ direction = "left" }))
 hl.bind(mainMod .. " + Down", hl.dsp.focus({ direction = "down" }))
@@ -476,3 +478,12 @@ hl.window_rule({
 	match = { content = "game", fullscreen = true },
 	confine_pointer = true,
 })
+
+-- local test_timer = hl.timer(function ()
+--     hl.notification.create({ text = "Hello", timeout = 1000})
+-- end, { timeout = 2000, type = "repeat" })
+--
+-- hl.bind(mainMod .. " + t", function ()
+--     test_timer:set_enabled(not test_timer:is_enabled())
+-- end)
+-- test_timer:set_enabled(true)

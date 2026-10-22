@@ -1,6 +1,4 @@
 import Quickshell
-
-
 import QtQuick
 import Quickshell.Wayland
 import "root:/config/"
@@ -8,8 +6,12 @@ import "root:/services/"
 import "root:/components/"
 
 Scope {
+    Component.onCompleted: Wallpaper.random()
+    WallpaperPicker {}
+
     Variants {
         model: Quickshell.screens
+
 
         PanelWindow {
             id: panelWindow

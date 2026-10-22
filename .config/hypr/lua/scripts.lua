@@ -11,7 +11,7 @@ end
 
 function _M.randomiseWallpaper(time)
 	hl.timer(function()
-		hl.exec_cmd("waypaper --random ")
+		hl.exec_cmd([[sh -c 'img=$(find ~/.wallpapers -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.gif" -o -iname "*.webp" \) | shuf -n 1); [ -n "$img" ] && awww img "$img" --transition-type random']])
 	end, { timeout = time, type = "repeat" })
 end
 
