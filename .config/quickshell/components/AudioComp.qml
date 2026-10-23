@@ -159,164 +159,490 @@ Rectangle {
             visible: false
             target: root
             bar: root.bar
-            implicitHeight: topBorder.implicitHeight + 8 + mainRow.implicitHeight + (separator.implicitHeight * (repeater.count != 0)) + (scrollView.implicitHeight * (repeater.count != 0)) + (16 * (repeater.count != 0))
-            implicitWidth: Math.max(220, mainRow.implicitWidth + 24, repeaterColumn.implicitWidth + 24)
+            // implicitHeight: topBorder.implicitHeight + 8 + outputPanel.implicitHeight * 2 + (separator.implicitHeight * (repeater.count != 0)) + (scrollView.implicitHeight * (repeater.count != 0)) + (16 * (repeater.count != 0))
+            // implicitWidth: Math.max(300, outputPanel.implicitWidth + 24, repeaterColumn.implicitWidth + 24)
+
+            implicitHeight: topBorder.implicitHeight + 24 + outputPanel.implicitHeight * 2
+            + (appList.visible ? 24 + Math.min(appList.wantedHeight, 280) : 0)
+            implicitWidth: 400
+
+            Rectangle {
+                id: playerMenu
+                anchors.fill: parent
+                color: Colors.base
+                radius: Options.radius
+                topLeftRadius: 0
+                topRightRadius: 0
+                border.color: Colors.peach
+                border.width: Options.borderWidth
+                implicitHeight: popup.implicitHeight
+                implicitWidth: popup.implicitWidth
 
                 Rectangle {
-                    id: playerMenu
-                    anchors.fill: parent
+                    id: topBorder
+                    implicitWidth: parent.width - Options.borderWidth * 2
+                    implicitHeight: Options.borderWidth
+                    anchors.top: parent.top
+                    anchors.horizontalCenter: parent.horizontalCenter
                     color: Colors.base
+                }
+
+
+                Rectangle {
+                    id: outputPanel
+                    anchors {
+                        top: topBorder.bottom
+                        left: parent.left
+                        right: parent.right
+                        leftMargin: 12
+                        rightMargin: 12
+                        topMargin: 6
+                    }
+
+                    implicitHeight: 96
+                    implicitWidth: parent.implicitWidth
                     radius: Options.radius
-                    topLeftRadius: 0
-                    topRightRadius: 0
-                    border.color: Colors.peach
-                    border.width: Options.borderWidth
-                    implicitHeight: popup.implicitHeight
-                    implicitWidth: popup.implicitWidth
+                    color: Colors.mantle
 
                     Rectangle {
-                        id: topBorder
-                        implicitWidth: parent.width - Options.borderWidth * 2
-                        implicitHeight: Options.borderWidth
-                        anchors.top: parent.top
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        color: Colors.base
+                        id: outputIconRect
+                        anchors {
+                            top: parent.top
+                            topMargin: 12
+                            left: parent.left
+                            leftMargin: 12
+
+                            // verticalCenter: parent.verticalCenter
+                        }
+                        implicitWidth: 40
+                        implicitHeight: 40
+                        color: Audio.muted ? Colors.base : Colors.teal
+                        radius: Options.radius / 2
+
+                        Behavior on color {
+                            ColorAnimation {
+                                duration: 120
+                                easing.type: Options.easingTypeOut
+                            }
+                        }
+
+                        Icon { 
+                            text: Audio.sinkIcon
+                            anchors {
+                                centerIn: parent
+                            }
+                            color: Audio.muted ? Colors.subtext0 : Colors.base
+                            font.pixelSize: 20
+
+                            Behavior on color {
+                                ColorAnimation {
+                                    duration: 120
+                                    easing.type: Options.easingTypeOut
+                                }
+                            }
+                        }
+
                     }
 
                     ColumnLayout {
-                        id: mainRow
+                        id: outputLayout
                         anchors {
-                            horizontalCenter: parent.horizontalCenter
-                            top: topBorder.bottom
-                            topMargin: 8
-                        }
-                        spacing: 8
-
-                        ColumnLayout {
-                            id: outputColumn
-                            spacing: 4
-
-                            Text {
-                                Layout.alignment: Qt.AlignHCenter
-                                text: "Output"
-                                color: Colors.text
-                                opacity: 0.6
-                                font.bold: true
-                                font.pixelSize: Options.font.size - 3
-                                font.family: Options.font.family
-                            }
-
-                            MixerEntry {
-                                id: mixerMain
-                                node: Audio.sink
-                                name: Audio.sink.nickname
-                            }
+                            verticalCenter: outputIconRect.verticalCenter
+                            left: outputIconRect.right
+                            leftMargin: 12
+                            // right: outputSwitch.left
+                            // rightMargin: 12
                         }
 
-                        Rectangle {
+                        Text {
+                            id: outputText
                             Layout.fillWidth: true
-                            Layout.topMargin: 4
-                            Layout.bottomMargin: 4
-                            implicitHeight: Options.borderWidth
-                            color: Colors.surface0
+                            elide: Text.ElideRight
+                            textFormat: Text.PlainText
+                            color: Audio.muted ? Colors.surface0 : Colors.text
+                            font.family: Options.font.family
+                            font.bold: true
+                            font.pixelSize: 16
+                            text: Audio.sink.nickname 
+
+                            Behavior on color {
+                                ColorAnimation {
+                                    duration: 120
+                                    easing.type: Options.easingTypeOut
+                                }
+                            }
                         }
 
-                        ColumnLayout {
-                            id: inputColumn
-                            spacing: 4
+                        Text {
+                            id: outputSubText
+                            color: Colors.subtext0
+                            font.family: Options.font.family
+                            font.bold: false
+                            font.pixelSize: 12
+                            text: "Output" 
+                        }
+                    }
 
-                            Text {
-                                Layout.alignment: Qt.AlignHCenter
-                                text: "Input"
-                                color: Colors.text
-                                opacity: 0.6
-                                font.bold: true
-                                font.pixelSize: Options.font.size - 3
-                                font.family: Options.font.family
+                    MixerEntry {
+                        id: mixerMainSource
+                        anchors {
+                            top: outputIconRect.bottom
+                            topMargin: 12
+                            left: outputIconRect.left
+                            // horizontalCenter: parent.horizontalCenter
+                        }
+                        buttonColor: Audio.muted ? Colors.base : Colors.teal
+                        buttonTextColor: Audio.muted ? Colors.subtext0 : Colors.base
+                        sliderColor: Audio.muted ? Colors.surface1 : Colors.teal
+                        sliderWidth: parent.implicitWidth - 24
+                        percentBold: true
+                        node: Audio.sink
+                        name: Audio.sink.nickname
+
+                        Behavior on sliderColor {
+                            ColorAnimation {
+                                duration: 120
+                                easing.type: Options.easingTypeOut
                             }
+                        }
 
-                            MixerEntry {
-                                id: mixerMainMic
-                                node: Audio.source
-                                name: Audio.source.nickname
+                        Behavior on buttonTextColor {
+                            ColorAnimation {
+                                duration: 120
+                                easing.type: Options.easingTypeOut
                             }
                         }
                     }
 
-                    Rectangle {
-                        id: separator2
+                    StyledButton {
+                        id: outputMute
                         anchors {
-                            horizontalCenter: parent.horizontalCenter
-                            top: mainRow.bottom
-                            topMargin: 8
+                            top: parent.top
+                            topMargin: 6
+                            right: parent.right
+                            rightMargin: 6
                         }
-                        implicitHeight: 3
-                        implicitWidth: playerMenu.implicitWidth * .9
-                        color: Colors.peach
-                    }
-
-                    ScrollView {
-                        id: scrollView
-                        implicitWidth: popup.implicitWidth - 2
-                        implicitHeight: Math.min(repeaterColumn.implicitHeight, 220)
-                        clip: false
-                        anchors {
-                            horizontalCenter: parent.horizontalCenter
-                            top: separator2.bottom
-                            topMargin: 4
-                        }
-
-                        ScrollBar.vertical.policy: ScrollBar.AlwaysOff
-
-                        ColumnLayout {
-                            id: repeaterColumn
-                            spacing: 12
-                            anchors {
-                                top: parent.top
-                                horizontalCenter: parent.horizontalCenter
-                            }
-
-                            Repeater {
-                                id: repeater
-                                model: Audio.groupedSinks
-
-                                function itemsContainMouse() {
-                                    let sharedState = false
-                                    for (let i = 0; i < repeater.count; i++) {
-                                        let item = repeater.itemAt(i)
-                                        sharedState = sharedState || (item && item.containsMouse)
-                                    }
-                                    return sharedState
-                                }
-
-
-                                ColumnLayout {
-                                    id: groupDelegate
-                                    required property var modelData
-                                    required property int index
-                                    Layout.alignment: Qt.AlignHCenter
-                                    spacing: 16
-
-                                    property bool containsMouse: groupItem.containsMouse
-
-                                    MixerGroup {
-                                        id: groupItem
-                                        appName: groupDelegate.modelData.appName
-                                        nodes: groupDelegate.modelData.nodes
-                                    }
-
-                                    Rectangle {
-                                        visible: groupDelegate.index < repeater.count - 1
-                                        Layout.fillWidth: true
-                                        Layout.leftMargin: 24
-                                        implicitHeight: Options.borderWidth
-                                        color: Colors.surface0
-                                    }
-                                }
-                            }
+                        implicitWidth: 32
+                        implicitHeight: 32
+                        buttonColor: Colors.mantle
+                        buttonTextColor: Colors.subtext0
+                        buttonText: Audio.sinkIcon
+                        fontFamily: Options.font.iconFamily
+                        fill: 1
+                        onClick: () => {
+                            Audio.mute(Audio.sink)
                         }
                     }
                 }
+
+                Rectangle {
+                    id: inputPanel
+                    anchors {
+                        top: outputPanel.bottom
+                        left: parent.left
+                        right: parent.right
+                        leftMargin: 12
+                        rightMargin: 12
+                        topMargin: 6
+                    }
+
+                    implicitHeight: 96
+                    implicitWidth: parent.implicitWidth
+                    radius: Options.radius
+                    color: Colors.mantle
+
+                    Rectangle {
+                        id: inputIconRect
+                        anchors {
+                            top: parent.top
+                            topMargin: 12
+                            left: parent.left
+                            leftMargin: 12
+
+                            // verticalCenter: parent.verticalCenter
+                        }
+                        implicitWidth: 40
+                        implicitHeight: 40
+                        color: Audio.micMuted ? Colors.base : Colors.teal
+                        radius: Options.radius / 2
+
+                        Behavior on color {
+                            ColorAnimation {
+                                duration: 120
+                                easing.type: Options.easingTypeOut
+                            }
+                        }
+
+                        Icon { 
+                            text: Audio.sourceIcon
+                            anchors {
+                                centerIn: parent
+                            }
+                            color: Audio.micMuted ? Colors.subtext0 : Colors.base
+                            font.pixelSize: 20
+
+                            Behavior on color {
+                                ColorAnimation {
+                                    duration: 120
+                                    easing.type: Options.easingTypeOut
+                                }
+                            }
+                        }
+
+                    }
+
+                    ColumnLayout {
+                        id: inputLayout
+                        anchors {
+                            verticalCenter: inputIconRect.verticalCenter
+                            left: inputIconRect.right
+                            leftMargin: 12
+                            // right: inputSwitch.left
+                            // rightMargin: 12
+                        }
+
+                        Text {
+                            id: inputText
+                            Layout.fillWidth: true
+                            elide: Text.ElideRight
+                            textFormat: Text.PlainText
+                            color: Audio.micMuted ? Colors.surface0 : Colors.text
+                            font.family: Options.font.family
+                            font.bold: true
+                            font.pixelSize: 16
+                            text: Audio.source.nickname 
+
+                            Behavior on color {
+                                ColorAnimation {
+                                    duration: 120
+                                    easing.type: Options.easingTypeOut
+                                }
+                            }
+                        }
+
+                        Text {
+                            id: inputSubText
+                            color: Colors.subtext0
+                            font.family: Options.font.family
+                            font.bold: false
+                            font.pixelSize: 12
+                            text: "Input" 
+                        }
+                    }
+
+                    MixerEntry {
+                        id: mixerMainMic
+                        anchors {
+                            top: inputIconRect.bottom
+                            topMargin: 12
+                            left: inputIconRect.left
+                            // horizontalCenter: parent.horizontalCenter
+                        }
+                        buttonColor: Audio.micMuted ? Colors.base : Colors.teal
+                        buttonTextColor: Audio.micMuted ? Colors.subtext0 : Colors.base
+                        sliderColor: Audio.micMuted ? Colors.surface1 : Colors.teal
+                        sliderWidth: parent.implicitWidth - 24
+                        percentBold: true
+                        node: Audio.source
+                        name: Audio.source.nickname
+
+                        Behavior on sliderColor {
+                            ColorAnimation {
+                                duration: 120
+                                easing.type: Options.easingTypeOut
+                            }
+                        }
+
+                        Behavior on buttonTextColor {
+                            ColorAnimation {
+                                duration: 120
+                                easing.type: Options.easingTypeOut
+                            }
+                        }
+                    }
+
+                    StyledButton {
+                        id: inputMute
+                        anchors {
+                            top: parent.top
+                            topMargin: 6
+                            right: parent.right
+                            rightMargin: 6
+                        }
+                        implicitWidth: 32
+                        implicitHeight: 32
+                        buttonColor: Colors.mantle
+                        buttonTextColor: Colors.subtext0
+                        buttonText: Audio.sourceIcon
+                        fontFamily: Options.font.iconFamily
+                        fill: 1
+                        onClick: () => {
+                            Audio.mute(Audio.source)
+                        }
+                    }
+
+                    // ToggleSwitch {
+                    //     id: outputSwitch
+                    //     backColor: Colors.lavender
+                    //     anchors {
+                    //         verticalCenter: outputIconRect.verticalCenter
+                    //         rightMargin: 12
+                    //         right: parent.right
+                    //     }
+                    //     checked: Idle.inhibitor.enabled
+                    //     onClicked: Idle.inhibitor.toggle()
+                    // }
+                }
+
+                AppMixerList {
+                    id: appList
+                    visible: streamCount > 0
+                    anchors {
+                        top: inputPanel.bottom
+                        topMargin: 12
+                        left: parent.left
+                        right: parent.right
+                        bottom: parent.bottom
+                        leftMargin: 12
+                        rightMargin: 12
+                        bottomMargin: 12
+                    }
+                }
+
+                // ColumnLayout {
+                //     id: mainRow
+                //     anchors {
+                //         horizontalCenter: parent.horizontalCenter
+                //         top: topBorder.bottom
+                //         topMargin: 8
+                //     }
+                //     spacing: 8
+                //
+                //     ColumnLayout {
+                //         id: outputColumn
+                //         spacing: 4
+                //
+                //         Text {
+                //             Layout.alignment: Qt.AlignHCenter
+                //             text: "Output"
+                //             color: Colors.text
+                //             opacity: 0.6
+                //             font.bold: true
+                //             font.pixelSize: Options.font.size - 3
+                //             font.family: Options.font.family
+                //         }
+                //
+                //         MixerEntry {
+                //             id: mixerMain
+                //             node: Audio.sink
+                //             name: Audio.sink.nickname
+                //         }
+                //     }
+                //
+                //     Rectangle {
+                //         Layout.fillWidth: true
+                //         Layout.topMargin: 4
+                //         Layout.bottomMargin: 4
+                //         implicitHeight: Options.borderWidth
+                //         color: Colors.surface0
+                //     }
+                //
+                //     ColumnLayout {
+                //         id: inputColumn
+                //         spacing: 4
+                //
+                //         Text {
+                //             Layout.alignment: Qt.AlignHCenter
+                //             text: "Input"
+                //             color: Colors.text
+                //             opacity: 0.6
+                //             font.bold: true
+                //             font.pixelSize: Options.font.size - 3
+                //             font.family: Options.font.family
+                //         }
+                //
+                //         MixerEntry {
+                //             id: mixerMainMic
+                //             node: Audio.source
+                //             name: Audio.source.nickname
+                //         }
+                //     }
+                // }
+
+                // Rectangle {
+                //     id: separator2
+                //     anchors {
+                //         horizontalCenter: parent.horizontalCenter
+                //         top: outputPanel.bottom
+                //         topMargin: 8
+                //     }
+                //     implicitHeight: 3
+                //     implicitWidth: playerMenu.implicitWidth * .9
+                //     color: Colors.peach
+                // }
+                //
+                // ScrollView {
+                //     id: scrollView
+                //     implicitWidth: popup.implicitWidth - 2
+                //     implicitHeight: Math.min(repeaterColumn.implicitHeight, 220)
+                //     clip: false
+                //     anchors {
+                //         horizontalCenter: parent.horizontalCenter
+                //         top: separator2.bottom
+                //         topMargin: 4
+                //     }
+                //
+                //     ScrollBar.vertical.policy: ScrollBar.AlwaysOff
+                //
+                //     ColumnLayout {
+                //         id: repeaterColumn
+                //         spacing: 12
+                //         anchors {
+                //             top: parent.top
+                //             horizontalCenter: parent.horizontalCenter
+                //         }
+                //
+                //         Repeater {
+                //             id: repeater
+                //             model: Audio.groupedSinks
+                //
+                //             function itemsContainMouse() {
+                //                 let sharedState = false
+                //                 for (let i = 0; i < repeater.count; i++) {
+                //                     let item = repeater.itemAt(i)
+                //                     sharedState = sharedState || (item && item.containsMouse)
+                //                 }
+                //                 return sharedState
+                //             }
+                //
+                //
+                //             ColumnLayout {
+                //                 id: groupDelegate
+                //                 required property var modelData
+                //                 required property int index
+                //                 Layout.alignment: Qt.AlignHCenter
+                //                 spacing: 16
+                //
+                //                 property bool containsMouse: groupItem.containsMouse
+                //
+                //                 MixerGroup {
+                //                     id: groupItem
+                //                     appName: groupDelegate.modelData.appName
+                //                     nodes: groupDelegate.modelData.nodes
+                //                 }
+                //
+                //                 Rectangle {
+                //                     visible: groupDelegate.index < repeater.count - 1
+                //                     Layout.fillWidth: true
+                //                     Layout.leftMargin: 24
+                //                     implicitHeight: Options.borderWidth
+                //                     color: Colors.surface0
+                //                 }
+                //             }
+                //         }
+                //     }
+                // }
             }
         }
     }
+}

@@ -14,6 +14,7 @@ Rectangle {
     required property var buttonText
     required property var buttonTextColor
     property var fontFamily: Options.font.family
+    property int fill: 0
     property var fontSize: Options.font.size
 
     MouseArea {
@@ -44,6 +45,8 @@ Rectangle {
             font.pixelSize: fontSize
             font.family: fontFamily
             font.bold: true
+            renderType: Text.NativeRendering
+            font.variableAxes: ({ "FILL": root.fill })
             anchors.centerIn: parent
             text: root.buttonText
         }

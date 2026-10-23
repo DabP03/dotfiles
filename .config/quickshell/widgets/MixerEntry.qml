@@ -12,27 +12,34 @@ ColumnLayout {
     id: root
     required property PwNode node;
     required property string name;
+    required property int sliderWidth;
+
+    property int buttonSize: 24
+    property string buttonColor: Colors.peach
+    property string buttonTextColor: Colors.base
+    property bool percentBold: false
     property real sliderScale: 1.0
+    property string sliderColor: Colors.peach
     property bool containsMouse: (!decButton.containsMouse && !incButton.containsMouse && !slider.hovered && !audioSinkPercent.containsMouse)
 
     spacing: 4
 
     PwObjectTracker { objects: [ node ] }
 
-    ScrollingText {
-        id: audioSinkName
-        Layout.alignment: Qt.AlignHCenter
-        implicitWidth: {
-            let cap = 200 * root.sliderScale
-            return textWidth < cap ? textWidth : cap
-        }
-        color: Colors.text
-        font.bold: true
-        font.pixelSize: Options.font.size - 2
-        font.family: Options.font.family
-        text: name || node.properties["application.name"] || node.nickname || "Unknown"
-        dwellTime: 3000
-    }
+    // ScrollingText {
+    //     id: audioSinkName
+    //     Layout.alignment: Qt.AlignHCenter
+    //     implicitWidth: {
+    //         let cap = 200 * root.sliderScale
+    //         return textWidth < cap ? textWidth : cap
+    //     }
+    //     color: Colors.text
+    //     font.bold: true
+    //     font.pixelSize: Options.font.size - 2
+    //     font.family: Options.font.family
+    //     text: name || node.properties["application.name"] || node.nickname || "Unknown"
+    //     dwellTime: 3000
+    // }
 
     RowLayout {
         id: panelRow
@@ -41,10 +48,10 @@ ColumnLayout {
 
         StyledButton {
             id: decButton
-            implicitWidth: 25
-            implicitHeight: 25
-            buttonColor: Colors.teal
-            buttonTextColor: Colors.base
+            implicitWidth: root.buttonSize
+            implicitHeight: root.buttonSize
+            buttonColor: root.buttonColor
+            buttonTextColor: root.buttonTextColor
             buttonText: "-"
             onClick: () => {
                 Audio.decrement(node)
@@ -53,7 +60,7 @@ ColumnLayout {
 
         Slider {
             id: slider
-            implicitWidth: 200 * root.sliderScale
+            implicitWidth: (root.sliderWidth - (root.buttonSize * 3) - (4 * 4) - audioSinkPercent.width) * root.sliderScale
             from: 0
             value: Math.round(node.audio.volume * 100) / 100
             to: 1
@@ -72,7 +79,7 @@ ColumnLayout {
                 Rectangle {
                     width: slider.visualPosition * parent.width
                     height: parent.height
-                    color: Colors.teal
+                    color: root.sliderColor
                     radius: 2
                 }
             }
@@ -82,33 +89,34 @@ ColumnLayout {
                 implicitWidth: 12
                 implicitHeight: 12
                 radius: 13
-                color: slider.pressed ? Qt.lighter(Colors.teal, 1.1) : Colors.teal
+                color: slider.pressed ? Qt.lighter(root.sliderColor, 1.1) : root.sliderColor
             }
         }
 
         StyledButton {
             id: incButton
-            implicitWidth: 25
-            implicitHeight: 25
-            buttonColor: Colors.teal
-            buttonTextColor: Colors.base
+            implicitWidth: root.buttonSize
+            implicitHeight: root.buttonSize
+            buttonColor: root.buttonColor
+            buttonTextColor: root.buttonTextColor
             buttonText: "+"
             onClick: () => {
                 Audio.increment(node)
             }
         }
+
     }
 
-    StyledButton {
+    Text {
         id: audioSinkPercent
-        Layout.alignment: Qt.AlignHCenter
-        implicitWidth: textWidth + 8
-        implicitHeight: 20
-        buttonColor: Colors.base
-        buttonTextColor: Colors.text
-        buttonText: Math.round(node.audio.volume * 100) + "%"
-        onClick: () => {
-            Audio.mute(node)
+        anchors {
+            left: panelRow.right
+            leftMargin: 8
+            verticalCenter: panelRow.verticalCenter
         }
+        Layout.alignment: Qt.AlignHCenter
+        color: Colors.text
+        font.bold: root.percentBold
+        text: Math.round(node.audio.volume * 100) + "%"
     }
 }

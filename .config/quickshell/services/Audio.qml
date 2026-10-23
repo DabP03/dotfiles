@@ -15,8 +15,19 @@ Singleton {
     readonly property bool micMuted: source?.audio?.muted ?? false
     readonly property real micVolume: source?.audio?.volume ?? 0
 
-
     property var sinks: Pipewire.nodes.values.filter(node => node.isSink && node.isStream)
+
+    readonly property string sinkIcon: {
+        if (Audio.muted) return "volume_off"
+        else if (Audio.volume < .25) return "volume_mute"
+        else if (Audio.volume < .50) return "volume_down"
+        else return "volume_up"
+    }
+
+    readonly property string sourceIcon: {
+        if (Audio.micMuted) return "mic_off"
+        else return "mic"
+    }
 
     // sinks grouped by application, e.g. { appName: "Firefox", nodes: [tab1, tab2, ...] }.
     // Apps with a single stream stay as a flat entry; apps with multiple streams

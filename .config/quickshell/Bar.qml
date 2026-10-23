@@ -16,6 +16,8 @@ Scope {
         PanelWindow {
             id: panelWindow
 
+            Component.onCompleted: Idle.setWindow(panelWindow)
+
             readonly property bool monitorHasWindows: {
                 const mon = Hyprland.monitors.values.find(m => m.name === modelData.name)
                 if (!mon) return false

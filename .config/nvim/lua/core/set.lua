@@ -33,5 +33,6 @@ vim.opt.wrap = false
 vim.opt.linebreak = true
 vim.opt.scrolloff = 8
 vim.opt.sidescrolloff = 8
+vim.opt.colorcolumn = "100"
 vim.opt.guifont = "IosevkaTerm NF:h12"
 vim.opt.whichwrap = "bs<>[]hl"
