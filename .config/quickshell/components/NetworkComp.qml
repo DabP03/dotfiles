@@ -192,7 +192,7 @@ Rectangle {
                     implicitHeight: visible ? 72 : 0
                     implicitWidth: parent.implicitWidth - 32
                     radius: Options.radius
-                    color: Colors.surface0
+                    color: Colors.mantle
 
                     Icon { 
                         id: wiredPanelIcon

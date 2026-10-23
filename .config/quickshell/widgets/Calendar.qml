@@ -7,8 +7,8 @@ import "root:/config/"
 
 Control {
     id: control
-    width: 300
-    height: 300  // Increased height to accommodate header
+    width: 400
+    height: 400  // Increased height to accommodate header
 
     property date selectedDate: new Date()  // Default to today
     property date today: {
@@ -88,6 +88,18 @@ Control {
 
                 delegate: Item {
                     required property var model
+                    property bool isToday: model.date.getFullYear() === control.today.getFullYear() &&
+                                 model.date.getMonth() === control.today.getMonth() &&
+                                 model.date.getDate() === control.today.getDate()
+
+                    // Separate highlight for today's date (e.g., border or different color)
+                    Rectangle {
+                        anchors.fill: parent
+                        border.color: Colors.peach  // Red border for today
+                        radius: Options.radius / 2
+                        color: Colors.peach
+                        visible: isToday
+                    }
 
                     Text {
                         anchors.centerIn: parent
@@ -95,8 +107,14 @@ Control {
                         verticalAlignment: Text.AlignVCenter
                         opacity: model.month === grid.month ? 1 : 0.5
                         text: model.day
-                        font: control.font
-                        color: control.palette.text
+                        font.family: Options.font.family
+                        font.pixelSize: Options.font.size
+                        font.bold: isToday
+                        color: if (isToday) {
+                            Colors.mantle
+                        } else {
+                            control.palette.text
+                        }
                     }
 
                     // Highlight for selected date
@@ -107,17 +125,6 @@ Control {
                         visible: model.date.getTime() === control.selectedDate.getTime()
                     }
 
-                    // Separate highlight for today's date (e.g., border or different color)
-                    Rectangle {
-                        anchors.fill: parent
-                        border.color: Colors.peach  // Red border for today
-                        radius: Options.radius
-                        border.width: 2
-                        color: "transparent"
-                        visible: model.date.getFullYear() === control.today.getFullYear() &&
-                                 model.date.getMonth() === control.today.getMonth() &&
-                                 model.date.getDate() === control.today.getDate()
-                    }
                 }
 
                 // onClicked: (date) => {

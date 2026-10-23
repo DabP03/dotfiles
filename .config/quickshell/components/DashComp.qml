@@ -32,7 +32,6 @@ Rectangle {
         onClicked: popup.toggle()
     }
 
-
     Rectangle {
         anchors.fill: parent
         radius: 8
@@ -52,7 +51,7 @@ Rectangle {
             font.bold: true
 
             anchors.centerIn: parent
-            text: Time.time
+            text: Time.timeI
         }
 
 
@@ -61,8 +60,9 @@ Rectangle {
             target: root
             bar: root.bar
             anchor.rect.x: root.bar.width - root.mapToItem(null, 0, 0).x - popup.implicitWidth / 2 - root.implicitWidth / 2
-            implicitWidth: calendarPanel.implicitWidth + 24
-            implicitHeight: 400
+            // implicitWidth: calendarPanel.implicitWidth + 98 + 24
+            implicitWidth: 425
+            implicitHeight: calendarPanel.implicitHeight +  3 * (datePanel.implicitHeight + 6) + 24
 
             Rectangle {
                 id: menu
@@ -101,15 +101,15 @@ Rectangle {
                 Rectangle {
                     id: calendarPanel
                     anchors {
-                        bottom: parent.bottom
+                        top: dndPanel.bottom
                         left: parent.left
-                        bottomMargin: 12
+                        topMargin: 6
                         leftMargin: 12
                     }
                     color: Colors.mantle
                     radius: Options.radius
-                    implicitHeight: 304
-                    implicitWidth: 304
+                    implicitHeight: calendar.height
+                    implicitWidth: calendar.width
 
                     // Behavior on opacity {
                     //     NumberAnimation {
@@ -119,10 +119,12 @@ Rectangle {
                     // }
 
                     Calendar {
+                        id: calendar
                         anchors.margins: 2
                         anchors.horizontalCenter: parent.horizontalCenter
                     }
                 }
+
 
                 Rectangle {
                     id: datePanel
@@ -130,54 +132,64 @@ Rectangle {
                         top: parent.top
                         left: parent.left
                         leftMargin: 12
-                        topMargin: 6
+                        topMargin: 12
                     }
-                    color: Colors.mantle
+
+                    implicitHeight: buttonsPanel.implicitHeight
+                    implicitWidth: (parent.implicitWidth - 24 - 3) / 2
                     radius: Options.radius
-                    implicitWidth: power.implicitWidth + 28
-                    implicitHeight: power.implicitWidth + 28
+                    color: Colors.mantle
 
-                    Text {
-                        id: monthText
-                        color: Colors.text
-                        font.family: Options.font.family
-                        font.bold: true
+                    ColumnLayout {
+                        id: datePanelLayout
                         anchors {
-                            horizontalCenter: parent.horizontalCenter
-                            top: parent.top
-                            topMargin: 14
+                            verticalCenter: parent.verticalCenter
+                            left: parent.left
+                            leftMargin: 12
                         }
-                        text: Time.date
+                        spacing: 4
+
+                        Text {
+                            id: datePanelText
+                            color: Colors.text
+                            font.family: Options.font.family
+                            font.bold: true
+                            font.pixelSize: 18
+                            Layout.alignment: Qt.AlignHCenter
+                            text: Time.time
+                        }
+
+                        Text {
+                            id: datePanelSubText
+                            color: Colors.subtext0
+                            font.family: Options.font.family
+                            font.bold: false
+                            Layout.alignment: Qt.AlignHCenter
+                            font.pixelSize: 14
+                            text: Time.fancyDate
+                        }
                     }
 
-                    Text {
-                        color: Colors.text
-                        font.family: Options.font.family
-                        font.bold: true
-                        anchors {
-                            horizontalCenter: parent.horizontalCenter
-                            top: monthText.bottom
-                        }
-                        text: Time.year
-                    }
                 }
 
                 Rectangle {
                     id: buttonsPanel
                     anchors {
                         top: parent.top
+                        left: datePanel.right
                         right: parent.right
+                        leftMargin: 6
                         rightMargin: 12
-                        topMargin: 6
+                        topMargin: 12
                     }
                     color: Colors.mantle
                     radius: Options.radius
-                    implicitWidth: calendarPanel.implicitWidth - datePanel.implicitWidth - 12
-                    implicitHeight: power.implicitWidth + 28
+                    implicitHeight: power.implicitHeight + 28
+                    implicitWidth: (parent.implicitWidth - 24 - 3) / 2
 
                     RowLayout {
                         id: column
-                        spacing: 8
+                        spacing: 4
                         anchors {
                             centerIn: parent
                         }
@@ -190,7 +202,7 @@ Rectangle {
                             radius: Options.buttonRadius
                             buttonColor: Colors.blue
                             buttonTextColor: Colors.base
-                            fontSize: 20
+                            fontSize: 18
                             fontFamily: Options.font.iconFamily
                             buttonText: "lock"
                             onClick: () => {
@@ -206,7 +218,7 @@ Rectangle {
                             buttonColor: Colors.green
                             buttonTextColor: Colors.base
                             fontFamily: Options.font.iconFamily
-                            fontSize: 20
+                            fontSize: 18
                             buttonText: "logout"
                             onClick: () => {
                                 process.exec(["systemctl", "exit"])
@@ -221,7 +233,7 @@ Rectangle {
                             buttonColor: Colors.yellow
                             buttonTextColor: Colors.base
                             fontFamily: Options.font.iconFamily
-                            fontSize: 20
+                            fontSize: 18
                             buttonText: "restart_alt"
                             onClick: () => {
                                 process.exec(["systemctl", "reboot"])
@@ -237,11 +249,207 @@ Rectangle {
                             buttonTextColor: Colors.base
                             fontFamily: Options.font.iconFamily
                             buttonText: "mode_off_on"
-                            fontSize: 20
+                            fontSize: 18
                             onClick: () => {
                                 process.exec(["systemctl", "poweroff"])
                             }
                         }
+                    }
+                }
+
+                Rectangle {
+                    id: idlePanel
+                    anchors {
+                        top: datePanel.bottom
+                        left: parent.left
+                        right: parent.right
+                        leftMargin: 12
+                        rightMargin: 12
+                        topMargin: 6
+                    }
+
+                    implicitHeight: buttonsPanel.implicitHeight
+                    implicitWidth: (parent.implicitWidth - 24 - 3) / 2
+                    radius: Options.radius
+                    color: Colors.mantle
+
+                    Rectangle {
+                        id: idleIconRect
+                        anchors {
+                            left: parent.left
+                            leftMargin: 12
+                            verticalCenter: parent.verticalCenter
+                        }
+                        implicitWidth: logout.implicitWidth
+                        implicitHeight: logout.implicitHeight
+                        color: idleSwitch.checked ? Colors.lavender : Colors.base
+                        radius: Options.radius / 2
+
+                        Behavior on color {
+                            ColorAnimation {
+                                duration: 120
+                                easing.type: Options.easingTypeOut
+                            }
+                        }
+
+                        Icon { 
+                            text: "coffee"
+                            anchors {
+                                centerIn: parent
+                            }
+                            color: idleSwitch.checked ? Colors.base : Colors.subtext0
+                            font.pixelSize: 18
+
+                            Behavior on color {
+                                ColorAnimation {
+                                    duration: 120
+                                    easing.type: Options.easingTypeOut
+                                }
+                            }
+                        }
+
+                    }
+
+                    ColumnLayout {
+                        id: idleLayout
+                        anchors {
+                            verticalCenter: idleIconRect.verticalCenter
+                            left: idleIconRect.right
+                            leftMargin: 12
+                            right: idleSwitch.left
+                            rightMargin: 12
+                        }
+
+                        Text {
+                            id: idleText
+                            Layout.fillWidth: true
+                            elide: Text.ElideRight
+                            textFormat: Text.PlainText
+                            color: Colors.text
+                            font.family: Options.font.family
+                            font.bold: true
+                            font.pixelSize: 18
+                            text: "Idle Inhibitor" 
+                        }
+
+                        Text {
+                            id: idleSubText
+                            color: Colors.subtext0
+                            font.family: Options.font.family
+                            font.bold: false
+                            font.pixelSize: 12
+                            text: "Blocks lock and sleep" 
+                        }
+                    }
+
+                    ToggleSwitch {
+                        id: idleSwitch
+                        backColor: Colors.lavender
+                        anchors {
+                            verticalCenter: idleIconRect.verticalCenter
+                            rightMargin: 12
+                            right: parent.right
+                        }
+                        checked: Idle.inhibitor.enabled
+                        onClicked: Idle.inhibitor.toggle()
+                    }
+                }
+
+                Rectangle {
+                    id: dndPanel
+                    anchors {
+                        top: idlePanel.bottom
+                        left: parent.left
+                        right: parent.right
+                        leftMargin: 12
+                        rightMargin: 12
+                        topMargin: 6
+                    }
+
+                    implicitHeight: buttonsPanel.implicitHeight
+                    implicitWidth: (parent.implicitWidth - 24 - 3) / 2
+                    radius: Options.radius
+                    color: Colors.mantle
+
+                    Rectangle {
+                        id: dndIconRect
+                        anchors {
+                            left: parent.left
+                            leftMargin: 12
+                            verticalCenter: parent.verticalCenter
+                        }
+                        implicitWidth: logout.implicitWidth
+                        implicitHeight: logout.implicitHeight
+                        color: dndSwitch.checked ? Colors.lavender : Colors.base
+                        radius: Options.radius / 2
+
+                        Behavior on color {
+                            ColorAnimation {
+                                duration: 120
+                                easing.type: Options.easingTypeOut
+                            }
+                        }
+
+                        Icon { 
+                            text: "notifications"
+                            anchors {
+                                centerIn: parent
+                            }
+                            color: dndSwitch.checked ? Colors.base : Colors.subtext0
+                            font.pixelSize: 18
+
+                            Behavior on color {
+                                ColorAnimation {
+                                    duration: 120
+                                    easing.type: Options.easingTypeOut
+                                }
+                            }
+                        }
+
+                    }
+
+                    ColumnLayout {
+                        id: dndLayout
+                        anchors {
+                            verticalCenter: dndIconRect.verticalCenter
+                            left: dndIconRect.right
+                            leftMargin: 12
+                            right: dndSwitch.left
+                            rightMargin: 12
+                        }
+
+                        Text {
+                            id: dndText
+                            Layout.fillWidth: true
+                            elide: Text.ElideRight
+                            textFormat: Text.PlainText
+                            color: Colors.text
+                            font.family: Options.font.family
+                            font.bold: true
+                            font.pixelSize: 18
+                            text: "Do Not Disturb" 
+                        }
+
+                        Text {
+                            id: dndSubText
+                            color: Colors.subtext0
+                            font.family: Options.font.family
+                            font.bold: false
+                            font.pixelSize: 12
+                            text: "Notifications are silent" 
+                        }
+                    }
+
+                    ToggleSwitch {
+                        id: dndSwitch
+                        backColor: Colors.lavender
+                        anchors {
+                            verticalCenter: dndIconRect.verticalCenter
+                            rightMargin: 12
+                            right: parent.right
+                        }
+                        checked: NetworkService.wifiEnabled
+                        onClicked: NetworkService.setWifiEnabled(!NetworkService.wifiEnabled)
                     }
                 }
             }

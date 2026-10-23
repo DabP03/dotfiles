@@ -15,12 +15,13 @@ Rectangle {
     id: root
 
     property bool checked: false
+    property string backColor: Colors.blue
     signal clicked()
 
     implicitWidth: 44
     implicitHeight: 24
     radius: height / 2
-    color: checked ? Colors.blue : Colors.surface1
+    color: checked ? backColor : Colors.surface1
     opacity: enabled ? 1 : 0.4
 
     Behavior on color {
