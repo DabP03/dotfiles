@@ -17,9 +17,9 @@ Variants {
     id: root
 
     // Space above the first toast: bar height plus a gap.
-    property real topOffset: 52
+    property real topOffset: 54
     property real toastWidth: 380
-    property real rightMargin: 12
+    property real rightMargin: 8
 
     model: Quickshell.screens
 

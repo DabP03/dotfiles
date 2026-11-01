@@ -18,7 +18,7 @@ Rectangle {
     readonly property bool critical: alive && notification.urgency === NotificationUrgency.Critical
     readonly property int timeoutMs: NotificationService.toastTimeout(notification)
 
-    implicitHeight: card.implicitHeight + Options.borderWidth * 2
+    implicitHeight: card.implicitHeight + Options.borderWidth * 2 + 2
     radius: Options.radius
     color: Colors.base
     border.width: Options.borderWidth
