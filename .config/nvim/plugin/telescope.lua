@@ -1,4 +1,4 @@
-vim.pack.add({ "https://github.com/nvim-telescope/telescope.nvim" })
+vim.pack.add({ { src = "https://github.com/nvim-telescope/telescope.nvim", version = "v0.2.1" } })
 vim.pack.add({ "https://github.com/nvim-lua/plenary.nvim" })
 
 local status_ok, telescope = pcall(require, "telescope")

@@ -6,3 +6,5 @@
     compression = 9
     whitespace = error
     preloadindex = true
+[credential]
+	helper = /usr/lib/git-core/git-credential-libsecret

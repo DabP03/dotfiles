@@ -57,7 +57,6 @@ hl.on("hyprland.start", function()
 	hl.exec_cmd("qs -d")
 	hl.exec_cmd("wl-paste --type text --watch cliphist")
 	hl.exec_cmd("wl-paste --type image --watch cliphist")
-	hl.exec_cmd("dunst")
 	hl.exec_cmd("hypridle")
 	hl.exec_cmd("awww-daemon")
 	hl.exec_cmd("/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh")
@@ -468,7 +467,7 @@ overlayLayerRule:set_enabled(true)
 
 hl.window_rule({
 	name = "scrolling_full_width",
-	match = { class = "zen|discord|steam" },
+	match = { class = "zen|discord" },
 
 	scrolling_width = 1.0,
 })

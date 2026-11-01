@@ -62,7 +62,8 @@ Rectangle {
             anchor.rect.x: root.bar.width - root.mapToItem(null, 0, 0).x - popup.implicitWidth / 2 - root.implicitWidth / 2
             // implicitWidth: calendarPanel.implicitWidth + 98 + 24
             implicitWidth: 425
-            implicitHeight: calendarPanel.implicitHeight +  3 * (datePanel.implicitHeight + 6) + 24
+            implicitHeight: calendarPanel.implicitHeight + 3 * (datePanel.implicitHeight + 6) + 24
+            + (notificationPanel.visible ? notificationPanel.implicitHeight + 6 : 0)
 
             Rectangle {
                 id: menu
@@ -125,6 +126,18 @@ Rectangle {
                     }
                 }
 
+                NotificationPanel {
+                    id: notificationPanel
+                    anchors {
+                        top: calendarPanel.bottom
+                        left: parent.left
+                        right: parent.right
+                        leftMargin: 12
+                        rightMargin: 12
+                        topMargin: 6
+                    }
+                }
+
 
                 Rectangle {
                     id: datePanel
@@ -143,9 +156,9 @@ Rectangle {
                     ColumnLayout {
                         id: datePanelLayout
                         anchors {
-                            verticalCenter: parent.verticalCenter
-                            left: parent.left
-                            leftMargin: 12
+                            centerIn: parent
+
+                            
                         }
                         spacing: 4
 
@@ -448,8 +461,8 @@ Rectangle {
                             rightMargin: 12
                             right: parent.right
                         }
-                        checked: NetworkService.wifiEnabled
-                        onClicked: NetworkService.setWifiEnabled(!NetworkService.wifiEnabled)
+                        checked: NotificationsService.dnd
+                        onClicked: NotificationsService.dnd = !NotificationsService.dnd
                     }
                 }
             }

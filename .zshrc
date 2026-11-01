@@ -120,3 +120,6 @@ zle-line-init() {
 zle -N zle-line-init
 
 . "$HOME/.local/bin/env"
+
+# Unity CLI
+case ":${PATH}:" in *:"$HOME/.local/bin":*) ;; *) export PATH="$HOME/.local/bin:$PATH" ;; esac

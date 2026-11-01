@@ -19,3 +19,7 @@ vim.diagnostic.config({
 
 -- Color as virtual text
 vim.lsp.document_color.enable(true, nil, { style = "virtual" })
+
+vim.filetype.add({
+  pattern = { ['.*%.blade%.php'] = 'blade' },
+})
