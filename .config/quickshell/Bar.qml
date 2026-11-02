@@ -4,6 +4,7 @@ import Quickshell.Wayland
 import "root:/config/"
 import "root:/services/"
 import "root:/components/"
+import "root:/widgets/"
 
 Scope {
     Component.onCompleted: Wallpaper.random()
@@ -138,6 +139,16 @@ Scope {
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.right: parent.right
                     anchors.rightMargin: Options.margin.outer
+                }
+
+                NotificationBadge {
+                    id: notifBadge
+                    anchors {
+                        top: dash.top
+                        right: dash.right
+                        rightMargin: -4
+                        topMargin: -4
+                    }
                 }
 
                 Workspaces {

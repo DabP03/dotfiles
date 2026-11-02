@@ -46,7 +46,6 @@ hl.env("QT_QPA_PLATFORMTHEME", "qt6ct")
 hl.env("XDG_MENU_PREFIX", "arch-")
 hl.env("QT_WAYLAND_DISABLE_WINDOWDECORATION", "1")
 
-
 -- On Start
 -- require("lua.scripts").randomiseWallpaper(1800000)
 hl.on("hyprland.start", function()
@@ -66,8 +65,10 @@ hl.on("hyprland.start", function()
 	hl.exec_cmd("easyeffects -w")
 	hl.exec_cmd("syncthing")
 	hl.exec_cmd("keepassxc --minimized")
-    hl.exec_cmd("solaar --window=hide")
-    hl.exec_cmd("sh -c 'sleep 10 && gpu-screen-recorder -w screen -c mp4 -f 60 -a $(pactl get-default-sink).monitor -a $(pactl get-default-source) -r 30 -o ~/Videos/ScreenRecordings -sc ~/.config/hypr/lua/gsr-notify.sh'")
+	hl.exec_cmd("solaar --window=hide")
+	hl.exec_cmd(
+		"sh -c 'sleep 10 && gpu-screen-recorder -w screen -c mp4 -f 60 -a $(pactl get-default-sink).monitor -a $(pactl get-default-source) -r 30 -o ~/Videos/ScreenRecordings -sc ~/.config/hypr/lua/gsr-notify.sh'"
+	)
 end)
 
 -- General Config
@@ -99,6 +100,12 @@ hl.config({
 		},
 		blur = {
 			enabled = false,
+		},
+		wobble = {
+			enabled = true,
+		},
+		motion_blur = {
+			enabled = true,
 		},
 	},
 	group = {
@@ -182,7 +189,6 @@ else
 		},
 	})
 end
-
 
 -- Workspaces
 hl.workspace_rule({ workspace = "spacial:shadowrealm", persistent = true, default = false })
@@ -424,7 +430,7 @@ hl.window_rule({
 	},
 	-- float = true,
 	no_anim = true,
-    center = true,
+	center = true,
 })
 
 hl.window_rule({
@@ -434,7 +440,7 @@ hl.window_rule({
 	},
 	float = true,
 	size = { "(monitor_w*0.72)", "(monitor_h*0.72)" },
-    center = true,
+	center = true,
 })
 
 hl.window_rule({
@@ -444,7 +450,7 @@ hl.window_rule({
 	},
 	float = true,
 	size = { "(monitor_w*0.72)", "(monitor_h*0.72)" },
-    center = true,
+	center = true,
 })
 
 hl.window_rule({
@@ -454,7 +460,7 @@ hl.window_rule({
 	},
 	float = true,
 	size = { "(monitor_w*0.72)", "(monitor_h*0.72)" },
-    center = true,
+	center = true,
 })
 
 local overlayLayerRule = hl.layer_rule({
@@ -463,7 +469,6 @@ local overlayLayerRule = hl.layer_rule({
 	no_anim = true,
 })
 overlayLayerRule:set_enabled(true)
-
 
 hl.window_rule({
 	name = "scrolling_full_width",
