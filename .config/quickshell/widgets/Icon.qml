@@ -1,6 +1,8 @@
 // Icon.qml
 import QtQuick
 
+import "root:/config/"
+
 Text {
     property int fill: 1
     text: ""
@@ -11,3 +13,5 @@ Text {
     renderType: Text.NativeRendering
     font.variableAxes: ({ "FILL": fill })
 }
+
+

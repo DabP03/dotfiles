@@ -92,8 +92,8 @@ ColumnLayout {
 
         Behavior on color {
             ColorAnimation {
-                duration: 100
-                easing.type: Options.easingTypeOut
+                duration: Motion.micro
+                easing.type: Motion.arrive
             }
         }
 
@@ -122,8 +122,8 @@ ColumnLayout {
 
                 Behavior on rotation {
                     NumberAnimation {
-                        duration: 150
-                        easing.type: Options.easingTypeOut
+                        duration: Motion.pop
+                        easing.type: Motion.arrive
                     }
                 }
             }
@@ -185,16 +185,16 @@ ColumnLayout {
         Behavior on implicitHeight {
             enabled: root.animated
             NumberAnimation {
-                duration: 160
-                easing.type: Options.easingTypeOut
+                duration: Motion.grow
+                easing.type: Motion.arrive
             }
         }
 
         Behavior on opacity {
             enabled: root.animated
             NumberAnimation {
-                duration: 120
-                easing.type: Options.easingTypeOut
+                duration: Motion.fade
+                easing.type: Motion.leave
             }
         }
 

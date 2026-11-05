@@ -17,7 +17,23 @@ Rectangle {
     // visible: NotificationService.hasNotifications
     color: Colors.mantle
     radius: Options.radius
-    implicitHeight: 12 + header.implicitHeight + NotificationService.hasNotifications * (8 + Math.min(list.contentHeight, maxListHeight)) + 12
+
+    readonly property real listHeight: NotificationService.hasNotifications
+        ? 8 + Math.min(list.contentHeight, maxListHeight)
+        : 0
+
+    implicitHeight: 12 + header.implicitHeight + listHeight + 12
+
+    // The dash popup sizes itself from this implicitHeight, so animating it
+    // animates the window: clearing notifications shrinks the popup instead of
+    // snapping. The popup's top edge stays anchored under the bar, so it grows
+    // and shrinks downwards from the bar edge.
+    Behavior on implicitHeight {
+        NumberAnimation {
+            duration: Motion.grow
+            easing.type: Motion.inOut
+        }
+    }
 
     RowLayout {
         id: header

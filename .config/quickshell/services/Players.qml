@@ -86,6 +86,13 @@ Singleton {
                 root.lastStateKey = key
                 root.trackAll()
                 root.reconputeToken = root.reconputeToken + 1
+                // A manual pick yields when some other tracked player starts.
+                const playing = root.list.find(p =>
+                    root.shownPlayers.includes(root.normId(root.getIdentity(p))) &&
+                    p.playbackState === MprisPlaybackState.Playing
+                )
+                if (playing && playing !== props.manualActive)
+                    props.manualActive = null
             }
         }
     }
@@ -107,7 +114,7 @@ Singleton {
         ?? list.find(p => shownPlayers.includes(normId(getIdentity(p))))
         ?? null
     }
-    readonly property real volume: active.volume
+    readonly property real volume: active?.volume ?? 1
     property list<var> shownPlayers: [
         "spotify",
         "tidal-hifi",
@@ -273,21 +280,6 @@ Singleton {
         onTriggered: root.active.positionChanged()
     }
 
-    Connections {
-    target: Mpris
-    function onPlayersChanged() {
-        root.lastStateKey = root.snapshotKey()
-        root.trackAll()
-        root.reconputeToken = root.reconputeToken + 1
-        const playing = root.list.find(p =>
-            root.shownPlayers.includes(root.normId(root.getIdentity(p))) &&
-            p.playbackState === MprisPlaybackState.Playing
-        )
-        // Clear manual pick if something else started playing
-        if (playing && playing !== props.manualActive)
-            props.manualActive = null
-    }
-}
 
 
     PersistentProperties {

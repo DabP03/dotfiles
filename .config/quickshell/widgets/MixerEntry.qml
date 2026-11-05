@@ -15,11 +15,11 @@ ColumnLayout {
     required property int sliderWidth;
 
     property int buttonSize: 24
-    property string buttonColor: Colors.peach
-    property string buttonTextColor: Colors.base
+    property color buttonColor: Colors.peach
+    property color buttonTextColor: Colors.base
     property bool percentBold: false
     property real sliderScale: 1.0
-    property string sliderColor: Colors.peach
+    property color sliderColor: Colors.peach
     property bool containsMouse: (!decButton.containsMouse && !incButton.containsMouse && !slider.hovered && !audioSinkPercent.containsMouse)
 
     spacing: 4
@@ -93,6 +93,13 @@ ColumnLayout {
             }
         }
 
+        Text {
+            id: audioSinkPercent
+            Layout.alignment: Qt.AlignVCenter
+            color: Colors.text
+            font.bold: root.percentBold
+            text: Math.round(node.audio.volume * 100) + "%"
+        }
         StyledButton {
             id: incButton
             implicitWidth: root.buttonSize
@@ -107,16 +114,4 @@ ColumnLayout {
 
     }
 
-    Text {
-        id: audioSinkPercent
-        anchors {
-            left: panelRow.right
-            leftMargin: 8
-            verticalCenter: panelRow.verticalCenter
-        }
-        Layout.alignment: Qt.AlignHCenter
-        color: Colors.text
-        font.bold: root.percentBold
-        text: Math.round(node.audio.volume * 100) + "%"
-    }
 }

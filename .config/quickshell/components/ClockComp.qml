@@ -43,8 +43,8 @@ Rectangle {
                 color: mouseArea.containsMouse ? Qt.lighter(Colors.maroon, 1.1) : Colors.maroon
                 Behavior on color {
                     ColorAnimation {
-                        duration: 100
-                        easing.type: Easing.Linear
+                        duration: Motion.micro
+                        easing.type: Motion.arrive
                     }
                 }
             }
@@ -53,8 +53,8 @@ Rectangle {
                 color: mouseArea.containsMouse ? Qt.lighter(Colors.mauve, 1.1) : Colors.mauve
                 Behavior on color {
                     ColorAnimation {
-                        duration: 100
-                        easing.type: Easing.Linear
+                        duration: Motion.micro
+                        easing.type: Motion.arrive
                     }
                 }
             }
@@ -98,13 +98,6 @@ Rectangle {
                     border.width: Options.borderWidth
                     implicitHeight: calendarPanel.implicitHeight
                     implicitWidth: calendarPanel.implicitWidth
-
-                    // Behavior on opacity {
-                    //     NumberAnimation {
-                    //         duration: 200
-                    //         easing.type: Options.easingTypeOut
-                    //     }
-                    // }
 
                     Rectangle {
                         id: topBorder

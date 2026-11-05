@@ -31,8 +31,8 @@ Rectangle {
 
         Behavior on color {
             ColorAnimation {
-                duration: 100 // Transition duration in milliseconds
-                easing.type: Options.easingTypeOut // Smooth easing curve
+                duration: Motion.micro
+                easing.type: Motion.arrive
             }
         }
 

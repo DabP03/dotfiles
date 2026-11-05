@@ -184,13 +184,14 @@ Scope {
 
                                 Behavior on scale {
                                     NumberAnimation {
-                                        duration: 150
-                                        easing.type: Options.easingTypeOut
+                                        duration: Motion.pop
+                                        easing.type: Motion.arrive
                                     }
                                 }
                                 Behavior on opacity {
                                     NumberAnimation {
-                                        duration: 150
+                                        duration: Motion.fade
+                                        easing.type: Motion.leave
                                     }
                                 }
 

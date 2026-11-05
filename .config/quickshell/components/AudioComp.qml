@@ -25,8 +25,8 @@ Rectangle {
 
     Behavior on implicitWidth {
         NumberAnimation {
-            duration: 200
-            easing.type: Options.easingTypeOut
+            duration: Motion.grow
+            easing.type: Motion.arrive
         }
     }
 
@@ -75,8 +75,8 @@ Rectangle {
 
         Behavior on color {
             ColorAnimation {
-                duration: 100 // Transition duration in milliseconds
-                easing.type: Options.easingTypeOut // Smooth easing curve
+                duration: Motion.micro
+                easing.type: Motion.arrive
             }
         }
 
@@ -156,7 +156,6 @@ Rectangle {
 
         BarPopup {
             id: popup
-            visible: false
             target: root
             bar: root.bar
             // implicitHeight: topBorder.implicitHeight + 8 + outputPanel.implicitHeight * 2 + (separator.implicitHeight * (repeater.count != 0)) + (scrollView.implicitHeight * (repeater.count != 0)) + (16 * (repeater.count != 0))
@@ -221,8 +220,8 @@ Rectangle {
 
                         Behavior on color {
                             ColorAnimation {
-                                duration: 120
-                                easing.type: Options.easingTypeOut
+                                duration: Motion.state
+                                easing.type: Motion.arrive
                             }
                         }
 
@@ -236,8 +235,8 @@ Rectangle {
 
                             Behavior on color {
                                 ColorAnimation {
-                                    duration: 120
-                                    easing.type: Options.easingTypeOut
+                                    duration: Motion.state
+                                    easing.type: Motion.arrive
                                 }
                             }
                         }
@@ -267,8 +266,8 @@ Rectangle {
 
                             Behavior on color {
                                 ColorAnimation {
-                                    duration: 120
-                                    easing.type: Options.easingTypeOut
+                                    duration: Motion.state
+                                    easing.type: Motion.arrive
                                 }
                             }
                         }
@@ -301,15 +300,15 @@ Rectangle {
 
                         Behavior on sliderColor {
                             ColorAnimation {
-                                duration: 120
-                                easing.type: Options.easingTypeOut
+                                duration: Motion.state
+                                easing.type: Motion.arrive
                             }
                         }
 
                         Behavior on buttonTextColor {
                             ColorAnimation {
-                                duration: 120
-                                easing.type: Options.easingTypeOut
+                                duration: Motion.state
+                                easing.type: Motion.arrive
                             }
                         }
                     }
@@ -368,8 +367,8 @@ Rectangle {
 
                         Behavior on color {
                             ColorAnimation {
-                                duration: 120
-                                easing.type: Options.easingTypeOut
+                                duration: Motion.state
+                                easing.type: Motion.arrive
                             }
                         }
 
@@ -383,8 +382,8 @@ Rectangle {
 
                             Behavior on color {
                                 ColorAnimation {
-                                    duration: 120
-                                    easing.type: Options.easingTypeOut
+                                    duration: Motion.state
+                                    easing.type: Motion.arrive
                                 }
                             }
                         }
@@ -414,8 +413,8 @@ Rectangle {
 
                             Behavior on color {
                                 ColorAnimation {
-                                    duration: 120
-                                    easing.type: Options.easingTypeOut
+                                    duration: Motion.state
+                                    easing.type: Motion.arrive
                                 }
                             }
                         }
@@ -448,15 +447,15 @@ Rectangle {
 
                         Behavior on sliderColor {
                             ColorAnimation {
-                                duration: 120
-                                easing.type: Options.easingTypeOut
+                                duration: Motion.state
+                                easing.type: Motion.arrive
                             }
                         }
 
                         Behavior on buttonTextColor {
                             ColorAnimation {
-                                duration: 120
-                                easing.type: Options.easingTypeOut
+                                duration: Motion.state
+                                easing.type: Motion.arrive
                             }
                         }
                     }

@@ -101,8 +101,8 @@ Item {
 
             Behavior on color {
                 ColorAnimation {
-                    duration: 100
-                    easing.type: Options.easingTypeOut
+                    duration: Motion.micro
+                    easing.type: Motion.arrive
                 }
             }
 
@@ -174,7 +174,7 @@ Item {
                         RotationAnimator on rotation {
                             from: 0
                             to: 360
-                            duration: 900
+                            duration: Motion.spin
                             loops: Animation.Infinite
                             running: spinner.visible
                         }

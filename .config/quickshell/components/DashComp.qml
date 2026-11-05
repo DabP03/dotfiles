@@ -22,7 +22,6 @@ Rectangle {
         return width;
     } 
     radius: 8
-    // Behavior on implicitWidth { NumberAnimation { duration: 175 } }
 
     MouseArea {
         id: mouseArea1
@@ -39,8 +38,8 @@ Rectangle {
 
         Behavior on color {
             ColorAnimation {
-                duration: 100 // Transition duration in milliseconds
-                easing.type: Options.easingTypeOut // Smooth easing curve
+                duration: Motion.micro
+                easing.type: Motion.arrive
             }
         }
 
@@ -111,13 +110,6 @@ Rectangle {
                     radius: Options.radius
                     implicitHeight: calendar.height
                     implicitWidth: calendar.width
-
-                    // Behavior on opacity {
-                    //     NumberAnimation {
-                    //         duration: 200
-                    //         easing.type: Options.easingTypeOut
-                    //     }
-                    // }
 
                     Calendar {
                         id: calendar
@@ -300,8 +292,8 @@ Rectangle {
 
                         Behavior on color {
                             ColorAnimation {
-                                duration: 120
-                                easing.type: Options.easingTypeOut
+                                duration: Motion.state
+                                easing.type: Motion.arrive
                             }
                         }
 
@@ -315,8 +307,8 @@ Rectangle {
 
                             Behavior on color {
                                 ColorAnimation {
-                                    duration: 120
-                                    easing.type: Options.easingTypeOut
+                                    duration: Motion.state
+                                    easing.type: Motion.arrive
                                 }
                             }
                         }
@@ -398,8 +390,8 @@ Rectangle {
 
                         Behavior on color {
                             ColorAnimation {
-                                duration: 120
-                                easing.type: Options.easingTypeOut
+                                duration: Motion.state
+                                easing.type: Motion.arrive
                             }
                         }
 
@@ -413,8 +405,8 @@ Rectangle {
 
                             Behavior on color {
                                 ColorAnimation {
-                                    duration: 120
-                                    easing.type: Options.easingTypeOut
+                                    duration: Motion.state
+                                    easing.type: Motion.arrive
                                 }
                             }
                         }
@@ -461,8 +453,8 @@ Rectangle {
                             rightMargin: 12
                             right: parent.right
                         }
-                        checked: NotificationsService.dnd
-                        onClicked: NotificationsService.dnd = !NotificationsService.dnd
+                        checked: NotificationService.dnd
+                        onClicked: NotificationService.dnd = !NotificationService.dnd
                     }
                 }
             }

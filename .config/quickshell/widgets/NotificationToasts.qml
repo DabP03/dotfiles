@@ -78,14 +78,15 @@ Variants {
                         property: "opacity"
                         from: 0
                         to: 1
-                        duration: 150
+                        duration: Motion.fade
+                        easing.type: Motion.leave
                     }
                     NumberAnimation {
                         property: "x"
                         from: 40
                         to: 0
-                        duration: 180
-                        easing.type: Options.easingTypeOut
+                        duration: Motion.popIn
+                        easing.type: Motion.arrive
                     }
                 }
             }
@@ -94,15 +95,16 @@ Variants {
                 NumberAnimation {
                     property: "opacity"
                     to: 0
-                    duration: 120
+                    duration: Motion.popOut
+                    easing.type: Motion.leave
                 }
             }
 
             displaced: Transition {
                 NumberAnimation {
                     property: "y"
-                    duration: 150
-                    easing.type: Options.easingTypeOut
+                    duration: Motion.slide
+                    easing.type: Motion.arrive
                 }
             }
         }

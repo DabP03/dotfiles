@@ -26,8 +26,8 @@ Rectangle {
 
     Behavior on implicitWidth {
         NumberAnimation {
-            duration: 200
-            easing.type: Options.easingTypeOut
+            duration: Motion.grow
+            easing.type: Motion.arrive
         }
     }
 
@@ -57,8 +57,8 @@ Rectangle {
 
         Behavior on color {
             ColorAnimation {
-                duration: 100 // Transition duration in milliseconds
-                easing.type: Options.easingTypeIn // Smooth easing curve
+                duration: Motion.micro
+                easing.type: Motion.arrive
             }
         }
 
@@ -81,14 +81,14 @@ Rectangle {
             opacity: 0
             Behavior on opacity {
                 NumberAnimation {
-                    duration: 500 
-                    easing.type: Options.easingTypeInOut
-                } 
+                    duration: Motion.fade
+                    easing.type: Motion.inOut
+                }
             }
             Behavior on implicitHeight {
                 NumberAnimation {
-                    duration: 150  // Quick but smooth—adjust as needed
-                    easing.type: Options.easingTypeInOut  // Balanced easing
+                    duration: Motion.pop
+                    easing.type: Motion.arrive
                 }
             }
         }
@@ -103,7 +103,7 @@ Rectangle {
             }
             height: 28
             width: 28  * (Players.active != null)
-            imgSource: Players.active.trackArtUrl
+            imgSource: Players.active?.trackArtUrl ?? ""
             radius: Options.radius
         }
 
@@ -114,13 +114,9 @@ Rectangle {
                 verticalCenter: songImg.verticalCenter
                 horizontalCenter: songImg.horizontalCenter
             }
-            text: if (Players.active.canPlay && Players.active.canPause && Players.active.canControl) {
-                if (Players.active.playbackState == MprisPlaybackState.Playing) {
-                    return ""
-                } else {
-                    return ""
-                }
-            }
+            text: Players.active?.canPlay && Players.active?.canPause && Players.active?.canControl
+                ? (Players.active.playbackState === MprisPlaybackState.Playing ? "" : "")
+                : ""
             color: Colors.yellow
             style: Text.Outline; styleColor: Colors.base
             font.pixelSize: Options.font.size + 4
@@ -130,9 +126,9 @@ Rectangle {
 
             Behavior on opacity {
                 NumberAnimation {
-                    duration: 500 
-                    easing.type: Options.easingTypeInOut
-                } 
+                    duration: Motion.fade
+                    easing.type: Motion.inOut
+                }
             }
 
             Timer {

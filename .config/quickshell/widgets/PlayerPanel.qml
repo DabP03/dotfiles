@@ -89,10 +89,8 @@ Rectangle {
 
         // ── track info ──
         ColumnLayout {
-            anchors {
-                horizontalCenter: parent.horizontalCenter
-            }
             Layout.fillWidth: true
+            Layout.alignment: Qt.AlignHCenter
             Layout.topMargin: 12
             spacing: 2
 

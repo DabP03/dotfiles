@@ -32,8 +32,8 @@ Rectangle {
 
     Behavior on opacity {
         NumberAnimation {
-            duration: 120
-            easing.type: Options.easingTypeOut
+            duration: Motion.state
+            easing.type: Motion.arrive
         }
     }
 

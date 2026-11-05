@@ -63,12 +63,6 @@ Rectangle {
                 onClick: () => {
                     onClicked: Niri.focusWorkspaceById(modelData.id)
                 }
-                Behavior on color {
-                    ColorAnimation {
-                        duration: 100 // Transition duration in milliseconds
-                        easing.type: Options.easingTypeIn // Smooth easing curve
-                    }
-                }
             }
         }
     }

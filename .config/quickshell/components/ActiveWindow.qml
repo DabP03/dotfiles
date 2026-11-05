@@ -14,7 +14,6 @@ Item {
     id: root
     required property ShellScreen screen
     property var monitor: 0
-    // Behavior on implicitWidth { NumberAnimation { duration: 100 } }
 
     implicitWidth: appName.implicitWidth + 20
     implicitHeight: parent.implicitHeight - 16
@@ -32,15 +31,15 @@ Item {
 
     Behavior on implicitWidth {
         NumberAnimation {
-            duration: 200
-            easing.type: Options.easingTypeOut
+            duration: Motion.grow
+            easing.type: Motion.arrive
         }
     }
 
         Behavior on color {
             ColorAnimation {
-                duration: 100 // Transition duration in milliseconds
-                easing.type: Options.easingTypeOut
+                duration: Motion.micro
+                easing.type: Motion.arrive
             }
         }
 
@@ -58,12 +57,6 @@ Item {
             id: appName
             text: "" 
             visible: true
-            Behavior on opacity {
-                ColorAnimation {
-                    duration: 100 // Transition duration in milliseconds
-                    easing.type: Options.easingTypeOut
-                }
-            }
             font.pixelSize: Options.font.size
             font.family: Options.font.family
             font.bold: true

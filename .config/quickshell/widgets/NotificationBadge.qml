@@ -24,15 +24,15 @@ Rectangle {
 
     Behavior on scale {
         NumberAnimation {
-            duration: 150
-            easing.type: Options.easingTypeOut
+            duration: Motion.pop
+            easing.type: Motion.arrive
         }
     }
 
     Behavior on color {
         ColorAnimation {
-            duration: 120
-            easing.type: Options.easingTypeOut
+            duration: Motion.state
+            easing.type: Motion.arrive
         }
     }
 }

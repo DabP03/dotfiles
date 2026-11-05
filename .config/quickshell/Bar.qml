@@ -53,13 +53,6 @@ Scope {
                 border.color: Colors.peach
                 border.width: Options.borderWidth
 
-                Behavior on bottomRightRadius {
-                    NumberAnimation {
-                        duration: 180
-                        easing.type: Options.easingTypeOut
-                    }
-                }
-
                 anchors {
                     top: parent.top
                     left: parent.left

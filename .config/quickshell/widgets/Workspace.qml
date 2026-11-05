@@ -11,28 +11,34 @@ import "root:/services/"
 Rectangle {
     id: root
     required property int value
+    // Set to true when a parent draws the travelling active marker; otherwise
+    // this tile paints itself so the active workspace stays visible.
+    property bool indicator: false
 
-    Behavior on color {
-        ColorAnimation {
-            duration: 200 // Transition duration in milliseconds
-            easing.type: Options.easingTypeOut
-        }
-    }
-    color: {
-        if (Hyprland.activeWsId === value) {
-            return mouseArea.containsMouse ? Qt.lighter(Colors.mauve, 1.1) : Colors.mauve
-        } else if (Hyprland.filledWsIds.includes(value)) {
-            if (Hyprland.workspacesWindows.includes(value)) {
-                return mouseArea.containsMouse ? Qt.lighter(Colors.peach, 1.1) : Colors.peach
-            }
-            return mouseArea.containsMouse ? Colors.peach : Colors.base
-        } else {
-            return mouseArea.containsMouse ? Colors.yellow : Colors.base
-        }
-    }
+    readonly property bool active: Hyprland.activeWsId === value
+    readonly property bool filled: Hyprland.filledWsIds.includes(value)
+    readonly property bool hovered: mouseArea.containsMouse
+
     implicitHeight: parent.height - 5
     implicitWidth: 30
     radius: 8
+
+    color: {
+        if (!hovered)
+            return active && !indicator ? Colors.mauve : "transparent";
+        // When a parent marker marks the active tile, brighten the marker instead
+        // of painting the tile over it - painting here makes the marker blink.
+        if (active && indicator)
+            return "transparent";
+        return filled ? Colors.peach : Colors.yellow;
+    }
+
+    Behavior on color {
+        ColorAnimation {
+            duration: Motion.micro
+            easing.type: Motion.arrive
+        }
+    }
 
     Text {
         id: workspaceText
@@ -40,26 +46,13 @@ Rectangle {
 
         Behavior on color {
             ColorAnimation {
-                duration: 200 // Transition duration in milliseconds
-                easing.type: Options.easingTypeOut
+                duration: Motion.micro
+                easing.type: Motion.arrive
             }
         }
 
-        color: {
-            if (mouseArea.containsMouse) {
-                return Colors.base
-            } else if (Hyprland.activeWsId === value) {
-                return Colors.base
-            } else if (Hyprland.filledWsIds.includes(value)) {
-                if (Hyprland.workspacesWindows.includes(value)) {
-                    return Colors.base
-                } else {
-                    return Colors.peach
-                }
-            } else {
-                return Colors.yellow
-            }
-        }
+        // Colour is paired with position (the pill) so state survives without it.
+        color: mouseArea.containsMouse || active ? Colors.base : filled ? Colors.peach : Colors.yellow
         font.bold: true
         font.family: Options.font.family
         font.pixelSize: Options.font.size

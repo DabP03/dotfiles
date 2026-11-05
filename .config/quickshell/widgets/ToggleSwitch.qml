@@ -26,8 +26,8 @@ Rectangle {
 
     Behavior on color {
         ColorAnimation {
-            duration: 120
-            easing.type: Options.easingTypeOut
+            duration: Motion.state
+            easing.type: Motion.arrive
         }
     }
 
@@ -42,8 +42,8 @@ Rectangle {
 
         Behavior on x {
             NumberAnimation {
-                duration: 120
-                easing.type: Options.easingTypeOut
+                duration: Motion.state
+                easing.type: Motion.arrive
             }
         }
     }

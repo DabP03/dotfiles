@@ -22,11 +22,27 @@ Item {
     // Scroll duration (exposed)
     property int scrollDuration: 12 * songNameLabel.implicitWidth
 
+    // Effective visibility: walking up the parent chain catches collapsed bar
+    // slots (width 0) and hidden parents, so a hidden ticker never ticks.
+    function shown(it: Item): bool {
+        while (it !== null) {
+            if (!it.visible || it.width <= 0 || it.height <= 0)
+                return false;
+            it = it.parent;
+        }
+        return true;
+    }
+    readonly property bool onScreen: shown(root)
+
+    // Scroll only while visible, overflowing, and past the dwell timer.
+    readonly property bool animating: root.onScreen
+        && songNameLabel.implicitWidth > root.implicitWidth
+        && !animTimer.running
+
     // Main scrolling animation
     SequentialAnimation {
         id: scrollAnimation
-        running: songNameLabel.implicitWidth > root.implicitWidth  // Only run if text is wider than container
-        // running: true
+        running: root.animating
         loops: Animation.Infinite
 
 
@@ -73,19 +89,16 @@ Item {
             // elide: Text.ElideNone
 
             onTextChanged: {
-                scrollAnimation.restart()
-                scrollAnimation.stop()
-                songNameLabel.x = 0  // Reset position to start
+                songNameRect.x = 0   // reset before the dwell, so the scroll starts at the edge
                 animTimer.restart()
             }
         }
+        // Dwell gate: while it runs, `animating` is false and the animation stays stopped.
         Timer {
             id: animTimer
-            interval: 3000
+            interval: root.dwellTime
             running: false
             repeat: false
-
-            onTriggered: scrollAnimation.restart()
         }
     }
 }
