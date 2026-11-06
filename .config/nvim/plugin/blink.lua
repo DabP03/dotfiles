@@ -1,6 +1,5 @@
 vim.pack.add({
-	{ src = "https://github.com/Saghen/blink.cmp", version = "v1" },
-	{ src = "https://github.com/Saghen/blink.download" },
+	{ src = "https://github.com/Saghen/blink.cmp", version = vim.version.range('>=1.0'), },
 	{ src = "https://github.com/Saghen/blink.pairs", version = "v0.5.0" },
 	{ src = "https://github.com/Saghen/blink.indent" },
 })
@@ -92,4 +91,5 @@ require("blink.cmp").setup({
 		default = { "lsp", "path", "snippets", "buffer" },
 	},
 	fuzzy = { implementation = "prefer_rust" },
+
 })
