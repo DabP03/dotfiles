@@ -64,41 +64,6 @@ Rectangle {
             }
         }
 
-        // Charge gauge: the fill edge travels as the percentage changes. Colour
-        // alone never carries the state - the icon already changes when charging.
-        Rectangle {
-            id: gaugeTrack
-            visible: Power.isLaptopBattery
-            anchors {
-                left: parent.left
-                right: parent.right
-                bottom: parent.bottom
-                margins: 4
-            }
-            implicitHeight: 3
-            radius: 2
-            color: Colors.mantle
-
-            Rectangle {
-                id: gaugeFill
-                anchors {
-                    left: parent.left
-                    top: parent.top
-                    bottom: parent.bottom
-                }
-                width: parent.width * Power.percentage
-                radius: 2
-                color: Power.charging ? Colors.teal : Colors.text
-
-                Behavior on width {
-                    NumberAnimation {
-                        duration: Motion.grow
-                        easing.type: Motion.arrive
-                    }
-                }
-            }
-        }
-
         BarPopup {
             id: popup
             target: root
