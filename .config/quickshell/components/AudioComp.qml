@@ -161,8 +161,10 @@ Rectangle {
             // implicitHeight: topBorder.implicitHeight + 8 + outputPanel.implicitHeight * 2 + (separator.implicitHeight * (repeater.count != 0)) + (scrollView.implicitHeight * (repeater.count != 0)) + (16 * (repeater.count != 0))
             // implicitWidth: Math.max(300, outputPanel.implicitWidth + 24, repeaterColumn.implicitWidth + 24)
 
-            implicitHeight: topBorder.implicitHeight + 24 + outputPanel.implicitHeight * 2
+            bodyHeight: topBorder.implicitHeight + 24 + outputPanel.implicitHeight * 2
             + (appList.visible ? 24 + Math.min(appList.wantedHeight, 280) : 0)
+            // window height: fixed at the tallest case
+            implicitHeight: topBorder.implicitHeight + 24 + outputPanel.implicitHeight * 2 + 24 + 280
             implicitWidth: 400
 
             Rectangle {
@@ -172,8 +174,8 @@ Rectangle {
                 radius: Options.radius
                 topLeftRadius: 0
                 topRightRadius: 0
-                border.color: Colors.peach
-                border.width: Options.borderWidth
+                border.color: Colors.peach 
+                border.width: Options.borderWidth - 0
                 implicitHeight: popup.implicitHeight
                 implicitWidth: popup.implicitWidth
 

@@ -11,14 +11,25 @@ PopupWindow {
     required property Item target
     required property var bar
 
-    // how far the popup overlaps the bar's bottom edge
-    property int overlap: 3
+    // how far the popup overlaps the bar's bottom edge. Quickshell places the
+    // popup's top edge one pixel below the anchor rect, measured on your bar:
+    // borderWidth + 1 lands the top edge on the top of the bar's peach stroke,
+    // so the 2px strip below covers exactly that stroke and the popup's own
+    // borders start at the bar's bottom edge with no gap.
+    property int overlap: Options.borderWidth + 1
 
     // exposes the focus grab state (popup.visible is already a PopupWindow property)
     property alias grabActive: grab.active
 
     // children declared where you use the component land in here
-    default property alias content: container.data
+    default property alias content: body.data
+
+    // Visible height of the content. Animate this freely: it never resizes the window.
+    // Defaults to implicitHeight, so popups that don't care behave as before.
+    property real bodyHeight: implicitHeight
+
+    // 0 = tucked into the bar, 1 = fully shown
+    property real progress: 0
 
     // Lifecycle: 0 closed · 1 entering · 2 open · 3 leaving. The surface stays
     // mapped for its whole life, so the exit is ours to animate instead of the
@@ -26,24 +37,31 @@ PopupWindow {
     property int phase: 0
     readonly property bool live: phase > 0
 
-    visible: popup.live
-    // A popup that is not fully open takes no input, so a dying one can't be clicked.
-    // Input follows the content while it arrives; a leaving popup takes no clicks.
-    mask: Region { item: popup.phase === 3 ? noInput : container }
+    visible: implicitWidth > 0 && implicitHeight > 0
+    // Input follows the revealed part, so a growing popup can't be clicked in
+    // the not-yet-showing area and a leaving one takes no clicks at all.
+    mask: Region { item: (popup.phase === 1 || popup.phase === 2) ? container : noInput }
 
-    // Animators take `to` only, so re-opening mid-exit reverses from wherever it
-    // is instead of snapping to the start value.
+    implicitWidth: 300
+    implicitHeight: 200
+    color: "transparent"
+
+    // How much of the body is revealed, measured from the popup's top edge,
+    // which sits `overlap` px above the bar's bottom edge. 0 = tucked in the bar.
+    // No alpha animation: a hfading popup let the wallpaper bleed through and
+    // flattened base and mantle into the same grey.
+    property real reveal: 0
+
     function open() {
         exitAnim.stop()
         popup.phase = 1
         grab.active = true
-        container.freezeOrigin()
         enterAnim.restart()
     }
 
     function close() {
         if (popup.phase === 0 || popup.phase === 3)
-            return;
+        return;
         enterAnim.stop()
         popup.phase = 3
         exitAnim.restart()
@@ -51,14 +69,10 @@ PopupWindow {
 
     function toggle() { popup.live ? popup.close() : popup.open() }
 
-    implicitWidth: 300
-    implicitHeight: 200
-    color: "transparent"
-
     anchor.item: target
     anchor.rect.x: 0
     anchor.rect.y: bar.height - overlap - target.mapToItem(null, 0, 0).y
-    anchor.rect.width: target.width
+    anchor.rect.width: 2 * Math.round(target.width / 2) 
     anchor.rect.height: 0
     anchor.edges: Edges.Bottom
     anchor.gravity: Edges.Bottom
@@ -77,84 +91,53 @@ PopupWindow {
         height: 0
     }
 
+    // The clip that grows the body out of the bar. It is the only thing that
+    // changes size; the body inside keeps its final layout, so text, sliders and
+    // lists never reflow mid-animation and implicitHeight stays stable.
     Item {
         id: container
-        anchors.fill: parent
-        opacity: 0
+        anchors.top: parent.top
+        anchors.left: parent.left
+        width: popup.implicitWidth
+        // floor() so a sub-pixel height never paints a 1px row; exact at 1 so a
+        // fractional bodyHeight keeps its bottom border.
+        height: popup.progress >= 1 ? popup.bodyHeight
+        : Math.floor(popup.bodyHeight * popup.progress)
+        clip: true
+        // (no `visible:` binding here)
 
-        // Frozen when the popup opens: the button can slide sideways as other bar
-        // widgets resize, and a live origin binding would drag the pop-in along
-        // with it while the surface itself stays put.
-        property real originX: width / 2
-
-        // Grow from the middle of the bar button that opened us. The popup is
-        // placed with its horizontal centre on the anchor rect's centre, so the
-        // button's offset from that centre is the origin. Measured inside the bar
-        // window only - mapping into this popup's own surface is meaningless
-        // because the two surfaces are separate scenes.
-        function freezeOrigin() {
-            originX = Math.max(0, Math.min(
-                width,
-                width / 2 + target.mapToItem(null, target.width / 2, 0).x
-                - target.mapToItem(null, anchor.rect.x + anchor.rect.width / 2, 0).x
-            ))
-        }
-        // Pop-in grows from the bar edge, like Hyprland's "popin" on a layer.
-        // A transform exposes xScale/yScale only (no single `scale`), so both
-        // axes carry the pop-in size.
-        transform: Scale {
-            id: popScale
-            origin.x: container.originX
-            origin.y: 0
-            xScale: Motion.popinFrom
-            yScale: Motion.popinFrom
+        Item {
+            id: body
+            width: popup.implicitWidth
+            height: popup.bodyHeight
         }
     }
 
-    ParallelAnimation {
+    Behavior on bodyHeight {
+        NumberAnimation { duration: Motion.grow; easing.type: Motion.inOut }
+    }
+
+    SequentialAnimation {
         id: enterAnim
-        OpacityAnimator { target: container; to: 1; duration: Motion.fade }
         NumberAnimation {
-            target: popScale
-            property: "xScale"
-            to: 1
-            duration: Motion.popIn
-            easing.type: Motion.arrive
-        }
-        NumberAnimation {
-            target: popScale
-            property: "yScale"
-            to: 1
-            duration: Motion.popIn
-            easing.type: Motion.arrive
+            target: popup; property: "progress"; to: 1
+            duration: Motion.popIn; easing.type: Motion.arrive
         }
         onFinished: popup.phase = 2
     }
 
-    ParallelAnimation {
+    SequentialAnimation {
         id: exitAnim
-        OpacityAnimator { target: container; to: 0; duration: Motion.popOut; easing.type: Motion.leave }
         NumberAnimation {
-            target: popScale
-            property: "xScale"
-            to: 0.94
-            duration: Motion.popOut
-            easing.type: Motion.leave
+            target: popup; property: "progress"; to: 0
+            duration: Motion.popOut; easing.type: Motion.leave
         }
-        NumberAnimation {
-            target: popScale
-            property: "yScale"
-            to: 0.94
-            duration: Motion.popOut
-            easing.type: Motion.leave
-        }
-        onFinished: {
-            popup.phase = 0
-            grab.active = false
-            // Qt.binding keeps the popinFrom binding alive; a bare assignment
-            // would break it permanently.
-            popScale.xScale = Qt.binding(() => Motion.popinFrom)
-            popScale.yScale = Qt.binding(() => Motion.popinFrom)
+        PauseAnimation { duration: 50 }
+        ScriptAction {
+            script: {
+                popup.phase = 0
+                grab.active = false
+            }
         }
     }
 }

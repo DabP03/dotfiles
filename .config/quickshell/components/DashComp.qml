@@ -61,8 +61,12 @@ Rectangle {
             anchor.rect.x: root.bar.width - root.mapToItem(null, 0, 0).x - popup.implicitWidth / 2 - root.implicitWidth / 2
             // implicitWidth: calendarPanel.implicitWidth + 98 + 24
             implicitWidth: 425
-            implicitHeight: calendarPanel.implicitHeight + 3 * (datePanel.implicitHeight + 6) + 24
+            // What the user sees; follows the panel's animated height.
+            bodyHeight: calendarPanel.implicitHeight + 3 * (datePanel.implicitHeight + 6) + 24
             + (notificationPanel.visible ? notificationPanel.implicitHeight + 6 : 0)
+
+            implicitHeight: calendarPanel.implicitHeight + 3 * (datePanel.implicitHeight + 6) + 24
+        + notificationPanel.maxImplicitHeight + 6
 
             Rectangle {
                 id: menu
@@ -73,7 +77,7 @@ Rectangle {
                 topLeftRadius: 0
                 topRightRadius: 0
                 bottomRightRadius: 0
-                implicitHeight: popup.implicitHeight
+                implicitHeight: popup.bodyHeight
                 implicitWidth: popup.implicitWidth
 
                 Rectangle {

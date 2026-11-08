@@ -2,7 +2,11 @@ pragma Singleton
 
 import QtQuick
 import Quickshell
+import Quickshell.Io
 import Quickshell.Services.Notifications
+
+import "root:/config/"
+import "root:/services/"
 
 // Notification daemon + notification-center state.
 // Named NotificationService because Notification and NotificationServer are
@@ -138,6 +142,41 @@ Singleton {
         return n.expireTimeout > 0 ? n.expireTimeout * 1000 : defaultToastMs;
     }
 
+    // ── sound ──
+    // Chime when a notification arrives. paplay is spawned asynchronously, so
+    // a long file never blocks the shell.
+    property int lastSoundMs: 0
+
+    // The sender may name its own file in the hints; that wins over the theme
+    // sound, and critical notifications get the error chime.
+    function soundFile(n) {
+        const hint = n?.hints?.["sound-file"];
+        if (hint)
+            return String(hint);
+        return n?.urgency === NotificationUrgency.Critical
+            ? Options.sound.critical
+            : Options.sound.normal;
+    }
+
+    function playSound(n) {
+        if (!Options.sound.enabled)
+            return;
+        if (Audio.muted)
+            return;
+        const now = Date.now();
+        if (now - lastSoundMs < Options.sound.cooldown)
+            return; // burst: one chime covers the whole batch
+        lastSoundMs = now;
+        soundProc.file = soundFile(n);
+        soundProc.running = true;
+    }
+
+    Process {
+        id: soundProc
+        property string file: Options.sound.normal
+        command: ["paplay", file]
+    }
+
     NotificationServer {
         id: server
 
@@ -151,10 +190,20 @@ Singleton {
             n.tracked = true;
 
             // Notifications carried over from before a reload stay in the list
-            // but don't pop up again.
-            if (root.toastsEnabled && !n.lastGeneration
-                    && (!root.dnd || n.urgency === NotificationUrgency.Critical))
+            // but don't pop up or chime again.
+            if (n.lastGeneration)
+                return;
+
+            // Toasts and chimes share the DND gate: quiet while DND, except
+            // for critical notifications. Chimes stay independent of
+            // toastsEnabled, so hiding popups alone doesn't silence them.
+            const audible = !root.dnd || n.urgency === NotificationUrgency.Critical;
+
+            if (root.toastsEnabled && audible)
                 root.showToast(n);
+
+            if (audible)
+                root.playSound(n);
         }
     }
 }

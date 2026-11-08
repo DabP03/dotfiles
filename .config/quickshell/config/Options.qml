@@ -8,6 +8,15 @@ Singleton {
     readonly property Font font: Font {}
     property Width width: Width {}
     readonly property Margin margin: Margin {}
+    // Notification chime settings, read by NotificationService.
+    readonly property QtObject sound: QtObject {
+        property bool enabled: true
+        // A burst of notifications plays one chime, not one per message.
+        readonly property int cooldown: 250
+        readonly property string normal: "/usr/share/sounds/freedesktop/stereo/message.oga"
+        readonly property string critical: "/usr/share/sounds/freedesktop/stereo/dialog-error.oga"
+    }
+    readonly property int wallpaperSwitchTime: 30 * 60 * 1000
     readonly property int borderWidth: 2
     readonly property int radius: 16
     readonly property int buttonRadius: 8

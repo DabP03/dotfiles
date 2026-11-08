@@ -72,7 +72,7 @@ Rectangle {
 
         // ── icon / image ──
         Item {
-            Layout.alignment: Qt.Center
+            Layout.alignment: Qt.AlignCenter
             implicitWidth: 36
             implicitHeight: 36
 

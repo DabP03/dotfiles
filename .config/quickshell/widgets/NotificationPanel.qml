@@ -14,6 +14,8 @@ Rectangle {
 
     property real maxListHeight: 260
 
+    readonly property real maxImplicitHeight: 12 + header.implicitHeight + 8 + maxListHeight + 12
+
     // visible: NotificationService.hasNotifications
     color: Colors.mantle
     radius: Options.radius
@@ -116,6 +118,14 @@ Rectangle {
             required property var modelData
             width: ListView.view.width
             notification: modelData
+        }
+
+        remove: Transition {
+            NumberAnimation { property: "opacity"; to: 0; duration: Motion.pop; easing.type: Motion.leave }
+        }
+
+        displaced: Transition {
+            NumberAnimation { properties: "y"; duration: Motion.grow; easing.type: Motion.inOut }
         }
     }
 }

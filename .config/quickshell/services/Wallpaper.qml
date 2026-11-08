@@ -4,6 +4,7 @@ import QtQuick
 import Quickshell
 import Quickshell.Io
 import Qt.labs.folderlistmodel
+import "root:/config/Options.qml"
 
 // Wallpaper service: awww draws the wallpaper, Quickshell only picks it.
 // Start it with the bar by calling Wallpaper.restore() from Bar.qml.
@@ -13,7 +14,7 @@ Singleton {
     // ---- config ----
     readonly property string dir: Quickshell.env("HOME") + "/.wallpapers"
     // how often the wallpaper changes to a random one (any change restarts the countdown)
-    property int autoIntervalMs: 15 * 60 * 1000
+    property int autoIntervalMs: Options.wallpaperSwitchTime
     readonly property var transitionArgs: [
         "--transition-type", "random",
         "--transition-step", "60",
