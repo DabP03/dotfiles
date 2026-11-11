@@ -3,8 +3,8 @@ import Quickshell
 import Quickshell.Io
 import Quickshell.Wayland
 import Quickshell.Hyprland as Hypr
-import "root:/config/"
-import "root:/services/"
+import "../config/"
+import "../services/"
 
 // Vim-style wallpaper picker: h/l move (wraps around), Enter apply, q (or Esc) close.
 // The window only exists while open (LazyLoader), so it can never appear on its own.

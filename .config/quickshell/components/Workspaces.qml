@@ -5,9 +5,9 @@ import QtQuick.Controls
 import Quickshell
 import Quickshell.Widgets
 
-import "root:/config/"
-import "root:/services/"
-import "root:/widgets/"
+import "../config/"
+import "../services/"
+import "../widgets/"
 
 Rectangle{
     required property ShellScreen screen

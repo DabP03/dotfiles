@@ -1,12 +1,10 @@
 import QtQuick
 import QtQuick.Layouts
-import Quickshell
-import Quickshell.Widgets
 import Quickshell.Services.Notifications
 
-import "root:/config/"
-import "root:/services/"
-import "root:/widgets/"
+import "../config/"
+import "../services/"
+import "../widgets/"
 
 // One notification inside the dash panel.
 // Click the card to run the notification's "default" action (if it has one),
@@ -76,11 +74,20 @@ Rectangle {
             implicitWidth: 36
             implicitHeight: 36
 
-            RoundedImage {
+            // Declared, not instantiated: most notifications have no image,
+            // and the image + clip subtree is the expensive half of the card.
+            Loader {
                 anchors.fill: parent
-                visible: root.hasImage
-                imgSource: root.alive ? root.n.image : ""
-                radius: Options.radius / 2
+                active: root.hasImage
+                sourceComponent: Component {
+                    RoundedImage {
+                        anchors.fill: parent
+                        imgSource: root.alive ? root.n.image : ""
+                        decodeWidth: 36
+                        decodeHeight: 36
+                        radius: Options.radius / 2
+                    }
+                }
             }
 
             AppTile {

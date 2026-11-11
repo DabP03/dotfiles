@@ -6,9 +6,9 @@ import Quickshell.Widgets
 import Quickshell.Services.Pipewire
 import Quickshell.Hyprland
 
-import "root:/config/"
-import "root:/services/"
-import "root:/widgets/"
+import "../config/"
+import "../services/"
+import "../widgets/"
 
 Rectangle {
     id: root
@@ -16,11 +16,7 @@ Rectangle {
     required property bool barDocked
     color: "transparent"
     implicitHeight: parent.implicitHeight - 16
-    implicitWidth: {
-        let width = audioText.implicitWidth + audioIcon.implicitWidth + micIcon.implicitWidth + micText.implicitWidth + separator.implicitWidth + 30
-        Options.width.audio = width
-        return width
-    }
+    implicitWidth: audioText.implicitWidth + audioIcon.implicitWidth + micIcon.implicitWidth + micText.implicitWidth + separator.implicitWidth + 30
     radius: 8
 
     Behavior on implicitWidth {
@@ -161,10 +157,10 @@ Rectangle {
             // implicitHeight: topBorder.implicitHeight + 8 + outputPanel.implicitHeight * 2 + (separator.implicitHeight * (repeater.count != 0)) + (scrollView.implicitHeight * (repeater.count != 0)) + (16 * (repeater.count != 0))
             // implicitWidth: Math.max(300, outputPanel.implicitWidth + 24, repeaterColumn.implicitWidth + 24)
 
-            bodyHeight: topBorder.implicitHeight + 24 + outputPanel.implicitHeight * 2
-            + (appList.visible ? 24 + Math.min(appList.wantedHeight, 280) : 0)
+            // heights are computed inside the content (see playerMenu) and read back here
+            bodyHeight: contentItem ? contentItem.shownHeight : 0
             // window height: fixed at the tallest case
-            implicitHeight: topBorder.implicitHeight + 24 + outputPanel.implicitHeight * 2 + 24 + 280
+            implicitHeight: contentItem ? contentItem.fullHeight : 0
             implicitWidth: 400
 
             Rectangle {
@@ -176,8 +172,13 @@ Rectangle {
                 topRightRadius: 0
                 border.color: Colors.peach 
                 border.width: Options.borderWidth - 0
-                implicitHeight: popup.implicitHeight
                 implicitWidth: popup.implicitWidth
+
+                // read by the popup through contentItem
+                readonly property real baseHeight: topBorder.implicitHeight + 24 + outputPanel.implicitHeight * 2
+                readonly property real shownHeight: baseHeight
+                    + (appList.streamCount > 0 ? 24 + Math.min(appList.wantedHeight, 280) : 0)
+                readonly property real fullHeight: baseHeight + 24 + 280
 
                 Rectangle {
                     id: topBorder

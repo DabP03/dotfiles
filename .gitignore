@@ -3,3 +3,4 @@
 .config/tmux/plugins*
 !.config/tmux/plugins/.hidden.txt
 .config/nvim/nvim-pack-lock.json
+.config/quickshell/.qmlls.ini

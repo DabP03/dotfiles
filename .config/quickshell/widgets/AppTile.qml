@@ -2,7 +2,7 @@ import QtQuick
 import Quickshell
 import Quickshell.Widgets
 
-import "root:/config/"
+import "../config/"
 
 // 28px rounded tile. Shows the app's icon when the theme has it, otherwise a
 // colored tile with the app's first letter (color picked from the name, so it

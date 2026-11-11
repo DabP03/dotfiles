@@ -26,6 +26,12 @@ vim.keymap.set("n", "<leader>lf", '<CMD>lua require("conform").format()<CR>', { 
 vim.keymap.set("t", "<Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 vim.keymap.set("n", "<leader>bc", "<CMD>bd<CR>", { desc = "Close current buffer" })
 
+-- Quickfix Navigation
+vim.keymap.set('n', ']q', ':cnext<CR>', { desc = "Next Quickfix item", silent = true })
+vim.keymap.set('n', '[q', ':cprevious<CR>', { desc = "Previous Quickfix item", silent = true })
+vim.keymap.set('n', ']Q', ':clast<CR>', { desc = "Last Quickfix item", silent = true })
+vim.keymap.set('n', '[Q', ':cfirst<CR>', { desc = "First Quickfix item", silent = true })
+
 -- LSP
 vim.keymap.set("n", "<leader>lR", "<cmd>Telescope lsp_references<CR>", { desc = "Show LSP references" })
 vim.keymap.set("n", "<leader>lD", vim.lsp.buf.declaration, { desc = "Go to declaration" })

@@ -1,7 +1,7 @@
 import QtQuick
 
-import "root:/config/"
-import "root:/services/"
+import "../config/"
+import "../services/"
 
 // Small dot for the corner of a bar button. Shown while the notification list
 // is not empty; grey while Do Not Disturb is on. The ring uses the bar color

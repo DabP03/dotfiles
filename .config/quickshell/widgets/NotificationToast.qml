@@ -1,9 +1,9 @@
 import QtQuick
 import Quickshell.Services.Notifications
 
-import "root:/config/"
-import "root:/services/"
-import "root:/widgets/"
+import "../config/"
+import "../services/"
+import "../widgets/"
 
 // One toast: a NotificationCard in a bordered frame that hides itself after
 // the notification's timeout. Hovering pauses the countdown; leaving restarts
@@ -16,7 +16,6 @@ Rectangle {
 
     readonly property bool alive: notification !== null && notification !== undefined
     readonly property bool critical: alive && notification.urgency === NotificationUrgency.Critical
-    readonly property int timeoutMs: NotificationService.toastTimeout(notification)
 
     implicitHeight: card.implicitHeight + Options.borderWidth * 2 + 2
     radius: Options.radius
@@ -24,14 +23,15 @@ Rectangle {
     border.width: Options.borderWidth
     border.color: critical ? Colors.red : Colors.peach
 
-    HoverHandler { id: hover }
-
-    Timer {
-        interval: root.timeoutMs
-        running: root.alive && root.timeoutMs > 0 && !hover.hovered
-        repeat: false
-        onTriggered: NotificationService.hideToast(root.notification)
+    HoverHandler {
+        id: hover
+        onHoveredChanged: NotificationService.setToastHovered(root.notification, hover.hovered)
     }
+
+    // Delegates only exist on the focused monitor, so the countdown lives in
+    // NotificationService. If focus moves while the toast is hovered, release
+    // the pause when this delegate is torn down.
+    Component.onDestruction: NotificationService.setToastHovered(root.notification, false)
 
     NotificationCard {
         id: card

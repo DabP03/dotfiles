@@ -98,14 +98,20 @@ Singleton {
         }
     }
 
+    // Single tracker for everything the UI renders: the default sink/source and
+    // every application stream. Views must not create their own trackers.
     PwObjectTracker {
-        id: sinkTracker
-        objects: [Pipewire.defaultAudioSink]
-    }
-
-    PwObjectTracker {
-        id: sourceTracker
-        objects: [Pipewire.defaultAudioSource]
+        id: audioTracker
+        objects: {
+            const out = [];
+            if (Pipewire.defaultAudioSink)
+                out.push(Pipewire.defaultAudioSink);
+            if (Pipewire.defaultAudioSource)
+                out.push(Pipewire.defaultAudioSource);
+            for (const node of root.sinks)
+                out.push(node);
+            return out;
+        }
     }
 
     Connections {

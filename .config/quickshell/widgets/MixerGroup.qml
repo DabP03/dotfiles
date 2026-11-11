@@ -1,11 +1,10 @@
 import QtQuick
 import QtQuick.Layouts
 import Quickshell
-import Quickshell.Services.Pipewire
 
-import "root:/config/"
-import "root:/services/"
-import "root:/widgets/"
+import "../config/"
+import "../services/"
+import "../widgets/"
 
 // One application in the mixer.
 //   - one stream  -> a plain AppStreamRow
@@ -65,7 +64,7 @@ ColumnLayout {
     spacing: 0
 
     HoverHandler { id: hover }
-    PwObjectTracker { objects: root.nodes }
+    // Node properties are tracked centrally by Audio.qml.
 
     // ── single stream: no tree needed ──
     AppStreamRow {

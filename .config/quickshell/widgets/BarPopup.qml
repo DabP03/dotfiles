@@ -2,7 +2,7 @@ import QtQuick
 import Quickshell
 import Quickshell.Hyprland
 
-import "root:/config/"
+import "../config/"
 
 PopupWindow {
     id: popup
@@ -22,7 +22,9 @@ PopupWindow {
     property alias grabActive: grab.active
 
     // children declared where you use the component land in here
-    default property alias content: body.data
+    default property Component content
+
+    readonly property Item contentItem: loader.item
 
     // Visible height of the content. Animate this freely: it never resizes the window.
     // Defaults to implicitHeight, so popups that don't care behave as before.
@@ -81,7 +83,7 @@ PopupWindow {
     HyprlandFocusGrab {
         id: grab
         windows: [ popup ]
-        active: false
+        active: popup.phase === 1 || popup.phase === 2
         onCleared: popup.close()
     }
 
@@ -110,10 +112,18 @@ PopupWindow {
             id: body
             width: popup.implicitWidth
             height: popup.bodyHeight
+
+            Loader {
+                id: loader
+                anchors.fill: parent
+                active: popup.live          // phase 1..3; unloads once phase returns to 0
+                sourceComponent: popup.content
+            }
         }
     }
 
     Behavior on bodyHeight {
+        enabled: popup.phase === 2
         NumberAnimation { duration: Motion.grow; easing.type: Motion.inOut }
     }
 

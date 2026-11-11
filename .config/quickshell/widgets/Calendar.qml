@@ -3,7 +3,7 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 
-import "root:/config/"
+import "../config/"
 
 Control {
     id: control

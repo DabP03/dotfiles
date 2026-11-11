@@ -2,9 +2,9 @@ import QtQuick
 import QtQuick.Layouts
 import Quickshell
 
-import "root:/config/"
-import "root:/services/"
-import "root:/widgets/"
+import "../config/"
+import "../services/"
+import "../widgets/"
 
 // "Applications" section of the audio popup: heading + scrolling list of
 // MixerGroup, one per app in Audio.groupedSinks.
@@ -96,7 +96,10 @@ Item {
         clip: true
         spacing: 2
         boundsBehavior: Flickable.StopAtBounds
-        cacheBuffer: 4000 // keep every group instantiated so contentHeight is exact
+        // Exact contentHeight only matters up to the consumer's 280 px cap
+        // (see AudioComp.shownHeight). Keeping a few hundred px of delegates
+        // around the viewport covers that without building the whole list.
+        cacheBuffer: 600
         model: ScriptModel {
             values: root.groups
             objectProp: "key"

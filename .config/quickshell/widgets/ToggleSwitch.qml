@@ -1,6 +1,6 @@
 import QtQuick
 
-import "root:/config/"
+import "../config/"
 
 // Simple on/off switch. It does not flip itself: bind `checked` to the real
 // state and handle `clicked`, so the visual always matches the backend.

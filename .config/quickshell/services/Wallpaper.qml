@@ -4,7 +4,7 @@ import QtQuick
 import Quickshell
 import Quickshell.Io
 import Qt.labs.folderlistmodel
-import "root:/config/"
+import "../config/"
 
 // Wallpaper service: awww draws the wallpaper, Quickshell only picks it.
 // Start it with the bar by calling Wallpaper.restore() from Bar.qml.

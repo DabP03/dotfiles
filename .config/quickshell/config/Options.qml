@@ -6,7 +6,6 @@ import QtQuick
 Singleton {
     id: root
     readonly property Font font: Font {}
-    property Width width: Width {}
     readonly property Margin margin: Margin {}
     // Notification chime settings, read by NotificationService.
     readonly property QtObject sound: QtObject {
@@ -30,16 +29,6 @@ Singleton {
         readonly property string family: "BlexMono Nerd Font"
         readonly property string iconFamily: "Material Symbols Rounded"
         readonly property real size: 16
-    }
-
-    component Width: QtObject {
-         property int audio
-         property int network
-         property int clock
-         property int tray
-         property int dash
-         property int battery
-         property int player
     }
     
     component Margin: QtObject {

@@ -1,8 +1,7 @@
-import "root:/config"
-import "root:/widgets"
 import Quickshell.Services.SystemTray
 import QtQuick.Layouts
 import QtQuick
+import "../widgets"
 
 Item {
     id: root
@@ -14,12 +13,7 @@ Item {
     clip: true
     visible: width > 0 && height > 0 // To avoid warnings about being visible with no size
 
-    implicitWidth: {
-        let width = layout.implicitWidth 
-        Options.width.tray = width;
-        return width;
-    }
-
+    implicitWidth: layout.implicitWidth 
     implicitHeight: parent.implicitHeight - 12
 
     RowLayout {

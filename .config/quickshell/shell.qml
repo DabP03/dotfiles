@@ -1,7 +1,7 @@
 //@ pragma UseQApplication
 import Quickshell
 
-import "root:/widgets/"
+import "./widgets/"
 
 Scope {
   Bar {}

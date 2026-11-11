@@ -5,19 +5,15 @@ import Quickshell
 import Quickshell.Wayland
 import Quickshell.Widgets
 
-import "root:/config/"
-import "root:/services/"
-import "root:/widgets/"
+import "../config/"
+import "../services/"
+import "../widgets/"
 
 Rectangle {
     id: root
     color: "transparent"
     implicitHeight: parent.height - 16
-    implicitWidth: {
-        let width = clockText.width + 20;
-        Options.width.clock = width;
-        return width;
-    } 
+    implicitWidth: clockText.width + 20;
     radius: 8
 
     MouseArea {

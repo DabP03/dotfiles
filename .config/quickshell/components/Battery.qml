@@ -6,9 +6,9 @@ import Quickshell.Services.UPower
 import Quickshell.Widgets
 import Quickshell.Hyprland
 
-import "root:/config/"
-import "root:/services/"
-import "root:/widgets/"
+import "../config/"
+import "../services/"
+import "../widgets/"
 
 Rectangle {
     id: root
@@ -68,20 +68,23 @@ Rectangle {
             id: popup
             target: root
             bar: root.bar
-            implicitHeight: performance.implicitHeight + balanced.implicitHeight + saver.implicitHeight + 10 * 3 + (timeToEmpty.implicitHeight + 10) * timeToEmpty.visible
-            implicitWidth: Math.max((timeToEmpty.implicitWidth) * Power.isLaptopBattery, performance.implicitWidth + 10) + 20
+            implicitHeight: contentItem ? contentItem.fullHeight : 0
+            implicitWidth: contentItem ? contentItem.fullWidth : 0
 
             Rectangle {
                 id: menu
-                anchors.topMargin: 10
+                anchors.fill: parent
                 color: Colors.base
                 radius: Options.radius
                 border.color: Colors.peach
                 border.width: Options.borderWidth
                 topLeftRadius: 0
                 topRightRadius: 0
-                implicitHeight: popup.implicitHeight
-                implicitWidth: popup.implicitWidth
+
+                // read by the popup through contentItem
+                readonly property real fullHeight: performance.implicitHeight + balanced.implicitHeight + saver.implicitHeight + 10 * 3
+                    + (timeToEmpty.implicitHeight + 10) * timeToEmpty.visible
+                readonly property real fullWidth: Math.max(timeToEmpty.implicitWidth * Power.isLaptopBattery, performance.implicitWidth + 10) + 20
 
                 Rectangle {
                     id: topBorder

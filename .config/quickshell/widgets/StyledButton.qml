@@ -2,7 +2,7 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
 
-import "root:/config/"
+import "../config/"
 
 Rectangle {
     id: root

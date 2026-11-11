@@ -2,9 +2,9 @@ import QtQuick
 import QtQuick.Layouts
 import Quickshell
 
-import "root:/config/"
-import "root:/services/"
-import "root:/widgets/"
+import "../config/"
+import "../services/"
+import "../widgets/"
 
 // Notification list for the dash popup. Invisible while there is nothing to
 // show; otherwise its implicitHeight is the header plus the list, capped at
@@ -108,7 +108,11 @@ Rectangle {
         clip: true
         spacing: 6
         boundsBehavior: Flickable.StopAtBounds
-        cacheBuffer: 4000 // keep every card instantiated so contentHeight is exact
+        // Exact contentHeight only matters up to maxListHeight above; beyond
+        // that the height is clamped. Size the buffer past the cap (plus a few
+        // rows) so small lists stay exact without instantiating 4000 px of
+        // off-screen cards.
+        cacheBuffer: 600
 
         model: ScriptModel {
             values: NotificationService.newestFirst

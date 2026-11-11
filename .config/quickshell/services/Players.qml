@@ -5,7 +5,7 @@ import Quickshell.Io
 import Quickshell.Services.Mpris
 import QtQml
 
-import "root:/config/"
+import "../config/"
 
 Singleton {
     id: root

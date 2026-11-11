@@ -5,8 +5,8 @@ import Quickshell
 import Quickshell.Io
 import Quickshell.Services.Notifications
 
-import "root:/config/"
-import "root:/services/"
+import "../config/"
+import "../services/"
 
 // Notification daemon + notification-center state.
 // Named NotificationService because Notification and NotificationServer are
@@ -30,6 +30,12 @@ Singleton {
     readonly property int count: tracked.values.length
     readonly property bool hasNotifications: count > 0
 
+    // How many notifications the dash keeps. Past this the oldest are
+    // dismissed (normal NotificationClosed behaviour) so a long session does
+    // not accumulate images and objects without bound. Applied to
+    // notifications carried over a reload as well as new ones.
+    property int maxTracked: 50
+
     // Newest first, as a plain array for a ScriptModel.
     readonly property var newestFirst: {
         const out = [];
@@ -40,8 +46,10 @@ Singleton {
     }
 
     function dismiss(n) {
-        if (n)
-            n.dismiss();
+        if (!n)
+            return;
+        hideToast(n);
+        n.dismiss();
     }
 
     function dismissAll() {
@@ -50,8 +58,27 @@ Singleton {
         const v = tracked.values;
         for (let i = 0; i < v.length; i++)
             copy.push(v[i]);
-        for (let i = 0; i < copy.length; i++)
+        for (let i = 0; i < copy.length; i++) {
+            hideToast(copy[i]);
             copy[i].dismiss();
+        }
+    }
+
+    // Drop the oldest notifications once the cap is exceeded. `tracked` keeps
+    // insertion order, so the front of the array is the oldest.
+    function enforceTrackedLimit() {
+        const v = tracked.values;
+        const excess = v.length - maxTracked;
+        if (excess <= 0)
+            return;
+
+        const oldest = [];
+        for (let i = 0; i < excess; i++)
+            oldest.push(v[i]);
+        for (let i = 0; i < oldest.length; i++) {
+            hideToast(oldest[i]);
+            oldest[i].dismiss();
+        }
     }
 
     // Actions that deserve a button: has a label and isn't the "default" action,
@@ -108,6 +135,14 @@ Singleton {
     // toast leaves the notification in the dash; dismissing removes both.
     property var toastIds: ({})
 
+    // Expiry lives here rather than in the toast delegate. Delegates are only
+    // built on the focused monitor, so a delegate-owned timer would restart
+    // every time focus moves. id -> absolute deadline in ms, 0 = stay until
+    // acted on.
+    property var toastDeadlines: ({})
+    // Remaining ms while the pointer is over a toast (id -> ms).
+    property var toastHoverRemaining: ({})
+
     readonly property var toasts: {
         const ids = toastIds;
         const out = [];
@@ -120,26 +155,99 @@ Singleton {
     readonly property bool hasToasts: toasts.length > 0
 
     function showToast(n) {
-        const ids = Object.assign({}, toastIds);
-        ids[n.id] = true;
-        toastIds = ids;
-    }
-
-    function hideToast(n) {
         if (!n)
             return;
         const ids = Object.assign({}, toastIds);
-        delete ids[n.id];
+        ids[n.id] = true;
         toastIds = ids;
+
+        const deadlines = Object.assign({}, toastDeadlines);
+        const ms = toastTimeout(n);
+        deadlines[n.id] = ms > 0 ? Date.now() + ms : 0;
+        toastDeadlines = deadlines;
+    }
+
+    function hideToast(n) {
+        if (n)
+            hideToastId(n.id);
+    }
+
+    function hideToastId(id) {
+        if (!toastIds[id])
+            return;
+
+        const ids = Object.assign({}, toastIds);
+        delete ids[id];
+        toastIds = ids;
+
+        const deadlines = Object.assign({}, toastDeadlines);
+        delete deadlines[id];
+        toastDeadlines = deadlines;
+
+        const hovering = Object.assign({}, toastHoverRemaining);
+        delete hovering[id];
+        toastHoverRemaining = hovering;
+    }
+
+    // Hovering pauses the countdown: keep the remaining time, not the deadline,
+    // so leaving the toast doesn't make it expire immediately.
+    function setToastHovered(n, hovered) {
+        if (!n || !toastIds[n.id])
+            return;
+
+        const deadlines = Object.assign({}, toastDeadlines);
+        const hovering = Object.assign({}, toastHoverRemaining);
+
+        if (hovered) {
+            if (deadlines[n.id] > 0 && hovering[n.id] === undefined)
+                hovering[n.id] = Math.max(0, deadlines[n.id] - Date.now());
+        } else if (hovering[n.id] !== undefined) {
+            if (deadlines[n.id] > 0)
+                deadlines[n.id] = Date.now() + hovering[n.id];
+            delete hovering[n.id];
+        } else {
+            return;
+        }
+
+        toastDeadlines = deadlines;
+        toastHoverRemaining = hovering;
+    }
+
+    function expireToasts() {
+        const now = Date.now();
+        const ids = toastIds;
+        const hovering = toastHoverRemaining;
+        let expired = null;
+
+        for (const id in ids) {
+            if (hovering[id] !== undefined)
+                continue;
+            const deadline = toastDeadlines[id];
+            if (deadline > 0 && now >= deadline)
+                (expired || (expired = [])).push(id);
+        }
+
+        if (!expired)
+            return;
+        for (const id of expired)
+            hideToastId(id);
+    }
+
+    Timer {
+        interval: 250
+        repeat: true
+        running: root.hasToasts
+        onTriggered: root.expireToasts()
     }
 
     // Milliseconds before a toast hides itself; 0 = stay until acted on.
+    // Notification.expireTimeout is already in milliseconds (notification spec).
     function toastTimeout(n) {
         if (!n)
             return 0;
         if (n.urgency === NotificationUrgency.Critical)
             return 0;
-        return n.expireTimeout > 0 ? n.expireTimeout * 1000 : defaultToastMs;
+        return n.expireTimeout > 0 ? n.expireTimeout : defaultToastMs;
     }
 
     // ── sound ──
@@ -188,6 +296,8 @@ Singleton {
         // Untracked notifications are discarded, so keep every one.
         onNotification: n => {
             n.tracked = true;
+            // Also trims notifications carried over from before a reload.
+            root.enforceTrackedLimit();
 
             // Notifications carried over from before a reload stay in the list
             // but don't pop up or chime again.

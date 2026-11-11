@@ -4,9 +4,9 @@ import QtQuick.Controls
 import Quickshell
 import Quickshell.Services.Pipewire
 
-import "root:/config/"
-import "root:/services/"
-import "root:/widgets/"
+import "../config/"
+import "../services/"
+import "../widgets/"
 
 ColumnLayout {
     id: root
@@ -24,7 +24,7 @@ ColumnLayout {
 
     spacing: 4
 
-    PwObjectTracker { objects: [ node ] }
+    // Node properties are tracked centrally by Audio.qml.
 
     // ScrollingText {
     //     id: audioSinkName

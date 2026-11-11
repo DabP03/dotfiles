@@ -106,7 +106,10 @@ Singleton {
 
     ScriptModel {
         id: wifiModel
-        values: root.buildNetworkList()
+        // The backend already owns every network. Keep this deduped copy only
+        // while a panel is open instead of retaining it (and its references)
+        // for the whole session.
+        values: root.scanClients > 0 ? root.buildNetworkList() : []
     }
 
     readonly property var activeWifiNetwork: {
@@ -298,7 +301,10 @@ Singleton {
     }
 
     // One Connections per Wi-Fi network to catch connectionFailed(reason).
+    // Only while a panel is open: failures can't be shown while it is closed,
+    // and a dense environment can expose hundreds of networks.
     Instantiator {
+        active: root.scanClients > 0
         model: root.wifiDevice ? root.wifiDevice.networks : null
 
         delegate: Connections {

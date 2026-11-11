@@ -1,12 +1,7 @@
 import QtQuick
-import QtQuick.Layouts
-import QtQuick.Controls
-import Quickshell
-import Quickshell.Io
-import Quickshell.Widgets
 
-import "root:/config/"
-import "root:/services/"
+import "../config/"
+import "../services/"
 
 Rectangle {
     id: root
@@ -58,10 +53,6 @@ Rectangle {
         font.pixelSize: Options.font.size
         text: value
     }
-    Process {
-        id: process
-    }
-
     MouseArea {
         id: mouseArea
         anchors.fill: parent

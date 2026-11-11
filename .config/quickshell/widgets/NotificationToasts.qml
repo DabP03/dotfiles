@@ -3,9 +3,9 @@ import Quickshell
 import Quickshell.Wayland
 import Quickshell.Hyprland
 
-import "root:/config/"
-import "root:/services/"
-import "root:/widgets/"
+import "../config/"
+import "../services/"
+import "../widgets/"
 
 // Toast popups. Declare once in shell.qml:  NotificationToasts {}
 //
@@ -61,8 +61,12 @@ Variants {
             spacing: 8
             interactive: false
 
+            // Only the focused monitor builds delegates. The other screens keep
+            // this list empty, so a toast costs one card tree instead of one per
+            // screen. Toast expiry lives in NotificationService, not in the
+            // delegate, so moving focus doesn't restart the countdown.
             model: ScriptModel {
-                values: NotificationService.toasts
+                values: win.visible ? NotificationService.toasts : []
             }
 
             delegate: NotificationToast {

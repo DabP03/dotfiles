@@ -4,9 +4,9 @@ import QtQuick.Controls
 import Quickshell
 import Quickshell.Widgets
 
-import "root:/config/"
-import "root:/services/"
-import "root:/widgets/"
+import "../config/"
+import "../services/"
+import "../widgets/"
 
 Rectangle {
     id: root
@@ -58,15 +58,17 @@ Rectangle {
             anchor.rect.x: root.bar.width - root.mapToItem(null, 0, 0).x - popup.implicitWidth / 2 - root.implicitWidth / 2
             implicitWidth: 425
             readonly property real maxHeight: 440
-            readonly property real wantedHeight: 60                                                              // header: 8 + 52
-            + (wiredPanel.visible ? 16 + 72 : 0)                            // wired panel
-            + (NetworkService.hasWifi ? 16 + wifiHeading.implicitHeight + 8 + wifiList.contentHeight : 0)
-            + 16                                                            // bottom padding
-            implicitHeight: Math.min(maxHeight, wantedHeight)
+            // computed inside the content (see playerMenu) and read back here
+            readonly property real wantedHeight: contentItem ? contentItem.wantedHeight : 0
+            // The window is always the tallest size (and only exists while the content is
+            // loaded); the visible body follows the list, so the window never has to resize.
+            implicitHeight: contentItem ? maxHeight : 0
+            bodyHeight: Math.min(maxHeight, wantedHeight)
 
 
-            onVisibleChanged: {
-                if (visible) {
+            // scan only while the popup is live (content loaded)
+            onLiveChanged: {
+                if (live) {
                     NetworkService.acquireScan()
                 } else {
                     NetworkService.releaseScan()
@@ -83,8 +85,13 @@ Rectangle {
                 bottomRightRadius: 0
                 border.color: Colors.peach
                 border.width: Options.borderWidth
-                implicitHeight: popup.implicitHeight
                 implicitWidth: popup.implicitWidth
+
+                // read by the popup through contentItem
+                readonly property real wantedHeight: 60                        // header: 8 + 52
+                    + (NetworkService.hasWired ? 16 + 72 : 0)                  // wired panel
+                    + (NetworkService.hasWifi ? 16 + wifiHeading.implicitHeight + 8 + wifiList.contentHeight : 0)
+                    + 16                                                       // bottom padding
 
                 Rectangle {
                     id: topBorder
@@ -98,7 +105,7 @@ Rectangle {
                 Rectangle {
                     id: sideBorder
                     width: Options.borderWidth
-                    height: parent.implicitHeight - 2
+                    height: parent.height - 2
 
                     anchors.right: parent.right
                     anchors.top: parent.top

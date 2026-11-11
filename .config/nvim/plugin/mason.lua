@@ -17,16 +17,24 @@ mason.setup({
 
 mason_tool_installer.setup({
 	ensure_installed = {
-		"prettier", -- prettier formatter
-		"stylua", -- lua formatter
-		"black", -- python formatter
-		"pylint", -- python linter
-		"eslint_d", -- js linter
-		"htmlhint",
-		"jsonlint",
-		"shellcheck",
-		"clang-format",
-		"asmfmt",
-		"clangd",
+    "basedpyright";
+    "tinymist";
+    "rust-analyzer";
+    "clang-format";
+    "eslint_d";
+    "qmlls";
+    "black";
+    "clangd";
+    "html-lsp";
+    "htmlhint";
+    "intelephense";
+    "jsonlint";
+    "lua-language-server";
+    "omnisharp";
+    "prettier";
+    "pylint";
+    "shellcheck";
+    "stylua";
+    "zls";
 	},
 })

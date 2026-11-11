@@ -3,9 +3,9 @@ import QtQuick.Layouts
 import QtQuick.Controls
 import Quickshell.Networking
 
-import "root:/config/"
-import "root:/services/"
-import "root:/widgets/"
+import "../config/"
+import "../services/"
+import "../widgets/"
 
 // Wi-Fi network list for the network popup.
 // Drives everything through NetworkService:
@@ -47,7 +47,10 @@ Item {
         clip: true
         spacing: 2
         boundsBehavior: Flickable.StopAtBounds
-        cacheBuffer: 4000 // keep every row instantiated so contentHeight isn't an estimate
+        // Exact contentHeight only matters up to NetworkComp's 440 px cap.
+        // This buffer covers the visible area plus the cap, so a dense scan no
+        // longer instantiates thousands of pixels of off-screen rows.
+        cacheBuffer: 900
         model: NetworkService.wifiNetworks
 
         delegate: Rectangle {

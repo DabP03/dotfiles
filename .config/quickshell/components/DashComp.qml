@@ -6,9 +6,9 @@ import Quickshell.Io
 import Quickshell.Widgets
 import Quickshell.Hyprland
 
-import "root:/config/"
-import "root:/services/"
-import "root:/widgets/"
+import "../config/"
+import "../services/"
+import "../widgets/"
 
 Rectangle {
     id: root
@@ -16,11 +16,7 @@ Rectangle {
     required property var bar
     color: "transparent"
     implicitHeight: parent.implicitHeight - 16
-    implicitWidth: {
-        let width = icon.implicitWidth + 24;
-        Options.width.dash = width;
-        return width;
-    } 
+    implicitWidth: icon.implicitWidth + 24;
     radius: 8
 
     MouseArea {
@@ -58,15 +54,15 @@ Rectangle {
             id: popup
             target: root
             bar: root.bar
+            // The dash is the only consumer of the seconds display; let the
+            // shared clock rest at minute precision while it is closed.
+            onLiveChanged: Time.showSeconds = popup.live
             anchor.rect.x: root.bar.width - root.mapToItem(null, 0, 0).x - popup.implicitWidth / 2 - root.implicitWidth / 2
             // implicitWidth: calendarPanel.implicitWidth + 98 + 24
             implicitWidth: 425
             // What the user sees; follows the panel's animated height.
-            bodyHeight: calendarPanel.implicitHeight + 3 * (datePanel.implicitHeight + 6) + 24
-            + (notificationPanel.visible ? notificationPanel.implicitHeight + 6 : 0)
-
-            implicitHeight: calendarPanel.implicitHeight + 3 * (datePanel.implicitHeight + 6) + 24
-        + notificationPanel.maxImplicitHeight + 6
+            bodyHeight: contentItem ? contentItem.shownHeight : 0
+            implicitHeight: contentItem ? contentItem.fullHeight : 0
 
             Rectangle {
                 id: menu
@@ -77,6 +73,18 @@ Rectangle {
                 topLeftRadius: 0
                 topRightRadius: 0
                 bottomRightRadius: 0
+
+                readonly property real baseHeight: calendarPanel.implicitHeight
+                + 3 * (datePanel.implicitHeight + 6) + 24
+
+                // what the user sees right now
+                readonly property real shownHeight: baseHeight
+                + (notificationPanel.visible ? notificationPanel.implicitHeight + 6 : 0)
+
+                // the window's full size (largest the content can get)
+                readonly property real fullHeight: baseHeight
+                + notificationPanel.maxImplicitHeight + 6
+
                 implicitHeight: popup.bodyHeight
                 implicitWidth: popup.implicitWidth
 

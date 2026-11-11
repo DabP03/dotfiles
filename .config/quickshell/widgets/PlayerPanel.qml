@@ -3,11 +3,10 @@ import QtQuick.Layouts
 import QtQuick.Controls
 import Quickshell
 import Quickshell.Services.Mpris
-import Quickshell.Widgets
 
-import "root:/config/"
-import "root:/services/"
-import "root:/widgets/"
+import "../config/"
+import "../services/"
+import "../widgets/"
 
 // Popup contents for the media player: cover art, track info, seek bar,
 // transport controls and the source chip. Everything reads Players.active
@@ -17,8 +16,13 @@ Rectangle {
 
     readonly property var player: Players.active
     readonly property bool hasPlayer: player !== null && player !== undefined
-    readonly property real contentWidth: width - 28
+    // Based on implicitWidth, not width: the popup window takes its height from
+    // implicitHeight, and `width` is still 0 while the content is being loaded.
+    readonly property real contentWidth: implicitWidth - 28
     property real artSize: contentWidth
+    // Upper bound for the popup window: art plus room for the text, seek bar,
+    // controls and chip. The visible height is implicitHeight; this only sizes the window.
+    readonly property real maxHeight: artSize + 320
     property color accent: Colors.yellow
 
     color: Colors.base
@@ -83,6 +87,9 @@ Rectangle {
             RoundedImage {
                 anchors.fill: parent
                 imgSource: root.player ? root.player.trackArtUrl : ""
+                // Decode at the drawn art size, not the source resolution.
+                decodeWidth: root.artSize
+                decodeHeight: root.artSize
                 radius: Options.radius
             }
         }

@@ -1,7 +1,7 @@
 // Icon.qml
 import QtQuick
 
-import "root:/config/"
+import "../config/"
 
 Text {
     property int fill: 1

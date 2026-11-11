@@ -1,19 +1,32 @@
 import QtQuick
-import QtQuick.Layouts
-import QtQuick.Controls
 import Quickshell
-import Quickshell.Widgets
-import Quickshell.Hyprland
-import Quickshell.Io
 
-import "root:/config/"
-import "root:/services/"
-import "root:/widgets/"
+import "../config/"
+import "../services/"
 
 Item {
     id: root
     required property ShellScreen screen
-    property var monitor: 0
+
+    // Quickshell already tracks the focused window, its monitor and appId.
+    // Reading them from the Hyprland singleton avoids running two
+    // `hyprctl activewindow` processes (one per screen) on every event.
+    readonly property var toplevel: Hyprland.activeToplevel
+    readonly property string className: {
+        const t = root.toplevel;
+        if (!t)
+            return "";
+        const appId = t.wayland ? t.wayland.appId : "";
+        if (appId)
+            return appId;
+        // XWayland windows may not report an appId; fall back to the class
+        // Hyprland last reported for the toplevel.
+        const ipc = t.lastIpcObject;
+        return ipc && ipc.class ? String(ipc.class) : "";
+    }
+    readonly property int monitor: root.toplevel && root.toplevel.monitor
+        ? root.toplevel.monitor.id
+        : -1
 
     implicitWidth: appName.implicitWidth + 20
     implicitHeight: parent.implicitHeight - 16
@@ -55,22 +68,13 @@ Item {
 
         Text {
             id: appName
-            text: "" 
+            text: root.className !== "" ? root.formatClass(root.className) : ""
             visible: true
             font.pixelSize: Options.font.size
             font.family: Options.font.family
             font.bold: true
             anchors.centerIn: parent
             color: Colors.base
-        }
-    }
-
-    Connections {
-        target: Hyprland
-
-        function onRawEvent(event: HyprlandEvent): void {
-            if (!event.name.endsWith("v2"))
-            getActiveClient.running = true;
         }
     }
 
@@ -146,25 +150,5 @@ Item {
         }
 
         return title;
-    }
-
-
-    Process {
-        id: getActiveClient
-        running: true
-        command: ["hyprctl", "activewindow", "-j"]
-        stdout: StdioCollector {
-            onStreamFinished: () => {
-                const out = JSON.parse(this.text);
-                let title = out.class;
-                root.monitor = out.monitor;
-                if (out.title == undefined) {
-                    appName.text = "";
-                    return;
-                }
-
-                appName.text = formatClass(title);
-            }
-        }
     }
 }

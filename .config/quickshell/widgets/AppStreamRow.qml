@@ -2,9 +2,9 @@ import QtQuick
 import QtQuick.Layouts
 import Quickshell.Services.Pipewire
 
-import "root:/config/"
-import "root:/services/"
-import "root:/widgets/"
+import "../config/"
+import "../services/"
+import "../widgets/"
 
 // One application stream: [tile] title / subtitle   [-] 65% [+] [mute]
 // Used for single-stream apps (showTile: true) and for the children of a
@@ -33,7 +33,7 @@ Rectangle {
         fontSize: 14
     }
 
-    PwObjectTracker { objects: root.node ? [root.node] : [] }
+    // Node properties are tracked centrally by Audio.qml.
 
     implicitHeight: 44
     radius: Options.radius / 2
